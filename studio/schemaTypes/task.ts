@@ -20,6 +20,13 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: [{ type: 'category' }],
+    }),
+    
+    defineField({
       name: 'oneLiner',
       title: 'Brief Description',
       type: 'array',

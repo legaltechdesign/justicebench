@@ -4,6 +4,8 @@ import imageUrlBuilder from '@sanity/image-url'
 import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import '@/app/globals.css'
+import { CustomPortableText } from '@/components/CustomPortableText'
+
 
 type Props = {
     params: {
@@ -58,7 +60,7 @@ export default async function TaskPage({ params }: any) {
         )}
         <div className="md:w-1/3">
           {task.oneLiner && (
-            <PortableText value={task.oneLiner} />
+            <CustomPortableText value={task.oneLiner} />
           )}
         </div>
       </div>
@@ -80,7 +82,7 @@ function Section({ title, content }: { title: string; content?: any }) {
     <section className="mb-12">
       <h2 className="text-4xl font-heading text-navy mb-4 mt-8">{title}</h2>
       <div className="prose prose-lg">
-        <PortableText value={content} />
+        <CustomPortableText value={content} />
       </div>
     </section>
   )
