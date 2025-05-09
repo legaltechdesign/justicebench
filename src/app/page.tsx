@@ -1,14 +1,17 @@
 // src/app/page.tsx
 import { sanityClient } from '@/lib/sanity'
 import Image from 'next/image'
-import { PortableText } from '@portabletext/react';
-
+import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
 
 // Define types
 interface SanityDoc {
   _id: string
   title: string
-  oneLiner?: string
+  slug?: {
+    current: string
+  }
+  oneliner?: any // Portable Text
   image?: {
     asset: {
       _id: string
@@ -23,7 +26,8 @@ export default async function Home() {
     sanityClient.fetch(`*[_type == "task"]{
       _id,
       title,
-      oneLiner,
+      slug,
+      "oneliner": oneLiner,
       image {
         asset->{
           _id,
@@ -34,7 +38,8 @@ export default async function Home() {
     sanityClient.fetch(`*[_type == "project"]{
       _id,
       title,
-      oneliner,
+      slug,
+      "oneliner": oneliner,
       image {
         asset->{
           _id,
@@ -45,7 +50,8 @@ export default async function Home() {
     sanityClient.fetch(`*[_type == "dataset"]{
       _id,
       title,
-      oneliner,
+      slug,
+      "oneliner": oneliner,
       image {
         asset->{
           _id,
@@ -56,7 +62,8 @@ export default async function Home() {
     sanityClient.fetch(`*[_type == "guide"]{
       _id,
       title,
-      oneliner,
+      slug,
+      "oneliner": oneliner,
       image {
         asset->{
           _id,
@@ -75,33 +82,13 @@ export default async function Home() {
         </p>
       </header>
 
-      <Section
-        title="Tasks"
-        description="What new AI projects are needed? These are some of the main tasks that need to be done to help people with their legal problems. Explore the task pages to understand what needs to be built, what benchmarks need to be met, and what is already in the works."
-        items={tasks}
-        bg="bg-peach-extra-light"
-      />
+      <Section title="Tasks" description="What new AI projects are needed? These are some of the main tasks that need to be done to help people with their legal problems. Explore the task pages to understand what needs to be built, what benchmarks need to be met, and what is already in the works." items={tasks} bg="bg-peach-extra-light" baseUrl="/task" />
 
-      <Section
-        title="Projects"
-        description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow."
-        items={projects}
-        bg="bg-white"
-      />
+      <Section title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
 
-      <Section
-        title="Datasets"
-        description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
-        items={datasets}
-        bg="bg-peach-extra-light"
-      />
+      <Section title="Datasets" description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works." items={datasets} bg="bg-peach-extra-light" baseUrl="/dataset" />
 
-      <Section
-        title="Guides"
-        description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
-        items={guides}
-        bg="bg-white"
-      />
+      <Section title="Guides" description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders." items={guides} bg="bg-white" baseUrl="/guide" />
     </main>
   )
 }
@@ -111,11 +98,13 @@ function Section({
   description,
   items,
   bg,
+  baseUrl,
 }: {
   title: string
   description: string
   items: SanityDoc[]
   bg: string
+  baseUrl: string
 }) {
   return (
     <section className={`${bg} px-10 py-16`}>
@@ -123,28 +112,27 @@ function Section({
       <p className="text-gray-600 max-w-2xl mb-6">{description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <div
-            key={item._id}
-            className="bg-white p-4 border rounded-lg shadow flex flex-col"
-          >
-            {item.image?.asset?.url && (
-              <Image
-                src={item.image.asset.url}
-                alt={item.title}
-                width={400}
-                height={200}
-                className="w-full h-40 object-cover rounded mb-4"
-              />
-            )}
-            <h3 className="text-xl font-semibold text-navy font-heading mb-2">
-              {item.title}
-            </h3>
-            {item.oneLiner && Array.isArray(item.oneLiner) && (
-  <div className="text-sm text-gray-700">
-    <PortableText value={item.oneLiner} />
-  </div>
-)}
-          </div>
+          <Link key={item._id} href={`${baseUrl}/${item.slug?.current || ''}`}>
+            <div className="bg-white p-4 border rounded-lg shadow flex flex-col hover:shadow-lg transition-shadow">
+              {item.image?.asset?.url && (
+                <Image
+                  src={item.image.asset.url}
+                  alt={item.title}
+                  width={400}
+                  height={200}
+                  className="object-cover w-full h-40 rounded mb-4"
+                />
+              )}
+              <h3 className="text-xl font-semibold text-navy font-heading mb-2">
+                {item.title}
+              </h3>
+              {item.oneliner && (
+                <div className="text-sm text-gray-700">
+                  <PortableText value={item.oneliner} />
+                </div>
+              )}
+            </div>
+          </Link>
         ))}
       </div>
     </section>
