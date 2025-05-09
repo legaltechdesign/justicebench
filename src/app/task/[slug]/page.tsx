@@ -103,14 +103,13 @@ function ReferenceList({
       <h2 className="text-3xl font-heading text-navy mb-4">{title}</h2>
       <ul className="list-disc pl-6 text-gray-700 space-y-1">
         {items.map((item) => (
-          <li key={item.slug.current}>
-            <a
-              className="text-navy underline hover:text-navy/70"
-              href={`${basePath}/${item.slug.current}`}
-            >
-              {item.title}
-            </a>
-          </li>
+         <li key={item.slug?.current || item.title}>
+         {item.slug?.current ? (
+           <a className="text-navy underline" href={`/project/${item.slug.current}`}>{item.title}</a>
+         ) : (
+           <span className="text-gray-500">{item.title}</span>
+         )}
+       </li>
         ))}
       </ul>
     </section>
