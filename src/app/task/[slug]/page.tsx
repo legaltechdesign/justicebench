@@ -5,6 +5,13 @@ import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import '@/app/globals.css'
 
+type Props = {
+    params: {
+      slug: string
+    }
+  }
+  
+
 // Sanity image URL builder
 const builder = imageUrlBuilder(sanityClient)
 function urlFor(source: any) {
@@ -17,7 +24,8 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return slugs.map((slug: string) => ({ slug }))
 }
 
-export default async function TaskPage({ params }: { params: { slug: string } }) {
+export default async function TaskPage({ params }: Props) {
+
   const task = await sanityClient.fetch(
     `*[_type == "task" && slug.current == $slug][0]{
       title,
