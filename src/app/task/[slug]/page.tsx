@@ -24,7 +24,8 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return slugs.map((slug: string) => ({ slug }))
 }
 
-export default async function TaskPage({ params }: Props) {
+export default async function TaskPage({ params }: any) {
+
 
   const task = await sanityClient.fetch(
     `*[_type == "task" && slug.current == $slug][0]{
