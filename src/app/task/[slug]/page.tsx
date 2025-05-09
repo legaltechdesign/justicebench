@@ -11,8 +11,8 @@ function urlFor(source: any) {
   return builder.image(source)
 }
 
-// Fetch a single task by slug
-export async function generateStaticParams() {
+// For static site generation
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const slugs = await sanityClient.fetch(`*[_type == "task" && defined(slug.current)][].slug.current`)
   return slugs.map((slug: string) => ({ slug }))
 }
@@ -37,10 +37,10 @@ export default async function TaskPage({ params }: { params: { slug: string } })
 
   return (
     <main className="font-sans px-8 py-12 max-w-6xl mx-auto">
-      <h1 className="text-6xl font-heading font-bold text-navy mb-6">{task.title}</h1>
+      <h1 className="text-6xl font-heading font-bold text-navy mb-10">{task.title}</h1>
 
-      <div className="bg-peach-extra-light rounded-lg p-6 flex flex-col md:flex-row gap-6 mb-12">
-        {task.image && (
+      <div className="bg-peach-extra-light rounded-lg p-6 flex flex-col md:flex-row gap-6 mb-16">
+        {task.image && urlFor(task.image).url() && (
           <img
             src={urlFor(task.image).width(800).url()}
             alt={task.title}
@@ -56,10 +56,11 @@ export default async function TaskPage({ params }: { params: { slug: string } })
 
       <Section title="Task Description" content={task.description} />
       <Section title="How to Measure Quality?" content={task.qualityStandards} />
-      <ReferenceList title="Related Projects" items={task.relatedProjects} />
-      <ReferenceList title="Related Datasets" items={task.relatedDatasets} />
-      <ReferenceList title="Related Evaluation Tools" items={task.relatedEvaluations} />
-      <ReferenceList title="Related Guides" items={task.relatedGuides} />
+
+      <ReferenceList title="Related Projects" items={task.relatedProjects} basePath="/project" />
+      <ReferenceList title="Related Datasets" items={task.relatedDatasets} basePath="/dataset" />
+      <ReferenceList title="Related Evaluation Tools" items={task.relatedEvaluations} basePath="/evaluation" />
+      <ReferenceList title="Related Guides" items={task.relatedGuides} basePath="/guide" />
     </main>
   )
 }
@@ -67,24 +68,37 @@ export default async function TaskPage({ params }: { params: { slug: string } })
 function Section({ title, content }: { title: string; content?: any }) {
   if (!content) return null
   return (
-    <section className="mb-10">
-      <h2 className="text-5xl font-heading text-navy mb-2">{title}</h2>
-      <div className="prose">
+    <section className="mb-12">
+      <h2 className="text-4xl font-heading text-navy mb-4 mt-8">{title}</h2>
+      <div className="prose prose-lg">
         <PortableText value={content} />
       </div>
     </section>
   )
 }
 
-function ReferenceList({ title, items }: { title: string; items?: { title: string; slug: { current: string } }[] }) {
+function ReferenceList({
+  title,
+  items,
+  basePath,
+}: {
+  title: string
+  items?: { title: string; slug: { current: string } }[]
+  basePath: string
+}) {
   if (!items || items.length === 0) return null
   return (
-    <section className="mb-10">
-      <h2 className="text-2xl font-heading text-navy mb-2">{title}</h2>
-      <ul className="list-disc pl-5 text-gray-700">
+    <section className="mb-12">
+      <h2 className="text-3xl font-heading text-navy mb-4">{title}</h2>
+      <ul className="list-disc pl-6 text-gray-700 space-y-1">
         {items.map((item) => (
           <li key={item.slug.current}>
-            <a className="text-navy underline" href={`/project/${item.slug.current}`}>{item.title}</a>
+            <a
+              className="text-navy underline hover:text-navy/70"
+              href={`${basePath}/${item.slug.current}`}
+            >
+              {item.title}
+            </a>
           </li>
         ))}
       </ul>
