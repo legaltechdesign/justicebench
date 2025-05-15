@@ -114,12 +114,12 @@ export default async function Home() {
     We have 8 main clusters of A2J tasks: Getting Brief Help, Providing Brief Help, Service Onboarding, Work Product, Case Management, Coaching, Administration & Strategy, and Tech Tooling. Explore them each below!
   </p>
 
-  {tasksByCategory.map((category) => (
+  {tasksByCategory.map((category: any) => (
     <div key={category._id} className="mb-12">
       <h3 className="text-2xl font-heading text-navy mb-4">{category.title}</h3>
       <p className="text-gray-600 mb-4">{category.description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {category.tasks.map((task) => (
+        {category.tasks.map((task: any) => (
           <Link key={task._id} href={`/task/${task.slug.current}`}>
             <div className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow">
               {task.image?.asset?.url && (
