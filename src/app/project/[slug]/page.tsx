@@ -12,16 +12,15 @@ function urlFor(source: any) {
 }
 
 export async function generateStaticParams() {
-  const slugs = await sanityClient.fetch(
-    `*[_type == "project" && defined(slug.current)][].slug.current`
-  )
-  return slugs.map((slug: string) => ({ slug }))
-}
+    const slugs = await sanityClient.fetch(`*[_type == "project" && defined(slug.current)][].slug.current`)
+    return slugs.map((slug: string) => ({ slug }))
+  }
 
 import type { Metadata, ResolvingMetadata } from 'next'
 
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
+
 
   const project = await sanityClient.fetch(
     `*[_type == "project" && slug.current == $slug][0]{
