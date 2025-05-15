@@ -106,7 +106,7 @@ export default async function Home() {
       <section className="bg-peach-extra-light px-10 py-16">
   <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
   <p className="text-gray-600 max-w-2xl mb-10">
-    <strong>What new AI projects are needed?</strong> These are some of the main tasks that need to be done to help people with their legal problems, and to help service providers operate more effectively. <br />
+    <strong>What new AI projects are needed to improve access to justice?</strong> These are some of the main tasks that need to be done to help people with their legal problems, and to help service providers operate more effectively. <br />
     <br />  
     These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
     <br />  
