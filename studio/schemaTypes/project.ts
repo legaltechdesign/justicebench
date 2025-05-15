@@ -25,12 +25,42 @@ const project = {
       type: 'array',
       of: [{ type: 'block' }],
     },
-    { name: 'url', title: 'Link to Repo or Demo', type: 'url' },
+    {
+      name: 'url',
+      title: 'Link to Repo or Demo',
+      type: 'url',
+    },
     {
       name: 'image',
       title: 'Illustration',
       type: 'image',
       options: { hotspot: true },
+    },
+
+    // NEW fields:
+    {
+      name: 'relatedTasks',
+      title: 'Related Tasks',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'task' }] }],
+    },
+    {
+      name: 'relatedDatasets',
+      title: 'Related Datasets',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'dataset' }] }],
+    },
+    {
+      name: 'relatedEvaluations',
+      title: 'Related Evaluation Tools',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'evaluation' }] }],
+    },
+    {
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'category' }] }],
     },
   ],
 }

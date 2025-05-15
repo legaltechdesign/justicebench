@@ -29,6 +29,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </nav>
         {children}
+        <footer className="bg-gray-100 border-t mt-12 text-sm text-gray-700 px-6 py-8 font-sans">
+  <div className="max-w-6xl mx-auto space-y-3">
+    <p>
+      &copy; 2025,{' '}
+      <a
+        href="https://justiceinnovation.law.stanford.edu/projects/ai-access-to-justice/"
+        className="text-navy underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Stanford Legal Design Lab
+      </a>
+      . All rights reserved.
+    </p>
+    <p className="text-gray-600">
+      This site provides resources to legal providers, but is not meant for people seeking help for legal problems. If you are looking for legal help, <a href="https://www.lawhelp.org/">please visit this website to find groups that can help you.</a>
+    </p>
+  </div>
+</footer>
+
       </body>
     </html>
   )

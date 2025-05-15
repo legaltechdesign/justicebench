@@ -25,5 +25,11 @@ export default defineType({
       title: 'Description',
       type: 'text',
     }),
+    defineField({
+        name: 'sortOrder',
+        title: 'Sort Order',
+        type: 'number',
+      })
+      
   ],
 })

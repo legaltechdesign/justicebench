@@ -10,6 +10,24 @@ function urlFor(source: any) {
   return builder.image(source).width(800).url()
 }
 
+export const portableTextComponents: PortableTextComponents = {
+    marks: {
+      link: ({ children, value }) => {
+        const href = value?.href || '#'
+        return (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-navy hover:text-dark-navy font-medium"
+          >
+            {children}
+          </a>
+        )
+      },
+    },
+  }
+
 const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
@@ -35,6 +53,7 @@ const components: PortableTextComponents = {
       <ol className="list-decimal pl-5 mb-4">{children}</ol>
     ),
   },
+  
   block: {
     h2: ({ children }) => (
       <h2 className="text-3xl font-bold mt-6 mb-2 text-navy">{children}</h2>
