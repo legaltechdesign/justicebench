@@ -18,7 +18,11 @@ export async function generateStaticParams() {
   return slugs.map((slug: string) => ({ slug }))
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+import type { Metadata, ResolvingMetadata } from 'next'
+import { type PageProps } from 'next'
+
+export default async function ProjectPage({ params }: PageProps<{ slug: string }>) {
+
   const project = await sanityClient.fetch(
     `*[_type == "project" && slug.current == $slug][0]{
       title,
