@@ -97,22 +97,44 @@ export default async function Home() {
   return (
     <main className="font-sans">
       <header className="bg-white p-12 text-center">
-        <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
-        <p className="text-xl text-gray-700 mt-4">
-          An R&D Community Platform for AI and Access to Justice
-        </p>
-      </header>
+  <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
+  <p className="text-xl text-gray-700 mt-4">
+    An R&D Community Platform for AI and Access to Justice
+  </p>
+  <div className="mt-4 bg-yellow-100 text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
+    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@gmail.com" className="underline">legaldesignlab@gmail.com</a>.
+  </div>
+</header>
 
       <section className="bg-peach-extra-light px-10 py-16">
-  <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
-  <p className="text-gray-600 max-w-2xl mb-10">
-    <strong>What new AI projects are needed to improve access to justice?</strong> These are some of the main tasks that need to be done to help people with their legal problems, and to help service providers operate more effectively. <br />
-    <br />  
-    These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
-    <br />  
-    <br />
-    We have 8 main clusters of A2J tasks: Getting Brief Help, Providing Brief Help, Service Onboarding, Work Product, Case Management, Coaching, Administration & Strategy, and Tech Tooling. Explore them each below!
-  </p>
+      <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
+
+<div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+  <div>
+    <p>
+      <strong>What new AI projects are needed to improve access to justice?</strong> These are some of the main tasks that need to be done to help people with their legal problems, and to help service providers operate more effectively.
+    </p>
+    <p className="mt-4">
+      These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
+    </p>
+  </div>
+  <div>
+    <p>
+      We have 8 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping:
+    </p>
+    <ul className="list-disc pl-5 mt-2">
+      <li>Getting Brief Help</li>
+      <li>Providing Brief Help</li>
+      <li>Service Onboarding</li>
+      <li>Work Product</li>
+      <li>Case Management</li>
+      <li>Coaching</li>
+      <li>Administration & Strategy</li>
+      <li>Tech Tooling</li>
+    </ul>
+    <p className="mt-4">Explore each in detail below!</p>
+  </div>
+</div>
 
   {tasksByCategory.map((category: any) => (
     <div key={category._id} className="mb-12">
@@ -131,9 +153,9 @@ export default async function Home() {
                   className="object-cover w-full h-40 rounded mb-4"
                 />
               )}
-              <h4 className="text-lg font-heading text-navy mb-2">{task.title}</h4>
+              <h4 className="text-lg font-heading text-navy mb-2 leading-tight">{task.title}</h4>
               {task.oneliner && (
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-gray-700 leading-snug">
                   <PortableText value={task.oneliner} />
                 </div>
               )}
@@ -188,11 +210,11 @@ function Section({
                   className="object-cover w-full h-40 rounded mb-4"
                 />
               )}
-              <h3 className="text-xl font-semibold text-navy font-heading mb-2">
+              <h3 className="text-xl font-semibold text-navy font-heading mb-2 leading-tight">
                 {item.title}
               </h3>
               {item.oneliner && (
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-gray-700 leading-snug">
                   <PortableText value={item.oneliner} />
                 </div>
               )}
