@@ -102,7 +102,7 @@ export default async function Home() {
     An R&D Community Platform for AI and Access to Justice
   </p>
   <div className="mt-4 bg-yellow-100 text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
-    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@gmail.com" className="underline">legaldesignlab@gmail.com</a>.
+    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
   </div>
 </header>
 
@@ -171,11 +171,11 @@ export default async function Home() {
 
       <Section title="Datasets" description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works." items={datasets} bg="bg-peach-extra-light" baseUrl="/dataset" />
       <p className="text-xl text-gray-700 mt-4">
-      Coming Soon. Please share datasets with us at <a href="mailto:legaldesignlab@gmail.com">legaldesignlab@gmail.com</a> </p>
+      Coming Soon. Please share datasets with us at <a href="mailto:legaldesignlab@law.stanford.edu" >legaldesignlab@law.stanford.edu</a> </p>
 
       <Section title="Guides" description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders." items={guides} bg="bg-white" baseUrl="/guide" />
       <p className="text-xl text-gray-700 mt-4">
-      Coming Soon. Please share guide proposals and open-source materials with us at <a href="mailto:legaldesignlab@gmail.com">legaldesignlab@gmail.com</a> </p>
+      Coming Soon. Please share guide proposals and open-source materials with us at <a href="mailto:legaldesignlab@law.stanford.edu">legaldesignlab@law.stanford.edu</a> </p>
     </main>
   )
 }
