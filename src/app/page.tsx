@@ -97,15 +97,23 @@ export default async function Home() {
   return (
     <main className="font-sans">
       <header className="bg-white p-12 text-center">
-        <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
-        <p className="text-xl text-gray-700 mt-4">
-          An R&D Community Platform for AI and Access to Justice
-        </p>
-        <div className="mt-4 bg-yellow-100 text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
-          🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
-        </div>
-      </header>
-
+  <div className="flex justify-center items-center gap-4">
+    <Image
+      src="/favicon.png"  // or "/favicon.ico"
+      alt="Justice Bench Logo"
+      width={48}
+      height={48}
+      className="rounded"
+    />
+    <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
+  </div>
+  <p className="text-xl text-gray-700 mt-4">
+    An R&D Community Platform for AI and Access to Justice
+  </p>
+  <div className="mt-4 bg-yellow-100 text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
+    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
+  </div>
+</header>
       <section className="bg-navy px-6 py-16">
   <h2 className="text-2xl md:text-3xl font-heading font-bold text-white text-center mb-6">
     How to Use JusticeBench
