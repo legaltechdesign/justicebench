@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, League_Spartan } from 'next/font/google'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Head from 'next/head'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
