@@ -132,7 +132,7 @@ export default async function Home() {
       <li>Administration & Strategy</li>
       <li>Tech Tooling</li>
     </ul>
-    <p className="mt-4">Explore each in detail below.</p>
+    <p className="mt-4">Explore each in detail below!</p>
   </div>
 </div>
 
