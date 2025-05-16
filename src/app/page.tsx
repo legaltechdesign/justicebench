@@ -210,7 +210,7 @@ function Section({
                   className="object-cover w-full h-40 rounded mb-4"
                 />
               )}
-              <h3 className="text-xl font-semibold text-navy font-heading mb-2 leading-tight">
+              <h3 className="text-3xl font-semibold text-navy font-heading mb-4 leading-tight">
                 {item.title}
               </h3>
               {item.oneliner && (
