@@ -129,7 +129,7 @@ export default async function Home() {
       <li>Work Product</li>
       <li>Case Management</li>
       <li>Coaching</li>
-      <li>Administration & Strategy</li>
+      <li>Administration, Ops, & Strategy</li>
       <li>Tech Tooling</li>
     </ul>
     <p className="mt-4">Explore each in detail below.</p>
@@ -138,7 +138,7 @@ export default async function Home() {
 
   {tasksByCategory.map((category: any) => (
     <div key={category._id} className="mb-12">
-      <h3 className="text-2xl font-heading text-navy mb-4">{category.title}</h3>
+     <h3 className="text-3xl font-heading font-semibold text-navy mb-4">{category.title}</h3>
       <p className="text-gray-600 mb-4">{category.description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {category.tasks.map((task: any) => (
