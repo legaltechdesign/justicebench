@@ -105,6 +105,36 @@ export default async function Home() {
           🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
         </div>
       </header>
+      <section className="bg-white px-10 py-12 border-t border-b border-gray-200">
+  <h2 className="text-2xl font-heading font-bold text-navy text-center mb-6">How to Use JusticeBench</h2>
+  <p className="text-gray-700 text-center max-w-4xl mx-auto mb-10">
+    JusticeBench is an open platform for the R&D community of legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
+  </p>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
+    <div>
+      <div className="text-5xl mb-4">🧭</div>
+      <h3 className="text-xl font-bold text-navy mb-2">Tasks</h3>
+      <p className="text-gray-700">
+        Explore specific use cases where AI can help with justice. Scope what to work on — and where you fit in.
+      </p>
+    </div>
+    <div>
+      <div className="text-5xl mb-4">🛠️</div>
+      <h3 className="text-xl font-bold text-navy mb-2">Projects</h3>
+      <p className="text-gray-700">
+        Look at prototypes, pilots, and tools others are building to find inspiration, collaborators, or models.
+      </p>
+    </div>
+    <div>
+      <div className="text-5xl mb-4">📊</div>
+      <h3 className="text-xl font-bold text-navy mb-2">Datasets</h3>
+      <p className="text-gray-700">
+        Share or use data to train, evaluate, and improve legal AI projects and performance standards.
+      </p>
+    </div>
+  </div>
+</section>
+
 
       <section className="bg-peach-extra-light px-10 py-16">
         <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
