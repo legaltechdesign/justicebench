@@ -15,6 +15,9 @@ const spartan = League_Spartan({
 export const metadata: Metadata = {
   title: 'JusticeBench',
   description: 'An R&D Community Platform for AI and Access to Justice',
+  icons: {
+    icon: '/favicon.png', // or '/favicon.ico'
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
