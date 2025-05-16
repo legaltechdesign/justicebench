@@ -110,23 +110,30 @@ export default async function Home() {
   <p className="text-gray-700 text-center max-w-4xl mx-auto mb-10">
     JusticeBench is an open platform for the R&D community of legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
+  <section className="bg-navy px-6 py-16">
+  <h2 className="text-2xl md:text-3xl font-heading font-bold text-white text-center mb-6">
+    How to Use JusticeBench
+  </h2>
+  <p className="text-white text-center max-w-4xl mx-auto mb-10">
+    JusticeBench is an open platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
+  </p>
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
-    <div>
-      <div className="text-5xl mb-4">🧭</div>
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="text-4xl mb-4">🔍</div>
       <h3 className="text-xl font-bold text-navy mb-2">Tasks</h3>
       <p className="text-gray-700">
         Explore specific use cases where AI can help with justice. Scope what to work on — and where you fit in.
       </p>
     </div>
-    <div>
-      <div className="text-5xl mb-4">🛠️</div>
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="text-4xl mb-4">🛠️</div>
       <h3 className="text-xl font-bold text-navy mb-2">Projects</h3>
       <p className="text-gray-700">
         Look at prototypes, pilots, and tools others are building to find inspiration, collaborators, or models.
       </p>
     </div>
-    <div>
-      <div className="text-5xl mb-4">📊</div>
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="text-4xl mb-4">📊</div>
       <h3 className="text-xl font-bold text-navy mb-2">Datasets</h3>
       <p className="text-gray-700">
         Share or use data to train, evaluate, and improve legal AI projects and performance standards.
@@ -134,6 +141,7 @@ export default async function Home() {
     </div>
   </div>
 </section>
+
 
 
       <section className="bg-peach-extra-light px-10 py-16">
