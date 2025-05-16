@@ -105,12 +105,8 @@ export default async function Home() {
           🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
         </div>
       </header>
-      <section className="bg-white px-10 py-12 border-t border-b border-gray-200">
-  <h2 className="text-2xl font-heading font-bold text-navy text-center mb-6">How to Use JusticeBench</h2>
-  <p className="text-gray-700 text-center max-w-4xl mx-auto mb-10">
-    JusticeBench is an open platform for the R&D community of legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
-  </p>
-  <section className="bg-navy px-6 py-16">
+
+      <section className="bg-navy px-6 py-16">
   <h2 className="text-2xl md:text-3xl font-heading font-bold text-white text-center mb-6">
     How to Use JusticeBench
   </h2>
@@ -142,7 +138,7 @@ export default async function Home() {
   </div>
 </section>
 
-
+      
 
       <section className="bg-peach-extra-light px-10 py-16">
         <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
@@ -208,15 +204,41 @@ export default async function Home() {
 
       <Section title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
 
-      <Section title="Datasets" description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works." items={datasets} bg="bg-peach-extra-light" baseUrl="/dataset" />
-      <p className="text-xl text-gray-700 mt-4">
-        Coming Soon. Please share datasets with us at <a href="mailto:legaldesignlab@law.stanford.edu">legaldesignlab@law.stanford.edu</a>
-      </p>
+      <Section
+  title="Datasets"
+  description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
+  items={datasets}
+  bg="bg-peach-extra-light"
+  baseUrl="/dataset"
+/>
 
-      <Section title="Guides" description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders." items={guides} bg="bg-white" baseUrl="/guide" />
-      <p className="text-xl text-gray-700 mt-4">
-        Coming Soon. Please share guide proposals and open-source materials with us at <a href="mailto:legaldesignlab@law.stanford.edu">legaldesignlab@law.stanford.edu</a>
-      </p>
+<section className="bg-peach-extra-light px-10 pt-0 pb-16">
+  <p className="text-xl text-gray-700 max-w-2xl">
+    <strong>Coming Soon.</strong> Please share datasets with us at{' '}
+    <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
+      legaldesignlab@law.stanford.edu
+    </a>
+  </p>
+</section>
+
+
+      <Section
+  title="Guides"
+  description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
+  items={guides}
+  bg="bg-white"
+  baseUrl="/guide"
+/>
+
+<section className="bg-white px-10 pt-0 pb-16">
+  <p className="text-xl text-gray-700 max-w-2xl">
+    <strong>Coming Soon.</strong> Please share guide proposals and open-source materials with us at{' '}
+    <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
+      legaldesignlab@law.stanford.edu
+    </a>
+  </p>
+</section>
+
     </main>
   )
 }
