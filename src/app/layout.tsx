@@ -3,6 +3,7 @@ import './globals.css'
 import { Geist, Geist_Mono, League_Spartan } from 'next/font/google'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import Head from 'next/head'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
@@ -16,13 +17,19 @@ export const metadata: Metadata = {
   title: 'JusticeBench',
   description: 'An R&D Community Platform for AI and Access to Justice',
   icons: {
-    icon: '/favicon.png', // or '/favicon.ico'
+    icon: '/favicon.ico', // or '/favicon.ico'
   },
 }
 
+
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    
     <html lang="en" className={`${geist.variable} ${mono.variable} ${spartan.variable}`}>
+        <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <body className="font-sans bg-white text-black antialiased">
         <nav className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
           <div className="max-w-7xl mx-auto">

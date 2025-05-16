@@ -153,7 +153,7 @@ export default async function Home() {
                           className="object-cover w-full h-40 rounded mb-4"
                         />
                       )}
-                      <h4 className="text-lg font-heading text-navy mb-2 leading-tight">{task.title}</h4>
+                      <h4 className="text-xl font-heading text-navy font-bold mb-2 leading-tight">{task.title}</h4>
                       {task.oneliner && (
                         <div className="text-sm text-gray-700 leading-snug">
                           <PortableText value={task.oneliner} />
