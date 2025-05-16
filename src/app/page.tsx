@@ -98,13 +98,7 @@ export default async function Home() {
     <main className="font-sans">
       <header className="bg-white p-12 text-center">
   <div className="flex justify-center items-center gap-4">
-    <Image
-      src="/favicon.png"  // or "/favicon.ico"
-      alt="Justice Bench Logo"
-      width={48}
-      height={48}
-      className="rounded"
-    />
+    
     <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
   </div>
   <p className="text-xl text-gray-700 mt-4">
@@ -126,7 +120,7 @@ export default async function Home() {
       <div className="text-4xl mb-4">🔍</div>
       <h3 className="text-xl font-bold text-navy mb-2">Tasks</h3>
       <p className="text-gray-700">
-        Explore specific use cases where AI can help with justice. Scope what to work on — and where you fit in.
+        Explore specific use cases where AI can help improve access to justice. Scope what to work on — and where you fit in.
       </p>
     </div>
     <div className="bg-white p-6 rounded-xl shadow-md">
