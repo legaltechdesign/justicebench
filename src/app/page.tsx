@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 
+
 // Define types
 interface SanityDoc {
   _id: string
@@ -49,9 +50,9 @@ export default async function Home() {
     }`),
     sanityClient.fetch(`*[_type == "dataset"]{
       _id,
-      title,
+      "title": name,
       slug,
-      "oneliner": oneliner,
+      "oneliner": description,
       image {
         asset->{
           _id,
@@ -216,7 +217,7 @@ export default async function Home() {
 
 <section className="bg-peach-extra-light px-10 pt-0 pb-16">
   <p className="text-xl text-gray-700 max-w-2xl">
-    <strong>Coming Soon.</strong> Please share datasets with us at{' '}
+    <strong>Please share datasets</strong> with JusticeBench at{' '}
     <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
       legaldesignlab@law.stanford.edu
     </a>
