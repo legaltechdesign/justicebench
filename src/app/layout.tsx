@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   <div className="max-w-7xl mx-auto flex items-center gap-4">
     <Link href="/" className="flex items-center gap-2 hover:opacity-80">
       <Image
-        src="/favicon.png" // or your specific image path
+        src="/favicon.ico" // or your specific image path
         alt="Justice Bench Logo"
         width={32}
         height={32}
