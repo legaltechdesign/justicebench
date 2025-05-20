@@ -52,7 +52,7 @@ export default async function Home() {
       _id,
       "title": name,
       slug,
-      "oneliner": description,
+      "oneliner": oneliner,
       image {
         asset->{
           _id,
