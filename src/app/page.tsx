@@ -50,7 +50,7 @@ export default async function Home() {
     }`),
     sanityClient.fetch(`*[_type == "dataset"]{
       _id,
-      "title": name,
+      title,
       slug,
       "oneliner": oneliner,
       image {
