@@ -205,9 +205,10 @@ export default async function Home() {
         ))}
       </section>
 
-      <Section title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
+      <Section id="projects" title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
 
       <Section
+  id="datasets"
   title="Datasets"
   description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
   items={datasets}
@@ -226,6 +227,7 @@ export default async function Home() {
 
 
       <Section
+  id="guides"
   title="Guides"
   description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
   items={guides}
@@ -247,12 +249,14 @@ export default async function Home() {
 }
 
 function Section({
+  id,
   title,
   description,
   items,
   bg,
   baseUrl,
 }: {
+  id?: string
   title: string
   description: string
   items: SanityDoc[]
@@ -260,7 +264,7 @@ function Section({
   baseUrl: string
 }) {
   return (
-    <section className={`${bg} px-10 py-16`}>
+    <section id={id} className={`${bg} px-10 py-16`}>
       <h2 className="text-3xl font-heading font-bold text-navy mb-2">{title}</h2>
       <p className="text-gray-600 max-w-2xl mb-6">{description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
