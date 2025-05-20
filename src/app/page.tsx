@@ -100,7 +100,7 @@ export default async function Home() {
       <header className="bg-white p-12 text-center">
   <div className="flex justify-center items-center gap-4">
     
-    <h1 className="text-6xl font-heading font-bold text-navy">Justice Bench</h1>
+    <h1 className="text-6xl font-heading font-bold text-navy">JusticeBench</h1>
   </div>
   <p className="text-xl text-gray-700 mt-4">
     An R&D Community Platform for AI and Access to Justice
@@ -143,7 +143,7 @@ export default async function Home() {
 
       
 
-      <section className="bg-peach-extra-light px-10 py-16">
+      <section id="tasks" className="bg-peach-extra-light px-10 py-16">
         <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
         <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           <div>
