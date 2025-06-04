@@ -24,7 +24,7 @@ interface SanityDoc {
 // Fetch all categories in parallel
 export default async function Home() {
   const [tasks, projects, datasets, guides] = await Promise.all([
-    sanityClient.fetch(`*[_type == "task"]{
+    sanityClient.fetch(`*[_type == "task" && references(^._id)] | order(sortOrder asc){
       _id,
       title,
       slug,
@@ -40,6 +40,7 @@ export default async function Home() {
       _id,
       title,
       slug,
+      legalProblemTypes[]->{title, slug, image},
       "oneliner": oneliner,
       image {
         asset->{

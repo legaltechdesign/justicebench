@@ -1,4 +1,4 @@
-const project = {
+export default {
   name: 'project',
   title: 'Project',
   type: 'document',
@@ -8,10 +8,7 @@ const project = {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      options: { source: 'title', maxLength: 96 },
     },
     {
       name: 'oneliner',
@@ -36,33 +33,11 @@ const project = {
       type: 'image',
       options: { hotspot: true },
     },
-
-    // NEW fields:
     {
-      name: 'relatedTasks',
-      title: 'Related Tasks',
+      name: 'legalProblemTypes',
+      title: 'Related Legal Problem Types',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'task' }] }],
-    },
-    {
-      name: 'relatedDatasets',
-      title: 'Related Datasets',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'dataset' }] }],
-    },
-    {
-      name: 'relatedEvaluations',
-      title: 'Related Evaluation Tools',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'evaluation' }] }],
-    },
-    {
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'category' }] }],
+      of: [{ type: 'reference', to: [{ type: 'legalProblemType' }] }],
     },
   ],
 }
-
-export default project
