@@ -40,7 +40,6 @@ export default async function Home() {
       _id,
       title,
       slug,
-      legalProblemTypes[]->{title, slug, image},
       "oneliner": oneliner,
       image {
         asset->{
@@ -120,21 +119,27 @@ export default async function Home() {
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
     <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="text-4xl mb-4">🔍</div>
+      <Link href="#tasks">
       <h3 className="text-xl font-bold text-navy mb-2">Tasks</h3>
+      </Link>
       <p className="text-gray-700">
         Explore specific use cases where AI can help improve access to justice. Scope what to work on — and where you fit in.
       </p>
     </div>
     <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="text-4xl mb-4">🛠️</div>
+      <Link href="#projects">
       <h3 className="text-xl font-bold text-navy mb-2">Projects</h3>
+      </Link>
       <p className="text-gray-700">
         Look at prototypes, pilots, and tools others are building to find inspiration, collaborators, or models.
       </p>
     </div>
     <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="text-4xl mb-4">📊</div>
+      <Link href="#datasets">
       <h3 className="text-xl font-bold text-navy mb-2">Datasets</h3>
+      </Link>
       <p className="text-gray-700">
         Share or use data to train, evaluate, and improve legal AI projects and performance standards.
       </p>
@@ -142,14 +147,78 @@ export default async function Home() {
   </div>
 </section>
 
-      
+<section className="bg-white py-16 px-6 sm:px-10" id="justice-journey">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-4xl font-heading font-bold text-navy mb-10 text-center">
+      The Common Stages of a Person's Justice Journey
+    </h2>
+
+<p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
+  Most people go through a similar set of stages when they face a legal issue. This 7 stage journey might apply to an eviction, debt collection, divorce, or debt collection matter. JusticeBench helps explore how AI can assist in each of these phases.
+</p>
+    <div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+
+
+      {[
+        {
+          title: 'Awareness Stage',
+          description: 'As a conflict brews, the person begins to recognize that they might need legal help to deal with it. They begin to seek out help online, through friends, or by contacting a service provider.',
+          icon: '/icons/awareness.png',
+        },
+        {
+          title: 'Orientation Stage',
+          description: 'The person gets a diagnosis of the exact legal scenario they are in, what the law says about their rights, what options they have, and what services can help.',
+          icon: '/icons/orientation.png',
+        },
+        {
+          title: 'Strategy Stage',
+          description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks to choose an option. They then get a plan of action -- what paperwork, meetings, and hearings to do.',
+          icon: '/icons/strategy.png',
+        },
+        {
+          title: 'Work Product Stage',
+          description: 'The person drafts documents and forms to file, gathers and organizes evidence, and crafts talking points to use in hearings and negotiations.',
+          icon: '/icons/work-product.png',
+        },
+        {
+          title: 'Engagement Stage',
+          description: 'The person sticks with all of the steps, deadlines, and requirements. They file things on time, attend required meetings and hearings, and stay updated on their case progress and obligations.',
+          icon: '/icons/engagement.png',
+        },
+        {
+          title: 'Present and Negotiate Stage',
+          description: 'The person presents their case to the judge or decisionmaker, answers questions, and interact with the other party. They may also negotiate with the other side, and respond to settlement offers.',
+          icon: '/icons/presentation.png',
+        },
+        {
+          title: 'Follow Through Stage',
+          description: 'After a decision or settlement, the person must ensure they understand what the final arrangement is and how to live up to it (or enforce it). They may need to comply with orders, secure what they won, or clear their record to prevent collateral consequences.',
+          icon: '/icons/follow.png',
+        },
+      ].map((step) => (
+        <div
+          key={step.title}
+          className="bg-peach-extra-light px-4 py-6 rounded-xl shadow-md flex flex-col items-start max-w-[320px] mx-auto"
+        >
+          <img
+            src={step.icon}
+            alt={step.title}
+            className="w-auto h-22 mb-4"
+          />
+          <h3 className="text-xl font-semibold text-navy font-heading mb-2">{step.title}</h3>
+          <p className="text-gray-700 text-sm">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
       <section id="tasks" className="bg-peach-extra-light px-10 py-16">
-        <h2 className="text-3xl font-heading font-bold text-navy mb-6">Tasks</h2>
+        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks</h2>
         <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           <div>
             <p>
-              <strong>What new AI projects are needed to improve access to justice?</strong> These are some of the main tasks that need to be done to help people with their legal problems, and to help service providers operate more effectively.
+              <strong>What new AI projects are needed to improve access to justice?</strong> For the various stages of a person's justice journey, these are the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
             </p>
             <p className="mt-4">
               These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
@@ -157,7 +226,7 @@ export default async function Home() {
           </div>
           <div>
             <p>
-              We have 8 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping:
+              We have 7 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping:
             </p>
             <ul className="list-disc pl-5 mt-2">
               <li>Getting Brief Help</li>
@@ -165,7 +234,6 @@ export default async function Home() {
               <li>Service Onboarding</li>
               <li>Work Product</li>
               <li>Case Management</li>
-              <li>Coaching</li>
               <li>Administration, Ops, & Strategy</li>
               <li>Tech Tooling</li>
             </ul>
@@ -207,7 +275,7 @@ export default async function Home() {
       </section>
 
       <Section id="projects" title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
-
+      
       <Section
   id="datasets"
   title="Datasets"

@@ -5,5 +5,5 @@ import guide from './guide'
 import evaluation from './evaluation'
 import category from './category'
 
-export const schemaTypes = [task, project, dataset, guide, evaluation, category, ]
+export const schemaTypes = [task, project, dataset, guide, evaluation, category ]
 

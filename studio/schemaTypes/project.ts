@@ -33,11 +33,6 @@ export default {
       type: 'image',
       options: { hotspot: true },
     },
-    {
-      name: 'legalProblemTypes',
-      title: 'Related Legal Problem Types',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'legalProblemType' }] }],
-    },
+    
   ],
 }
