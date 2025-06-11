@@ -154,7 +154,10 @@ export default async function Home() {
     </h2>
 
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
-  Most people go through a similar set of stages when they face a legal issue. This 7 stage journey might apply to an eviction, debt collection, divorce, or debt collection matter. JusticeBench helps explore how AI can assist in each of these phases.
+  <strong>How does a legal problem play out in people's lives?</strong> Different legal problems -- eviction, debt collection, divorce, or other disputes -- often follow the same 7 stages.
+</p>
+<p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
+  Use this overview to understand where AI might help a person. Then <a href="#tasks" className="text-navy underline">go to the Tasks Section</a> to see the specific AI opportunities at each stage.
 </p>
     <div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
 
@@ -172,22 +175,22 @@ export default async function Home() {
         },
         {
           title: 'Strategy Stage',
-          description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks to choose an option. They then get a plan of action -- what paperwork, meetings, and hearings to do.',
+          description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks. They choose what path to take and get a plan of action -- including paperwork, research, hearings, meetings, and more.',
           icon: '/icons/strategy.png',
         },
         {
           title: 'Work Product Stage',
-          description: 'The person drafts documents and forms to file, gathers and organizes evidence, and crafts talking points to use in hearings and negotiations.',
+          description: 'The person drafts documents and forms to file, researches the law, gathers and organizes evidence, responds to requests, makes requests of the other side, and crafts talking points.',
           icon: '/icons/work-product.png',
         },
         {
           title: 'Engagement Stage',
-          description: 'The person sticks with all of the steps, deadlines, and requirements. They file things on time, attend required meetings and hearings, and stay updated on their case progress and obligations.',
+          description: 'The person completes all of the steps, deadlines, and procedural requirements. They file things on time, make payments or get fee waivers, attend required meetings and hearings, and stay updated on their case progress and obligations.',
           icon: '/icons/engagement.png',
         },
         {
           title: 'Present and Negotiate Stage',
-          description: 'The person presents their case to the judge or decisionmaker, answers questions, and interact with the other party. They may also negotiate with the other side, and respond to settlement offers.',
+          description: 'The person presents their case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.',
           icon: '/icons/presentation.png',
         },
         {
@@ -226,16 +229,16 @@ export default async function Home() {
           </div>
           <div>
             <p>
-              We have 7 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping:
+              We have 7 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
             </p>
             <ul className="list-disc pl-5 mt-2">
-              <li>Getting Brief Help</li>
-              <li>Providing Brief Help</li>
-              <li>Service Onboarding</li>
-              <li>Work Product</li>
-              <li>Case Management</li>
-              <li>Administration, Ops, & Strategy</li>
-              <li>Tech Tooling</li>
+              <li>User: Getting Brief Help</li>
+              <li>Provider: Providing Brief Help</li>
+              <li>User-Provider: Service Onboarding</li>
+              <li>User-Provider: Work Product</li>
+              <li>Provider: Case Management</li>
+              <li>Provider: Administration, Ops, & Strategy</li>
+              <li>Provider: Tech Tooling</li>
             </ul>
             <p className="mt-4">Explore each in detail below.</p>
           </div>
