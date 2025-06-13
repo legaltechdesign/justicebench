@@ -5,6 +5,7 @@ import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
+import { CustomPortableText } from '@/components/CustomPortableText'
 
 const builder = imageUrlBuilder(sanityClient)
 function urlFor(source: any) {
@@ -56,9 +57,9 @@ export default async function ProjectPage({ params }: any) {
           )}
         </div>
       </div>
-
+      
       <Section title="Project Description" content={project.description} />
-
+     
       {project.url && (
         <div className="mb-10">
           <h2 className="text-2xl font-heading text-navy mb-2">Link to Project</h2>
@@ -89,8 +90,8 @@ function Section({ title, content }: { title: string; content?: any }) {
   return (
     <section className="mb-10">
       <h2 className="text-4xl font-heading text-navy mb-4">{title}</h2>
-      <div className="prose">
-        <PortableText value={content} components={portableTextComponents} />
+      <div className="prose prose-lg">
+        <CustomPortableText value={content} />
       </div>
     </section>
   )

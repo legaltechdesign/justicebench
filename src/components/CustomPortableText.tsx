@@ -53,6 +53,10 @@ const components: PortableTextComponents = {
       <ol className="list-decimal pl-5 mb-4">{children}</ol>
     ),
   },
+  listItem: {
+    bullet: ({ children }) => <li className="mb-1">{children}</li>,
+    number: ({ children }) => <li className="mb-1">{children}</li>,
+  },
   
   block: {
     h2: ({ children }) => (
@@ -61,9 +65,7 @@ const components: PortableTextComponents = {
     h3: ({ children }) => (
       <h3 className="text-2xl font-semibold mt-4 mb-2 text-navy">{children}</h3>
     ),
-    normal: ({ children }) => (
-      <p className="mb-4 text-gray-800">{children}</p>
-    ),
+    normal: ({ children }) => <p className="mb-4">{children}</p>,
   },
 }
 
