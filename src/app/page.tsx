@@ -46,6 +46,12 @@ export default async function Home() {
           _id,
           url
         }
+      },
+      status->{
+        status,
+        description,
+        color,
+        "iconUrl": icon.asset->url
       }
     }`),
     sanityClient.fetch(`*[_type == "dataset"]{
@@ -147,7 +153,7 @@ export default async function Home() {
   </div>
 </section>
 
-<section className="bg-white py-16 px-6 sm:px-10" id="justice-journey">
+<section className="bg-white py-10 px-6 sm:px-10" id="justice-journey">
   <div className="max-w-7xl mx-auto">
     <h2 className="text-4xl font-heading font-bold text-navy mb-10 text-center">
       The Common Stages of a Person's Justice Journey
@@ -159,65 +165,121 @@ export default async function Home() {
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
   Use this overview to understand where AI might help a person. Then <a href="#tasks" className="text-navy underline">go to the Tasks Section</a> to see the specific AI opportunities at each stage.
 </p>
-    <div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
 
-
-      {[
-        {
-          title: 'Awareness Stage',
-          description: 'As a conflict brews, the person begins to recognize that they might need legal help to deal with it. They begin to seek out help online, through friends, or by contacting a service provider.',
-          icon: '/icons/awareness.png',
-        },
-        {
-          title: 'Orientation Stage',
-          description: 'The person gets a diagnosis of the exact legal scenario they are in, what the law says about their rights, what options they have, and what services can help.',
-          icon: '/icons/orientation.png',
-        },
-        {
-          title: 'Strategy Stage',
-          description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks. They choose what path to take and get a plan of action -- including paperwork, research, hearings, meetings, and more.',
-          icon: '/icons/strategy.png',
-        },
-        {
-          title: 'Work Product Stage',
-          description: 'The person drafts documents and forms to file, researches the law, gathers and organizes evidence, responds to requests, makes requests of the other side, and crafts talking points.',
-          icon: '/icons/work-product.png',
-        },
-        {
-          title: 'Engagement Stage',
-          description: 'The person completes all of the steps, deadlines, and procedural requirements. They file things on time, make payments or get fee waivers, attend required meetings and hearings, and stay updated on their case progress and obligations.',
-          icon: '/icons/engagement.png',
-        },
-        {
-          title: 'Present and Negotiate Stage',
-          description: 'The person presents their case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.',
-          icon: '/icons/presentation.png',
-        },
-        {
-          title: 'Follow Through Stage',
-          description: 'After a decision or settlement, the person must ensure they understand what the final arrangement is and how to live up to it (or enforce it). They may need to comply with orders, secure what they won, or clear their record to prevent collateral consequences.',
-          icon: '/icons/follow.png',
-        },
-      ].map((step) => (
-        <div
-          key={step.title}
-          className="bg-peach-extra-light px-4 py-6 rounded-xl shadow-md flex flex-col items-start max-w-[320px] mx-auto"
-        >
-          <img
-            src={step.icon}
-            alt={step.title}
-            className="w-auto h-22 mb-4"
-          />
-          <h3 className="text-xl font-semibold text-navy font-heading mb-2">{step.title}</h3>
-          <p className="text-gray-700 text-sm">{step.description}</p>
-        </div>
-      ))}
+{[
+  {
+    title: 'Awareness Stage',
+    description: 'As a conflict brews, the person begins to recognize that they might need legal help to deal with it. They begin to seek out help online, through friends, or by contacting a service provider.',
+    icon: '/icons/awareness.png',
+  },
+  {
+    title: 'Orientation Stage',
+    description: 'The person gets a diagnosis of the exact legal scenario they are in, what the law says about their rights, what options they have, and what services can help.',
+    icon: '/icons/orientation.png',
+  },
+  {
+    title: 'Strategy Stage',
+    description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks. They choose what path to take and get a plan of action -- including paperwork, research, hearings, meetings, and more.',
+    icon: '/icons/strategy.png',
+  },
+  {
+    title: 'Work Product Stage',
+    description: 'The person drafts documents and forms to file, researches the law, gathers and organizes evidence, responds to requests, makes requests of the other side, and crafts talking points.',
+    icon: '/icons/work-product.png',
+  },
+  {
+    title: 'Engagement Stage',
+    description: 'The person completes all of the steps, deadlines, and procedural requirements. They file things on time, make payments or get fee waivers, attend required meetings and hearings, and stay updated on their case progress and obligations.',
+    icon: '/icons/engagement.png',
+  },
+  {
+    title: 'Present and Negotiate Stage',
+    description: 'The person presents their case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.',
+    icon: '/icons/presentation.png',
+  },
+  {
+    title: 'Follow Through Stage',
+    description: 'After a decision or settlement, the person must ensure they understand what the final arrangement is and how to live up to it (or enforce it). They may need to comply with orders, secure what they won, or clear their record to prevent collateral consequences.',
+    icon: '/icons/follow.png',
+  },
+].map((step) => (
+  <div
+    key={step.title}
+    className="bg-peach-extra-light rounded-xl shadow hover:shadow-lg transition overflow-hidden max-w-[300px] mx-auto"
+  >
+    <div className="relative w-full h-40">
+      <img
+        src={step.icon}
+        alt={step.title}
+        className="object-cover w-full h-full"
+      />
+      <div className="absolute bottom-0 left-0 right-0 bg-navy bg-opacity-80 text-white text-center px-2 py-2 text-xl font-semibold">
+        {step.title}
+      </div>
     </div>
+    <div className="p-4">
+      <p className="text-gray-700 text-xs leading-snug">{step.description}</p>
+    </div>
+  </div>
+))}
+</div>
+
+  </div>
+</section>
+<section id="service-provider-workflow" className="py-10">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
+    How Service Providers Support Justice Journeys
+  </h2>
+  <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+    Aside from users, service providers are also key stakeholders in advancing access to justice.
+    These are the core stages that legal aid and court providers go through—connecting with people,
+    figuring out how to help, and providing tools, guidance, and support to resolve legal problems.
+  </p>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    {[
+      {
+        title: "Outreach",
+        description:
+          "Trying to connect with the right audience—raising awareness, building trust, and helping people recognize legal issues and seek help.",
+      },
+      {
+        title: "Screening & Triage",
+        description:
+          "Understanding each person's background and legal issue to determine if and how the organization can help. This includes routing people to services or referrals.",
+      },
+      {
+        title: "Work Product & Client Management",
+        description:
+          "Collaborating with clients to research, draft documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
+      },
+      {
+        title: "Coaching & Support",
+        description:
+          "Providing encouragement, legal education, and guidance so clients can understand their situation and make informed decisions.",
+      },
+      {
+        title: "Tracking & Improvement",
+        description:
+          "Monitoring cases and outcomes, managing staff and reporting, spotting patterns, and identifying areas for service improvement or innovation.",
+      },
+    ].map((step, idx) => (
+      <div
+        key={idx}
+        className="bg-[#e8edf6] rounded-2xl shadow p-6 border border-gray-200 hover:shadow-md transition"
+      >
+        <h3 className="text-xl font-semibold text-navy mb-2">{step.title}</h3>
+        <p className="text-sm text-gray-800">{step.description}</p>
+      </div>
+    ))}
   </div>
 </section>
 
+
+
       <section id="tasks" className="bg-peach-extra-light px-10 py-16">
-        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks</h2>
+        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Do</h2>
         <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           <div>
             <p>
