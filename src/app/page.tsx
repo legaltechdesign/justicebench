@@ -80,16 +80,17 @@ export default async function Home() {
     }`),
   ])
   const tasksByCategory = await sanityClient.fetch(`
-    *[_type == "category"] | order(sortOrder asc) {
+    *[_type == "category"] | order(sortOrder asc){
       _id,
       title,
       slug,
       description,
       sortOrder,
-      "tasks": *[_type == "task" && references(^._id)]{
+      "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
         _id,
         title,
         slug,
+        sortOrder,
         "oneliner": oneLiner,
         image {
           asset->{
@@ -97,7 +98,7 @@ export default async function Home() {
             url
           }
         }
-      }
+      } | order(sortOrder asc)
     }
   `)
 
