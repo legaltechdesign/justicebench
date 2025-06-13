@@ -4,6 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import { portableTextComponents } from '@/components/CustomPortableText'
+import { CustomPortableText } from '@/components/CustomPortableText'
 import Link from 'next/link'
 
 const builder = imageUrlBuilder(sanityClient)
@@ -73,9 +74,10 @@ function Section({ title, content }: { title: string; content?: any }) {
   return (
     <section className="mb-10">
       <h2 className="text-4xl font-heading text-navy mb-4">{title}</h2>
-      <div className="prose">
-        <PortableText value={content} components={portableTextComponents} />
+      <div className="prose prose-lg">
+        <CustomPortableText value={content} />
       </div>
     </section>
   )
 }
+

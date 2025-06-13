@@ -111,7 +111,7 @@ export default async function Home() {
   <p className="text-xl text-gray-700 mt-4">
     An R&D Community Platform for AI and Access to Justice
   </p>
-  <div className="mt-4 bg-yellow-100 text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
+  <div className="mt-4 bg-peach text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
     🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
   </div>
 </header>
@@ -160,7 +160,7 @@ export default async function Home() {
     </h2>
 
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
-  <strong>How does a legal problem play out in people's lives?</strong> Different legal problems -- eviction, debt collection, divorce, or other disputes -- often follow the same 7 stages.
+  <strong>How does a legal problem play out in a person's life?</strong> Different legal problems -- eviction, debt collection, divorce, driver's license suspension, or other disputes -- often follow the same 7 stages.
 </p>
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
   Use this overview to understand where AI might help a person. Then <a href="#tasks" className="text-navy underline">go to the Tasks Section</a> to see the specific AI opportunities at each stage.
@@ -229,53 +229,76 @@ export default async function Home() {
 </section>
 <section id="service-provider-workflow" className="py-10">
   <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
-    How Service Providers Support Justice Journeys
+   Service Providers' Workflows to Suport Better Justice Journeys
   </h2>
   <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
     Aside from users, service providers are also key stakeholders in advancing access to justice.
-    These are the core stages that legal aid and court providers go through—connecting with people,
-    figuring out how to help, and providing tools, guidance, and support to resolve legal problems.
+    Legal aid groups, court providers, pro bono clinics, and other providers have certain clusters of activities, that they do to provide front-facing services and back-end operations and strategy.
   </p>
-
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-    {[
-      {
-        title: "Outreach",
-        description:
-          "Trying to connect with the right audience—raising awareness, building trust, and helping people recognize legal issues and seek help.",
-      },
-      {
-        title: "Screening & Triage",
-        description:
-          "Understanding each person's background and legal issue to determine if and how the organization can help. This includes routing people to services or referrals.",
-      },
-      {
-        title: "Work Product & Client Management",
-        description:
-          "Collaborating with clients to research, draft documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
-      },
-      {
-        title: "Coaching & Support",
-        description:
-          "Providing encouragement, legal education, and guidance so clients can understand their situation and make informed decisions.",
-      },
-      {
-        title: "Tracking & Improvement",
-        description:
-          "Monitoring cases and outcomes, managing staff and reporting, spotting patterns, and identifying areas for service improvement or innovation.",
-      },
-    ].map((step, idx) => (
-      <div
-        key={idx}
-        className="bg-[#e8edf6] rounded-2xl shadow p-6 border border-gray-200 hover:shadow-md transition"
-      >
-        <h3 className="text-xl font-semibold text-navy mb-2">{step.title}</h3>
-        <p className="text-sm text-gray-800">{step.description}</p>
+  {[
+    {
+      title: "Outreach & Education",
+      description:
+        "Trying to connect with the right audience—raising awareness, building trust, and helping people recognize legal issues and seek help.",
+      icon: "/icons/outreach-icon.png",
+    },
+    {
+      title: "Screening & Triage",
+      description:
+        "Understanding each person's background and legal issue to determine if and how the organization can help. This includes routing people to services or referrals.",
+      icon: "/icons/screen-icon.png",
+    },
+    {
+      title: "Tailored Advice",
+      description:
+        "Helping people understand their legal options, risks, and next steps. Advice is specific to their goals, context, and documents—and designed to support informed decisions.",
+      icon: "/icons/advice-icon.png",
+    },
+    {
+      title: "Work Product & Client Management",
+      description:
+        "Collaborating with clients to research, draft documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
+      icon: "/icons/work-icon.png",
+    },
+    {
+      title: "Coaching & Support",
+      description:
+        "Providing encouragement, legal education, and guidance so clients can understand their situation and make informed decisions.",
+      icon: "/icons/coach-icon.png",
+    },
+    {
+      title: "Administration & Strategy",
+      description:
+        "Monitoring cases and outcomes, managing staff and reporting, spotting patterns, operating tech, and identifying areas for service improvement, policy change, strategic litigation, or tech innovation.",
+      icon: "/icons/admin-icon.png",
+    },
+  ].map((step, idx) => (
+    <div
+      key={idx}
+      className="relative bg-[#e8edf6] rounded-xl shadow-md overflow-hidden flex flex-col h-[360px] hover:shadow-lg transition-shadow"
+    >
+      <div className="relative h-48">
+        <img
+          src={step.icon}
+          alt={step.title}
+          className="object-cover w-full h-full"
+        />
+        <div className="absolute inset-0 bg-navy bg-opacity-60 flex items-center justify-center p-4">
+          <h3 className="text-xxl text-white font-bold text-center leading-tight font-heading">
+            {step.title}
+          </h3>
+        </div>
       </div>
-    ))}
-  </div>
-</section>
+      <div className="p-4 text-sm text-gray-800">
+        <p>{step.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
 
+  
+  </section>.
 
 
       <section id="tasks" className="bg-peach-extra-light px-10 py-16">
