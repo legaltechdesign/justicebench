@@ -3,6 +3,8 @@ import { sanityClient } from '@/lib/sanity'
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
+import { portableTextComponents } from '@/components/CustomPortableText'
+
 
 
 // Define types
@@ -101,6 +103,14 @@ export default async function Home() {
       } | order(sortOrder asc)
     }
   `)
+  const statusOrder = ['Pilots', 'Prototypes', 'Proposals']
+
+  const groupedProjects = statusOrder.map((status) => ({
+    status,
+    projects: projects.filter((p: any) => p.status?.status === status),
+    description: projects.find((p: any) => p.status?.status === status)?.status?.description,
+    iconUrl: projects.find((p: any) => p.status?.status === status)?.status?.iconUrl,
+  })).filter(group => group.projects.length > 0)
 
   return (
     <main className="font-sans">
@@ -124,6 +134,15 @@ export default async function Home() {
     JusticeBench is an open platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
+  <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="text-4xl mb-4">🛠️</div>
+      <Link href="#projects">
+      <h3 className="text-xl font-bold text-navy mb-2">Projects</h3>
+      </Link>
+      <p className="text-gray-700">
+        Look at prototypes, pilots, and tools others are building to find inspiration, collaborators, or models.
+      </p>
+    </div>
     <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="text-4xl mb-4">🔍</div>
       <Link href="#tasks">
@@ -133,15 +152,7 @@ export default async function Home() {
         Explore specific use cases where AI can help improve access to justice. Scope what to work on — and where you fit in.
       </p>
     </div>
-    <div className="bg-white p-6 rounded-xl shadow-md">
-      <div className="text-4xl mb-4">🛠️</div>
-      <Link href="#projects">
-      <h3 className="text-xl font-bold text-navy mb-2">Projects</h3>
-      </Link>
-      <p className="text-gray-700">
-        Look at prototypes, pilots, and tools others are building to find inspiration, collaborators, or models.
-      </p>
-    </div>
+ 
     <div className="bg-white p-6 rounded-xl shadow-md">
       <div className="text-4xl mb-4">📊</div>
       <Link href="#datasets">
@@ -154,9 +165,69 @@ export default async function Home() {
   </div>
 </section>
 
-<section className="bg-white py-10 px-6 sm:px-10" id="justice-journey">
+<section id="projects" className="bg-white py-16 px-6 sm:px-10">
   <div className="max-w-7xl mx-auto">
-    <h2 className="text-4xl font-heading font-bold text-navy mb-10 text-center">
+    <h2 className="text-6xl font-heading font-bold text-navy mb-10 text-center">
+      Projects
+    </h2>
+    <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+      What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
+    </p>
+
+    {groupedProjects.map((group) => (
+      <div key={group.status} className="mb-16">
+        <div className="flex items-center gap-4 mb-6">
+          {group.iconUrl && (
+            <Image src={group.iconUrl} alt={group.status} width={60} height={60} />
+          )}
+          <h3 className="text-5xl font-heading text-navy text-center">{group.status}</h3>
+        </div>
+        {group.description && (
+          <p className="text-gray-700 mb-6 max-w-3xl">{group.description}</p>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {group.projects.map((project: any) => (
+            <Link key={project._id} href={`/project/${project.slug.current}`}>
+              <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+                {project.image?.asset?.url && (
+                  <Image
+                    src={project.image.asset.url}
+                    alt={project.title}
+                    width={400}
+                    height={220}
+                    className="object-cover w-full h-48"
+                  />
+                )}
+                <div className="p-4">
+                  <h4 className="text-xl font-heading font-bold text-navy mb-2">
+                    {project.title}
+                  </h4>
+                  {project.oneliner && (
+                    <div className="text-sm text-gray-700">
+                      <PortableText value={project.oneliner} components={portableTextComponents} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section className="bg-navy py-14 px-6 sm:px-10 text-white" id="justice-journey">
+  <div className="max-w-7xl mx-auto">
+    <h1 className="text-4xl font-heading font-bold text-white mb-6 text-center">
+      Learn More about the Access to Justice Domain
+    </h1>
+    </div>
+    </section>
+<section className="bg-white py-10 px-6 sm:px-10" >
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-3xl font-heading font-bold text-navy mb-10 text-center">
       The Common Stages of a Person's Justice Journey
     </h2>
 
@@ -301,13 +372,15 @@ export default async function Home() {
   
   </section>.
 
+ 
 
       <section id="tasks" className="bg-peach-extra-light px-10 py-16">
-        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Do</h2>
+        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Advance Access to Justice</h2>
         <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           <div>
             <p>
-              <strong>What new AI projects are needed to improve access to justice?</strong> For the various stages of a person's justice journey, these are the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
+              <strong>Across all different problem types and geographies, what tasks can AI do to improve how people get legal help & how providers serve people?</strong></p> 
+              <p>For the various stages of a person's justice journey, we have documented the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
             </p>
             <p className="mt-4">
               These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
@@ -315,7 +388,7 @@ export default async function Home() {
           </div>
           <div>
             <p>
-              We have 7 main clusters of Access to Justice tasks from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
+              The 7 main clusters of Access to Justice tasks came from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
             </p>
             <ul className="list-disc pl-5 mt-2">
               <li>User: Getting Brief Help</li>
@@ -363,9 +436,8 @@ export default async function Home() {
         ))}
       </section>
 
-      <Section id="projects" title="Projects" description="What is already happening in this space? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow." items={projects} bg="bg-white" baseUrl="/project" />
-      
-      <Section
+     
+     <Section
   id="datasets"
   title="Datasets"
   description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
