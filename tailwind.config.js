@@ -16,6 +16,7 @@ module.exports = {
         peach: '#F9C7B5',
         'peach-light': '#FFEDE6',
         'peach-extra-light': '#FEF1ED',
+        'peach-dark': '#f4a76c',
       },
     },
   },

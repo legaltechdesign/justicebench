@@ -122,12 +122,12 @@ export default async function Home() {
   <p className="text-xl text-gray-700 mt-4">
     An R&D Community Platform for AI and Access to Justice
   </p>
-  <div className="mt-4 bg-peach text-yellow-900 text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
+  <div className="mt-4 bg-peach-light text-navy text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
     🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
   </div>
 </header>
       <section className="bg-navy px-6 py-16">
-  <h2 className="text-2xl md:text-3xl font-heading font-bold text-white text-center mb-6">
+  <h2 className="text-5xl md:text-5xl font-heading font-bold text-white text-center mb-4">
     How to Use JusticeBench
   </h2>
   <p className="text-white text-center max-w-4xl mx-auto mb-10">
@@ -166,13 +166,28 @@ export default async function Home() {
   </div>
 </section>
 
+<section className="bg-peach-light text-white rounded-2xl p-8 max-w-5xl mx-auto mb-12 shadow-lg my-8">
+  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">
+    New to the Access to Justice Domain?
+  </h2>
+  <p className="text-base text-black md:text-lg mb-6">
+    Are you a technologist, researcher, data scientist, or professional who is new to the world of legal aid, courts, and civil legal problems? Learn the basics of what a person's journey through a legal problem like eviction, debt, or divorce looks like—and how service providers try to assist them.
+  </p>
+  <a
+    href="#justice-journey"
+    className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition"
+  >
+    Learn More about Access to Justice
+  </a>
+</section>
+
 <section id="projects" className="bg-white py-16 px-6 sm:px-10">
   <div className="max-w-7xl mx-auto">
     <h2 className="text-6xl font-heading font-bold text-navy mb-10 text-center">
       Projects
     </h2>
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
-      What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools and pilots to use AI for access to justice. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
+      What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools to help people & providers dealing with legal problems. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
     </p>
 
     {groupedProjects.map((group) => (
@@ -313,37 +328,37 @@ export default async function Home() {
     {
       title: "Outreach & Education",
       description:
-        "Trying to connect with the right audience—raising awareness, building trust, and helping people recognize legal issues and seek help.",
+        "The provider tries to connect with the right audience—raising awareness, providing legal information, building trust, and helping people recognize legal issues and seek help.",
       icon: "/icons/outreach-icon.png",
     },
     {
       title: "Screening & Triage",
       description:
-        "Understanding each person's background and legal issue to determine if and how the organization can help. This includes routing people to services or referrals.",
+        "The provider attempts to understand each person's background and legal issue to determine if and how the organization can help. This includes routing people to services, guides, or referrals.",
       icon: "/icons/screen-icon.png",
     },
     {
       title: "Tailored Advice",
       description:
-        "Helping people understand their legal options, risks, and next steps. Advice is specific to their goals, context, and documents—and designed to support informed decisions.",
+        "The provider provides the user with detailed, custom advice on their legal options, risks, and next steps. Advice is specific to the user's goals, context, and documents—and designed to support informed decisions.",
       icon: "/icons/advice-icon.png",
     },
     {
-      title: "Work Product & Client Management",
+      title: "Work Product & Legal Research",
       description:
-        "Collaborating with clients to research, draft documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
+        "The provider works with the user to research the law, draft and file documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
       icon: "/icons/work-icon.png",
     },
     {
       title: "Coaching & Support",
       description:
-        "Providing encouragement, legal education, and guidance so clients can understand their situation and make informed decisions.",
+        "The provider gives ongoing encouragement, legal education, and guidance throughout the justice journey, so users stay involved and making informed decisions.",
       icon: "/icons/coach-icon.png",
     },
     {
       title: "Administration & Strategy",
       description:
-        "Monitoring cases and outcomes, managing staff and reporting, spotting patterns, operating tech, and identifying areas for service improvement, policy change, strategic litigation, or tech innovation.",
+        "The provider monitors cases and outcomes overall, manages staff and reporting, spots patterns, operates tech, and identifies areas for service improvement, policy change, strategic litigation, or tech innovation.",
       icon: "/icons/admin-icon.png",
     },
   ].map((step, idx) => (
@@ -438,16 +453,18 @@ export default async function Home() {
       </section>
 
      
-     <Section
+     
+<section className="bg-white px-10 pt-0 pb-16">
+  <Section
   id="datasets"
   title="Datasets"
   description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
   items={datasets}
-  bg="bg-peach-extra-light"
+
   baseUrl="/dataset"
 />
 
-<section className="bg-peach-extra-light px-10 pt-0 pb-16">
+
   <p className="text-xl text-gray-700 max-w-2xl">
     <strong>Please share datasets</strong> with JusticeBench at{' '}
     <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
@@ -456,17 +473,15 @@ export default async function Home() {
   </p>
 </section>
 
-
+<section className="bg-peach-extra-light px-10 pt-0 pb-16">
       <Section
   id="guides"
   title="Guides"
   description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
   items={guides}
-  bg="bg-white"
   baseUrl="/guide"
 />
 
-<section className="bg-white px-10 pt-0 pb-16">
   <p className="text-xl text-gray-700 max-w-2xl">
     <strong>Coming Soon.</strong> Please share guide proposals and open-source materials with us at{' '}
     <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
@@ -496,7 +511,7 @@ function Section({
 }) {
   return (
     <section id={id} className={`${bg} px-10 py-16`}>
-      <h2 className="text-3xl font-heading font-bold text-navy mb-2">{title}</h2>
+      <h2 className="text-4xl font-heading font-bold text-navy mb-2">{title}</h2>
       <p className="text-gray-600 max-w-2xl mb-6">{description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
