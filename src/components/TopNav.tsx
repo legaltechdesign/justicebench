@@ -7,6 +7,11 @@ import { Menu, X } from "lucide-react";
 export default function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleNav = (hash: string) => {
+    window.location.href = `/${hash}`; // force full reload to homepage section
+    setIsOpen(false);
+  };
+
   return (
     <nav className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -21,9 +26,15 @@ export default function TopNav() {
           {isOpen ? <X /> : <Menu />}
         </button>
         <div className={`sm:flex gap-6 ${isOpen ? "block" : "hidden"}`}>
-          <Link href="#tasks" className="block py-2 text-navy font-heading hover:underline">Tasks</Link>
-          <Link href="#projects" className="block py-2 text-navy font-heading hover:underline">Projects</Link>
-          <Link href="#datasets" className="block py-2 text-navy font-heading hover:underline">Datasets</Link>
+          <button onClick={() => handleNav("#tasks")} className="block py-2 text-navy font-heading hover:underline">
+            Tasks
+          </button>
+          <button onClick={() => handleNav("#projects")} className="block py-2 text-navy font-heading hover:underline">
+            Projects
+          </button>
+          <button onClick={() => handleNav("#datasets")} className="block py-2 text-navy font-heading hover:underline">
+            Datasets
+          </button>
           <div className="relative group">
             <span className="block py-2 text-navy font-heading cursor-pointer hover:underline">More</span>
             <div className="absolute hidden group-hover:block bg-white shadow p-2 mt-1">
