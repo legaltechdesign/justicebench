@@ -454,16 +454,16 @@ export default async function Home() {
 
      
      
-<section className="bg-white px-10 pt-0 pb-16">
+<section className="px-10 pt-0 pb-16">
   <Section
   id="datasets"
   title="Datasets"
   description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
   items={datasets}
+  bg="bg-white" 
 
   baseUrl="/dataset"
 />
-
 
   <p className="text-xl text-gray-700 max-w-2xl">
     <strong>Please share datasets</strong> with JusticeBench at{' '}
@@ -477,6 +477,7 @@ export default async function Home() {
       <Section
   id="guides"
   title="Guides"
+  bg="bg-peach-extra-light" 
   description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
   items={guides}
   baseUrl="/guide"
