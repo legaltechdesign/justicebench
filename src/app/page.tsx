@@ -244,7 +244,7 @@ export default async function Home() {
 <section className="bg-white py-10 px-6 sm:px-10" >
   <div className="max-w-7xl mx-auto">
     <h2 className="text-3xl font-heading font-bold text-navy mb-10 text-center">
-      The Common Stages of a Person's Justice Journey
+      Common Stages of a Person's Justice Journey
     </h2>
 
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
