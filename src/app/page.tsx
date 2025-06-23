@@ -189,6 +189,9 @@ export default async function Home() {
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
       What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools to help people & providers dealing with legal problems. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
     </p>
+    <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+      Projects are divided up into Pilots (live and in use), Prototypes (working but still not operating in the field), and Proposals (visions of what could be).
+    </p>
 
     {groupedProjects.map((group) => (
       <div key={group.status} className="mb-16">
@@ -239,6 +242,9 @@ export default async function Home() {
     <h1 className="text-4xl font-heading font-bold text-white mb-6 text-center">
       Learn More about the Access to Justice Domain
     </h1>
+    <p className="text-white mb-12 text-center max-w-3xl mx-auto">
+      What does 'access to justice' mean? How can technology help more people navigate their legal problems and the justice system in order to get to good outcomes? Explore this section to get oriented in this A2J domain.
+    </p>
     </div>
     </section>
 <section className="bg-white py-10 px-6 sm:px-10" >
