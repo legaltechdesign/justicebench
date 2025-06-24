@@ -39,6 +39,12 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'icon',
+      title: 'Icon',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'description',
       title: 'Long Description',
       type: 'array',

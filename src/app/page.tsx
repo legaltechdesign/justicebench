@@ -54,8 +54,39 @@ export default async function Home() {
         description,
         color,
         "iconUrl": icon.asset->url
-      }
+    },
+      category->{
+        title,
+        slug,
+        icon {
+          asset->{
+            url
+          }
+        }
+      },
+      tasks[]->{
+        title,
+        slug,
+        icon {
+          asset->{
+            url
+          }
+        }
+      },
+      issue[]->{
+  _id,
+  title,
+  slug,
+  icon {
+    asset->{
+      _id,
+      url
+    }
+  }
+}
     }`),
+
+
     sanityClient.fetch(`*[_type == "dataset"]{
       _id,
       title,
@@ -87,6 +118,7 @@ export default async function Home() {
       title,
       slug,
       description,
+      image,
       sortOrder,
       "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
         _id,
@@ -109,6 +141,7 @@ export default async function Home() {
     status,
     projects: projects.filter((p: any) => p.status?.status === status),
     description: projects.find((p: any) => p.status?.status === status)?.status?.description,
+    icon: projects.find((p: any) => p.status?.status === status)?.status?.icon,
     iconUrl: projects.find((p: any) => p.status?.status === status)?.status?.iconUrl,
   })).filter(group => group.projects.length > 0)
 
@@ -189,14 +222,18 @@ export default async function Home() {
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
       What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools to help people & providers dealing with legal problems. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
     </p>
-    <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
-      Projects are divided up into Pilots (live and in use), Prototypes (working but still not operating in the field), and Proposals (visions of what could be).
-    </p>
+    <div className="flex justify-center gap-4 mb-8 max-w-3xl mx-auto">
+  <a href="#pilot" className="text-navy underline font-semibold hover:text-navy/70">Pilots </a> (projects that are live and in use)
+  <a href="#prototype" className="text-navy underline font-semibold hover:text-navy/70">Prototypes</a> (projects that work but aren't operating in the field)
+  <a href="#proposal" className="text-navy underline font-semibold hover:text-navy/70">Proposals</a> (visions of possible new projects)
+</div>
+
 
     {groupedProjects.map((group) => (
-      <div key={group.status} className="mb-16">
+      <div key={group.status} className="mb-16" id={group.status.toLowerCase()}>
+
         <div className="flex items-center gap-4 mb-6">
-          {group.iconUrl && (
+          {group.icon?.asset?.url && (
             <Image src={group.iconUrl} alt={group.status} width={60} height={60} />
           )}
           <h3 className="text-5xl font-heading text-navy text-center">{group.status}</h3>
@@ -227,6 +264,62 @@ export default async function Home() {
                       <PortableText value={project.oneliner} components={portableTextComponents} />
                     </div>
                   )}
+{/* Labels Section */}
+<div className="flex flex-wrap gap-2 mt-4">
+  {/* Legal Issue Labels */}
+  {project.issue?.map((issue: any) => (
+  <Link
+    key={issue._id}
+    href={`/legal-issue/${issue.slug?.current}`}
+    className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
+  >
+    {issue.icon?.asset?.url && (
+      <Image
+        src={issue.icon.asset.url}
+        alt={issue.title}
+        width={16}
+        height={16}
+        className="mr-1"
+      />
+    )}
+    <span>Legal Issue: {issue.title}</span>
+  </Link>
+))}
+  {/* Category Label */}
+  {project.category && (
+    <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
+      {project.category.icon?.asset?.url && (
+        <Image
+          src={project.category.icon.asset.url}
+          alt={project.category.title}
+          width={16}
+          height={16}
+          className="mr-1"
+        />
+      )}
+      <span>Category: {project.category.title}</span>
+    </Link>
+  )}
+
+  {/* Task Labels */}
+  {project.tasks?.map((task: any) => (
+    <Link key={task._id} href={`/#${task.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
+      {task.icon?.asset?.url && (
+        <Image
+          src={task.icon.asset.url}
+          alt={task.title}
+          width={16}
+          height={16}
+          className="mr-1"
+        />
+      )}
+      <span>Task: {task.title}</span>
+    </Link>
+  ))}
+</div>
+
+
+
                 </div>
               </div>
             </Link>

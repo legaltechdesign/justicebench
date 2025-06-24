@@ -30,6 +30,12 @@ export default defineType({
       title: 'Sort Order',
       type: 'number',
     }),
+    defineField( {
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
     defineField({
       name: 'tasks',
       title: 'Tasks in this Category',
