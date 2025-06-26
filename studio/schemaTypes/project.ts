@@ -42,7 +42,7 @@ export default {
     },
     {
       name: 'issue',
-      title: 'Legal Issue Area',
+      title: 'Issue',
       type: 'reference',
       to: [{ type: 'issue' }],
       description: 'What legal issue areas does this project address?'

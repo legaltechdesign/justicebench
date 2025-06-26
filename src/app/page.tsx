@@ -260,7 +260,7 @@ export default async function Home() {
         height={80}
         className="mb-4"
       />
-      <h3 className="text-xxl font-heading font-bold text-navy mb-1">{item.title}</h3>
+      <h3 className="text-xl font-heading font-bold text-navy mb-1">{item.title}</h3>
       <p className="text-sm text-gray-700">{item.description}</p>
     </a>
   ))}
@@ -284,7 +284,7 @@ export default async function Home() {
         <h3 className="text-5xl font-heading text-navy">{group.status}</h3>
       </div>
       {group.description && (
-          <p className="text-gray-700 mb-6 max-w-3xl">{group.description}</p>
+          <p className="text-gray-700 mb-6 ">{group.description}</p>
         )}
     </div>
         
@@ -332,6 +332,21 @@ export default async function Home() {
     <span>Legal Issue: {issue.title}</span>
   </Link>
 ))}
+  {/* Issue Label 2 */}
+  {project.issue && (
+    <Link href={`/#${project.issue.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
+      {project.issue.icon?.asset?.url && (
+        <Image
+          src={project.issue.icon.asset.url}
+          alt={project.issue.title}
+          width={16}
+          height={16}
+          className="mr-1"
+        />
+      )}
+      <span>Issue: {project.issue.title}</span>
+    </Link>
+  )}
   {/* Category Label */}
   {project.category && (
     <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
@@ -566,36 +581,37 @@ export default async function Home() {
         </div>
 
         {tasksByCategory.map((category: any) => (
-          <div key={category._id} className="mb-12">
-            <h3 className="text-3xl font-heading font-semibold text-navy mb-4">{category.title}</h3>
-            <p className="text-gray-600 mb-4">{category.description}</p>
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {category.tasks.map((task: any) => (
-                task.slug?.current && (
-                  <Link key={task._id} href={`/task/${task.slug.current}`}>
-                    <div className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow">
-                      {task.image?.asset?.url && (
-                        <Image
-                          src={task.image.asset.url}
-                          alt={task.title}
-                          width={400}
-                          height={200}
-                          className="object-cover w-full h-40 rounded mb-4"
-                        />
-                      )}
-                      <h4 className="text-xl font-heading text-navy font-bold mb-2 leading-tight">{task.title}</h4>
-                      {task.oneliner && (
-                        <div className="text-sm text-gray-700 leading-snug">
-                          <PortableText value={task.oneliner} />
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                )
-              ))}
+  <div key={category._id} id={category.slug?.current} className="mb-12">
+    <h3 className="text-3xl font-heading font-semibold text-navy mb-4">{category.title}</h3>
+    <p className="text-gray-600 mb-4">{category.description}</p>
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {category.tasks.map((task: any) => (
+        task.slug?.current && (
+          <Link key={task._id} href={`/task/${task.slug.current}`}>
+            <div className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow">
+              {task.image?.asset?.url && (
+                <Image
+                  src={task.image.asset.url}
+                  alt={task.title}
+                  width={400}
+                  height={200}
+                  className="object-cover w-full h-40 rounded mb-4"
+                />
+              )}
+              <h4 className="text-xl font-heading text-navy font-bold mb-2 leading-tight">{task.title}</h4>
+              {task.oneliner && (
+                <div className="text-sm text-gray-700 leading-snug">
+                  <PortableText value={task.oneliner} />
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          </Link>
+        )
+      ))}
+    </div>
+  </div>
+))}
+
       </section>
 
      

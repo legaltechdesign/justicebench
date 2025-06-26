@@ -19,7 +19,9 @@ module.exports = {
         'peach-dark': '#f4a76c',
       },
     },
+    
   },
   plugins: [],
+  
 }
 
