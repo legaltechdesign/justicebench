@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
 import { CustomPortableText } from '@/components/CustomPortableText'
+import Image from 'next/image'
 
 const builder = imageUrlBuilder(sanityClient)
 function urlFor(source: any) {
@@ -13,15 +14,11 @@ function urlFor(source: any) {
 }
 
 export async function generateStaticParams() {
-    const slugs = await sanityClient.fetch(`*[_type == "project" && defined(slug.current)][].slug.current`)
-    return slugs.map((slug: string) => ({ slug }))
-  }
-
-import type { Metadata, ResolvingMetadata } from 'next'
+  const slugs = await sanityClient.fetch(`*[_type == "project" && defined(slug.current)][].slug.current`)
+  return slugs.map((slug: string) => ({ slug }))
+}
 
 export default async function ProjectPage({ params }: any) {
-
-
   const project = await sanityClient.fetch(
     `*[_type == "project" && slug.current == $slug][0]{
       title,
@@ -29,11 +26,11 @@ export default async function ProjectPage({ params }: any) {
       oneliner,
       description,
       url,
-      "relatedTasks": relatedTasks[]->{title, slug, icon},
+      "relatedTasks": task[]->{title, slug, icon},
       "relatedDatasets": relatedDatasets[]->{title, slug},
       "relatedEvaluations": relatedEvaluations[]->{title, slug},
-      "categories": categories[]->{title, slug, icon},
-      "legalIssue": legalIssue->{title, slug, icon}
+      "category": category->{title, slug, icon},
+      "issue": issue->{title, slug, icon}
     }`,
     { slug: params.slug }
   )
@@ -44,40 +41,50 @@ export default async function ProjectPage({ params }: any) {
     <main className="font-sans px-8 py-12 max-w-6xl mx-auto">
       <h1 className="text-6xl font-heading font-bold text-navy mb-6">{project.title}</h1>
 
-      <div className="bg-peach-extra-light rounded-lg p-6 flex flex-col md:flex-row gap-6 mb-12">
-  {project.image && (
-    <img
-      src={urlFor(project.image).width(800).url()}
-      alt={project.title}
-      className="rounded-lg w-full md:w-2/3 object-cover"
-    />
-  )}
-  <div className="md:w-1/3 space-y-4">
-    {project.oneliner && (
-      <PortableText value={project.oneliner} components={portableTextComponents} />
-    )}
+      <div className="bg-peach-extra-light rounded-lg p-6 flex flex-col md:flex-row gap-6 mb-6">
+        {project.image && (
+          <img
+            src={urlFor(project.image).width(800).url()}
+            alt={project.title}
+            className="rounded-lg w-full md:w-2/3 object-cover"
+          />
+        )}
+        <div className="md:w-1/3">
+          {project.oneliner && (
+            <PortableText value={project.oneliner} components={portableTextComponents} />
+          )}
 
-    <div className="flex flex-wrap gap-3 pt-4">
-      {project.legalIssue && (
-        <LabelTag
-          label="Legal Issue"
-          item={project.legalIssue}
-          baseUrl="/issue"
-        />
-      )}
-      {project.categories?.map((cat) => (
-        <LabelTag key={cat.slug.current} label="Category" item={cat} baseUrl="/category" />
-      ))}
-      {project.relatedTasks?.map((task) => (
-        <LabelTag key={task.slug.current} label="Task" item={task} baseUrl="/task" />
-      ))}
-    </div>
-  </div>
-</div>
+          <div className="bg-peach-light rounded-lg p-4 mt-4 flex flex-wrap gap-4 items-center">
+            {project.relatedTasks?.length > 0 && project.relatedTasks.map((task: any) => (
+              <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+                {task.icon?.asset?.url && (
+                  <Image src={task.icon.asset.url} alt="task icon" width={20} height={20} className="mr-2" />
+                )}
+                <span>Task: {task.title}</span>
+              </Link>
+            ))}
+            {project.category && (
+              <Link href={`/category/${project.category.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+                {project.category.icon?.asset?.url && (
+                  <Image src={project.category.icon.asset.url} alt="category icon" width={20} height={20} className="mr-2" />
+                )}
+                <span>Category: {project.category.title}</span>
+              </Link>
+            )}
+            {project.issue && (
+              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+                {project.issue.icon?.asset?.url && (
+                  <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
+                )}
+                <span>Legal Issue: {project.issue.title}</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
 
-      
       <Section title="Project Description" content={project.description} />
-     
+
       {project.url && (
         <div className="mb-10">
           <h2 className="text-2xl font-heading text-navy mb-2">Link to Project</h2>
@@ -92,13 +99,8 @@ export default async function ProjectPage({ params }: any) {
         </div>
       )}
 
-      <ReferenceList title="Related Tasks" items={project.relatedTasks} baseUrl="/task" />
       <ReferenceList title="Related Datasets" items={project.relatedDatasets} baseUrl="/dataset" />
       <ReferenceList title="Related Evaluation Tools" items={project.relatedEvaluations} baseUrl="/evaluation" />
-
-      {project.categories?.length > 0 && (
-        <ReferenceList title="Categories" items={project.categories} baseUrl="/category" />
-      )}
     </main>
   )
 }
@@ -114,29 +116,6 @@ function Section({ title, content }: { title: string; content?: any }) {
     </section>
   )
 }
-
-function LabelTag({
-  label,
-  item,
-  baseUrl,
-}: {
-  label: string
-  item: { title: string; slug: { current: string }; icon?: { asset?: { url: string } } }
-  baseUrl: string
-}) {
-  return (
-    <Link
-      href={`${baseUrl}/${item.slug.current}`}
-      className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm text-gray-700 hover:bg-gray-200"
-    >
-      {item.icon?.asset?.url && (
-        <img src={item.icon.asset.url} alt={item.title} className="w-4 h-4 mr-2" />
-      )}
-      <span className="font-semibold mr-1">{label}:</span> {item.title}
-    </Link>
-  )
-}
-
 
 function ReferenceList({
   title,

@@ -53,6 +53,11 @@ export default async function Home() {
         status,
         description,
         color,
+        icon {
+          asset->{
+            url
+          }
+    },
         "iconUrl": icon.asset->url
     },
       category->{
@@ -74,15 +79,15 @@ export default async function Home() {
         }
       },
       issue[]->{
-  _id,
-  title,
-  slug,
-  icon {
-    asset->{
-      _id,
-      url
-    }
-  }
+        _id,
+       title,
+       slug,
+       icon {
+         asset->{
+          _id,
+         url
+         }
+      }
 }
     }`),
 
@@ -200,7 +205,7 @@ export default async function Home() {
 </section>
 
 <section className="bg-peach-light text-white rounded-2xl p-8 max-w-5xl mx-auto mb-12 shadow-lg my-8">
-  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">
+  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-center">
     New to the Access to Justice Domain?
   </h2>
   <p className="text-base text-black md:text-lg mb-6">
@@ -208,7 +213,7 @@ export default async function Home() {
   </p>
   <a
     href="#justice-journey"
-    className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition"
+    className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition flex justify-center items-center"
   >
     Learn More about Access to Justice
   </a>
@@ -222,25 +227,67 @@ export default async function Home() {
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
       What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools to help people & providers dealing with legal problems. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
     </p>
-    <div className="flex justify-center gap-4 mb-8 max-w-3xl mx-auto">
-  <a href="#pilot" className="text-navy underline font-semibold hover:text-navy/70">Pilots </a> (projects that are live and in use)
-  <a href="#prototype" className="text-navy underline font-semibold hover:text-navy/70">Prototypes</a> (projects that work but aren't operating in the field)
-  <a href="#proposal" className="text-navy underline font-semibold hover:text-navy/70">Proposals</a> (visions of possible new projects)
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+  {[
+    {
+      id: "pilot",
+      title: "Pilots",
+      description: "Projects that are live and in use",
+      icon: "https://cdn.sanity.io/images/swtijbu4/production/5e6b9214676d8554307efc4bd6635a248c0a3388-475x475.png",
+    },
+    {
+      id: "prototype",
+      title: "Prototypes",
+      description: "Projects that work but aren't operating in the field",
+      icon: "https://cdn.sanity.io/images/swtijbu4/production/ce9f7210c0bba1df3aee4fe67d8dc833e6aa463a-475x475.png",
+    },
+    {
+      id: "proposal",
+      title: "Proposals",
+      description: "Visions of possible new projects",
+      icon: "https://cdn.sanity.io/images/swtijbu4/production/53b223ae986e14a7eb16143c889255493355eed7-475x475.png",
+    },
+  ].map((item) => (
+    <a
+      key={item.id}
+      href={`#${item.id}`}
+      className="bg-navy/10 rounded-xl p-6 flex flex-col items-center text-center hover:bg-navy/20 transition"
+    >
+      <Image
+        src={item.icon}
+        alt={item.title}
+        width={80}
+        height={80}
+        className="mb-4"
+      />
+      <h3 className="text-xxl font-heading font-bold text-navy mb-1">{item.title}</h3>
+      <p className="text-sm text-gray-700">{item.description}</p>
+    </a>
+  ))}
 </div>
+
 
 
     {groupedProjects.map((group) => (
       <div key={group.status} className="mb-16" id={group.status.toLowerCase()}>
 
-        <div className="flex items-center gap-4 mb-6">
-          {group.icon?.asset?.url && (
-            <Image src={group.iconUrl} alt={group.status} width={60} height={60} />
-          )}
-          <h3 className="text-5xl font-heading text-navy text-center">{group.status}</h3>
-        </div>
-        {group.description && (
+<div className="bg-navy/10 rounded-xl py-6 px-4 mb-8 text-center shadow-sm">
+      <div className="flex justify-center items-center gap-4 mb-4">
+        {group.icon?.asset?.url && (
+          <Image
+            src={group.icon.asset.url}
+            alt={group.status}
+            width={60}
+            height={60}
+          />
+        )}
+        <h3 className="text-5xl font-heading text-navy">{group.status}</h3>
+      </div>
+      {group.description && (
           <p className="text-gray-700 mb-6 max-w-3xl">{group.description}</p>
         )}
+    </div>
+        
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {group.projects.map((project: any) => (
