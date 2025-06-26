@@ -26,7 +26,7 @@ export default async function ProjectPage({ params }: any) {
       oneliner,
       description,
       url,
-      "relatedTasks": task[]->{title, slug, icon},
+      "tasks": tasks[]->{title, slug, icon},
       "relatedDatasets": relatedDatasets[]->{title, slug},
       "relatedEvaluations": relatedEvaluations[]->{title, slug},
       "category": category->{title, slug, icon},
@@ -55,7 +55,7 @@ export default async function ProjectPage({ params }: any) {
           )}
 
           <div className="bg-peach-light rounded-lg p-4 mt-4 flex flex-wrap gap-4 items-center">
-            {project.relatedTasks?.length > 0 && project.relatedTasks.map((task: any) => (
+            {project.tasks?.length > 0 && project.tasks.map((task: any) => (
               <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
                 {task.icon?.asset?.url && (
                   <Image src={task.icon.asset.url} alt="task icon" width={20} height={20} className="mr-2" />
@@ -64,7 +64,7 @@ export default async function ProjectPage({ params }: any) {
               </Link>
             ))}
             {project.category && (
-              <Link href={`/category/${project.category.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+              <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
                 {project.category.icon?.asset?.url && (
                   <Image src={project.category.icon.asset.url} alt="category icon" width={20} height={20} className="mr-2" />
                 )}
@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: any) {
               </Link>
             )}
             {project.issue && (
-              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy rounded-full px-3 py-1 text-sm text-white hover:bg-gray-900">
                 {project.issue.icon?.asset?.url && (
                   <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
                 )}

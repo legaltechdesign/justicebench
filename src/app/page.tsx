@@ -42,6 +42,7 @@ export default async function Home() {
       _id,
       title,
       slug,
+      "issue": issue->{title, slug, icon},
       "oneliner": oneliner,
       image {
         asset->{
@@ -57,8 +58,7 @@ export default async function Home() {
           asset->{
             url
           }
-    },
-        "iconUrl": icon.asset->url
+       }
     },
       category->{
         title,
@@ -77,18 +77,7 @@ export default async function Home() {
             url
           }
         }
-      },
-      issue[]->{
-        _id,
-       title,
-       slug,
-       icon {
-         asset->{
-          _id,
-         url
-         }
       }
-}
     }`),
 
 
@@ -230,19 +219,19 @@ export default async function Home() {
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
   {[
     {
-      id: "pilot",
+      id: "pilots",
       title: "Pilots",
       description: "Projects that are live and in use",
       icon: "https://cdn.sanity.io/images/swtijbu4/production/5e6b9214676d8554307efc4bd6635a248c0a3388-475x475.png",
     },
     {
-      id: "prototype",
+      id: "prototypes",
       title: "Prototypes",
       description: "Projects that work but aren't operating in the field",
       icon: "https://cdn.sanity.io/images/swtijbu4/production/ce9f7210c0bba1df3aee4fe67d8dc833e6aa463a-475x475.png",
     },
     {
-      id: "proposal",
+      id: "proposals",
       title: "Proposals",
       description: "Visions of possible new projects",
       icon: "https://cdn.sanity.io/images/swtijbu4/production/53b223ae986e14a7eb16143c889255493355eed7-475x475.png",
@@ -269,7 +258,7 @@ export default async function Home() {
 
 
     {groupedProjects.map((group) => (
-      <div key={group.status} className="mb-16" id={group.status.toLowerCase()}>
+      <div key={group.status} className="mb-16" id={group.status.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}>
 
 <div className="bg-navy/10 rounded-xl py-6 px-4 mb-8 text-center shadow-sm">
       <div className="flex justify-center items-center gap-4 mb-4">
@@ -303,7 +292,7 @@ export default async function Home() {
                   />
                 )}
                 <div className="p-4">
-                  <h4 className="text-xl font-heading font-bold text-navy mb-2">
+                  <h4 className="text-2x font-heading font-bold text-navy mb-2">
                     {project.title}
                   </h4>
                   {project.oneliner && (
@@ -313,43 +302,19 @@ export default async function Home() {
                   )}
 {/* Labels Section */}
 <div className="flex flex-wrap gap-2 mt-4">
-  {/* Legal Issue Labels */}
-  {project.issue?.map((issue: any) => (
-  <Link
-    key={issue._id}
-    href={`/legal-issue/${issue.slug?.current}`}
-    className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
-  >
-    {issue.icon?.asset?.url && (
-      <Image
-        src={issue.icon.asset.url}
-        alt={issue.title}
-        width={16}
-        height={16}
-        className="mr-1"
-      />
-    )}
-    <span>Legal Issue: {issue.title}</span>
-  </Link>
-))}
+
   {/* Issue Label 2 */}
   {project.issue && (
-    <Link href={`/#${project.issue.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
-      {project.issue.icon?.asset?.url && (
-        <Image
-          src={project.issue.icon.asset.url}
-          alt={project.issue.title}
-          width={16}
-          height={16}
-          className="mr-1"
-        />
-      )}
-      <span>Issue: {project.issue.title}</span>
-    </Link>
-  )}
+              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy rounded-full px-3 py-1 text-xs text-white hover:bg-gray-400">
+                {project.issue.icon?.asset?.url && (
+                  <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
+                )}
+                <span>Legal Issue: {project.issue.title}</span>
+              </Link>
+            )}
   {/* Category Label */}
   {project.category && (
-    <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
+    <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-peach-dark rounded-full px-3 py-1 text-xs text-white hover:bg-gray-800">
       {project.category.icon?.asset?.url && (
         <Image
           src={project.category.icon.asset.url}
@@ -365,7 +330,7 @@ export default async function Home() {
 
   {/* Task Labels */}
   {project.tasks?.map((task: any) => (
-    <Link key={task._id} href={`/#${task.slug?.current}`} className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700 hover:bg-gray-200">
+    <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-600">
       {task.icon?.asset?.url && (
         <Image
           src={task.icon.asset.url}
