@@ -42,7 +42,10 @@ export default async function Home() {
       _id,
       title,
       slug,
-      "issue": issue->{title, slug, icon},
+      "issue": issue->{title, slug, icon{asset->{
+          _id,
+          url
+    }}},
       "oneliner": oneliner,
       image {
         asset->{
@@ -65,6 +68,7 @@ export default async function Home() {
         slug,
         icon {
           asset->{
+          _id,
             url
           }
         }
@@ -74,6 +78,7 @@ export default async function Home() {
         slug,
         icon {
           asset->{
+          _id,
             url
           }
         }
@@ -305,7 +310,7 @@ export default async function Home() {
 
   {/* Issue Label 2 */}
   {project.issue && (
-              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy rounded-full px-3 py-1 text-xs text-white hover:bg-gray-400">
+              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy-light rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400">
                 {project.issue.icon?.asset?.url && (
                   <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
                 )}
@@ -314,7 +319,7 @@ export default async function Home() {
             )}
   {/* Category Label */}
   {project.category && (
-    <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-peach-dark rounded-full px-3 py-1 text-xs text-white hover:bg-gray-800">
+    <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400">
       {project.category.icon?.asset?.url && (
         <Image
           src={project.category.icon.asset.url}
@@ -330,7 +335,7 @@ export default async function Home() {
 
   {/* Task Labels */}
   {project.tasks?.map((task: any) => (
-    <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-600">
+    <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400">
       {task.icon?.asset?.url && (
         <Image
           src={task.icon.asset.url}

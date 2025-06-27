@@ -30,7 +30,10 @@ export default async function ProjectPage({ params }: any) {
       "relatedDatasets": relatedDatasets[]->{title, slug},
       "relatedEvaluations": relatedEvaluations[]->{title, slug},
       "category": category->{title, slug, icon},
-      "issue": issue->{title, slug, icon}
+      "issue": issue->{title, slug, icon{asset->{
+          _id,
+          url
+    }}},
     }`,
     { slug: params.slug }
   )
@@ -56,7 +59,7 @@ export default async function ProjectPage({ params }: any) {
 
           <div className="bg-peach-light rounded-lg p-4 mt-4 flex flex-wrap gap-4 items-center">
             {project.tasks?.length > 0 && project.tasks.map((task: any) => (
-              <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+              <Link key={task.slug.current} href={`/task/${task.slug.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-sm text-navy hover:bg-gray-400">
                 {task.icon?.asset?.url && (
                   <Image src={task.icon.asset.url} alt="task icon" width={20} height={20} className="mr-2" />
                 )}
@@ -64,7 +67,7 @@ export default async function ProjectPage({ params }: any) {
               </Link>
             ))}
             {project.category && (
-              <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-white rounded-full px-3 py-1 text-sm text-gray-800 hover:bg-gray-100">
+              <Link href={`/#${project.category.slug?.current}`} className="flex items-center bg-peach rounded-full px-3 py-1 text-sm text-navy hover:bg-gray-400">
                 {project.category.icon?.asset?.url && (
                   <Image src={project.category.icon.asset.url} alt="category icon" width={20} height={20} className="mr-2" />
                 )}
@@ -72,7 +75,7 @@ export default async function ProjectPage({ params }: any) {
               </Link>
             )}
             {project.issue && (
-              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy rounded-full px-3 py-1 text-sm text-white hover:bg-gray-900">
+              <Link href={`/issue/${project.issue.slug.current}`} className="flex items-center bg-navy-light rounded-full px-3 py-1 text-sm text-navy hover:bg-gray-400">
                 {project.issue.icon?.asset?.url && (
                   <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
                 )}
