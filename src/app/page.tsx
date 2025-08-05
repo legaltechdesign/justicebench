@@ -1,7 +1,7 @@
 // src/app/page.tsx
 import { sanityClient } from '@/lib/sanity'
 import Image from 'next/image'
-import { PortableText } from '@portabletext/react'
+import { PortableText, PortableTextComponents  } from '@portabletext/react'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
 
@@ -283,7 +283,7 @@ export default async function Home() {
     </div>
         
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {group.projects.map((project: any) => (
             <Link key={project._id} href={`/project/${project.slug.current}`}>
               <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
@@ -297,7 +297,7 @@ export default async function Home() {
                   />
                 )}
                 <div className="p-4">
-                  <h4 className="text-2x font-heading font-bold text-navy mb-2">
+                  <h4 className="text-lg font-heading font-bold text-navy mb-2">
                     {project.title}
                   </h4>
                   {project.oneliner && (

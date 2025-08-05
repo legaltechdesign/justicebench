@@ -20,7 +20,11 @@ export default {
       name: 'description',
       title: 'Long Description',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'},
+        {
+          type: 'image',
+          options: { hotspot: true },
+        },],
     },
     {
       name: 'url',

@@ -58,7 +58,7 @@ export default function TopNav() {
                 href="/about"
                 className="block px-4 py-2 text-sm text-navy hover:bg-gray-100"
               >
-                About This Project
+                About JusticeBench
               </Link>
               <Link
                 href="/privacy"

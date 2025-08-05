@@ -30,11 +30,14 @@ export default defineType({
       title: 'Sort Order',
       type: 'number',
     }),
-    defineField( {
-      name: 'image',
-      title: 'Image',
+    defineField({
+      name: 'icon',
+      title: 'Icon',
       type: 'image',
-      options: { hotspot: true },
+      description: 'Visual icon or illustration for this category',
+      options: {
+        hotspot: true
+      }
     }),
     defineField({
       name: 'tasks',
@@ -67,4 +70,10 @@ export default defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'icon'
+    }
+  }
 })
