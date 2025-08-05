@@ -155,7 +155,7 @@ export default async function Home() {
     An R&D Community Platform for AI and Access to Justice
   </p>
   <div className="mt-4 bg-peach-light text-navy text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
-    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
+    🚧 This platform is still under development. Please explore and send us your projects, feedback, contributions, and ideas <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479" className="underline">at the form here</a>.
   </div>
 </header>
       <section className="bg-navy px-6 py-16">
