@@ -540,7 +540,8 @@ export default async function Home() {
 
   </div>
 </section>
-<section id="service-provider-workflow" className="py-10">
+<section id="service-provider-workflow" className="bg-white py-10 px-6 sm:px-10">
+<div className="max-w-7xl mx-auto">
   <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
    Service Providers' Workflows to Suport Better Justice Journeys
   </h2>
@@ -562,7 +563,8 @@ export default async function Home() {
     Overview of the service provider’s workflow, tasks along the justice journey.
   </figcaption>
 </figure>
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+
+<div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
   {[
     {
       title: "Outreach & Education",
@@ -600,28 +602,28 @@ export default async function Home() {
         "The provider monitors cases and outcomes overall, manages staff and reporting, spots patterns, operates tech, and identifies areas for service improvement, policy change, strategic litigation, or tech innovation.",
       icon: "/icons/admin-icon.png",
     },
-  ].map((step, idx) => (
+  ].map((step) => (
     <div
-      key={idx}
-      className="relative bg-[#e8edf6] rounded-xl shadow-md overflow-hidden flex flex-col h-[360px] hover:shadow-lg transition-shadow"
+      key={step.title}
+      className="bg-navy/10 rounded-xl shadow hover:shadow-lg transition overflow-hidden max-w-[300px] mx-auto"
     >
-      <div className="relative h-48">
+      <div className="relative w-full h-40">
         <img
           src={step.icon}
           alt={step.title}
           className="object-cover w-full h-full"
         />
-        <div className="absolute inset-0 bg-navy bg-opacity-60 flex items-center justify-center p-4">
-          <h3 className="text-xxl text-white font-bold text-center leading-tight font-heading">
-            {step.title}
-          </h3>
+        <div className="absolute bottom-0 left-0 right-0 bg-navy bg-opacity-80 text-white text-center px-2 py-2 text-xl font-semibold">
+          {step.title}
         </div>
       </div>
-      <div className="p-4 text-sm text-gray-800">
-        <p>{step.description}</p>
+      <div className="p-4">
+        <p className="text-gray-700 text-xs leading-snug">{step.description}</p>
       </div>
     </div>
   ))}
+</div>
+
 </div>
 
   
