@@ -369,17 +369,7 @@ export default async function Home() {
                           <span>Legal Issue: {project.issue.title}</span>
                         </Link>
                       )}
-                      {project.category && (
-                        <Link
-                          href={`/#${project.category.slug?.current}`}
-                          className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400"
-                        >
-                          {project.category.icon?.asset?.url && (
-                            <Image src={project.category.icon.asset.url} alt={project.category.title} width={16} height={16} className="mr-1" />
-                          )}
-                          <span>Category: {project.category.title}</span>
-                        </Link>
-                      )}
+            
                       {project.tasks?.map((t: any) => (
                         <Link
                           key={t.slug.current}
