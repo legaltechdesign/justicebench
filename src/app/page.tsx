@@ -464,6 +464,20 @@ export default async function Home() {
 <p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
   Use this overview to understand where AI might help a person. Then <a href="#tasks" className="text-navy underline">go to the Tasks Section</a> to see the specific AI opportunities at each stage.
 </p>
+<figure className="my-8">
+  <Image
+    src="/images/user-workflow.png"
+    alt="User justice journey overview"
+    width={2400}            // any large intrinsic width is fine
+    height={1400}           // keep the aspect ratio roughly correct
+    className="w-full h-auto rounded-xl shadow"
+    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
+    priority                 // optional: prioritize this image
+  />
+  <figcaption className="text-center text-xs text-gray-500 mt-2">
+    Overview of the person’s justice journey stages.
+  </figcaption>
+</figure>
 <div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
 
 {[
