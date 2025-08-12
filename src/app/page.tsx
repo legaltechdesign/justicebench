@@ -155,45 +155,62 @@ export default async function Home() {
     🚧 This platform is still under development. Please explore and send us your projects, feedback, contributions, and ideas <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479" className="underline">at the form here</a>.
   </div>
 </header>
-      <section className="bg-navy px-6 py-16">
+<section className="bg-navy px-6 py-16">
   <h2 className="text-5xl md:text-5xl font-heading font-bold text-white text-center mb-4">
     How to Use JusticeBench
   </h2>
   <p className="text-white text-center max-w-4xl mx-auto mb-10">
     JusticeBench is an open platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
-  <div className="bg-white p-6 rounded-xl shadow-md">
-    <Link href="#projects">
-      <div className="text-4xl mb-4">🛠️</div>
-      <h3 className="text-3xl font-bold text-navy mb-2">Projects</h3>
+
+  {/* 2 columns on md, 4 on lg */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto text-center">
+    {/* Projects */}
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <Link href="#projects">
+        <div className="text-4xl mb-4" aria-hidden>🛠️</div>
+        <h3 className="text-3xl font-bold text-navy mb-2">Projects</h3>
       </Link>
       <p className="text-gray-700">
         Look at prototypes, pilots, and proposals others are building to find inspiration, collaborators, or models.
       </p>
     </div>
+
+    {/* Tasks */}
     <div className="bg-white p-6 rounded-xl shadow-md">
-    <Link href="#tasks">
-      <div className="text-4xl mb-4">🔍</div>
-      <h3 className="text-3xl font-bold text-navy mb-2">Tasks</h3>
+      <Link href="#tasks">
+        <div className="text-4xl mb-4" aria-hidden>🔍</div>
+        <h3 className="text-3xl font-bold text-navy mb-2">Tasks</h3>
       </Link>
       <p className="text-gray-700">
         Explore specific use cases where AI can help improve access to justice. Scope what to work on — and where you fit in.
       </p>
     </div>
- 
+
+    {/* Datasets */}
     <div className="bg-white p-6 rounded-xl shadow-md">
-    <Link href="#datasets">
-      <div className="text-4xl mb-4">📊</div>
-      
-      <h3 className="text-3xl font-bold text-navy mb-2">Datasets</h3>
+      <Link href="#datasets">
+        <div className="text-4xl mb-4" aria-hidden>📊</div>
+        <h3 className="text-3xl font-bold text-navy mb-2">Datasets</h3>
       </Link>
       <p className="text-gray-700">
         Share or use data to train, evaluate, and improve legal AI projects and performance standards.
       </p>
     </div>
+
+    {/* Guides (new) */}
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <Link href="#guides">
+        <div className="text-4xl mb-4" aria-hidden>📚</div>
+        <h3 className="text-3xl font-bold text-navy mb-2">Guides</h3>
+      </Link>
+      <p className="text-gray-700">
+        Step-by-step playbooks and templates for planning, evaluating, and rolling out AI in justice institutions.
+      </p>
+    </div>
   </div>
 </section>
+
 
 <section className="bg-peach-light text-white rounded-2xl p-8 max-w-5xl mx-auto mb-12 shadow-lg my-8">
   <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-center">
