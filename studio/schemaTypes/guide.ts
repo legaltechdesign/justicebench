@@ -5,6 +5,12 @@ const guide = {
     fields: [
       { name: 'title', title: 'Guide Title', type: 'string' },
       {
+        name: 'sortOrder',
+        title: 'Order',
+        type: 'number',
+        description: 'Lower numbers appear first',
+      },
+      {
         name: 'oneliner',
         title: 'Brief Description',
         type: 'array',

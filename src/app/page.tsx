@@ -21,6 +21,7 @@ interface SanityDoc {
       url: string
     }
   }
+  link?: string
 }
 
 // Fetch all categories in parallel
@@ -36,6 +37,16 @@ export default async function Home() {
           _id,
           url
         }
+      }
+    }`),
+    sanityClient.fetch(`*[_type == "guide"] | order(coalesce(sortOrder, 9999) asc, title asc){
+      _id,
+      title,
+      slug,
+      link,
+      "oneliner": oneliner,
+      image{
+        asset->{ url }
       }
     }`),
     sanityClient.fetch(`*[_type == "project"]{
@@ -87,18 +98,6 @@ export default async function Home() {
 
 
     sanityClient.fetch(`*[_type == "dataset"]{
-      _id,
-      title,
-      slug,
-      "oneliner": oneliner,
-      image {
-        asset->{
-          _id,
-          url
-        }
-      }
-    }`),
-    sanityClient.fetch(`*[_type == "guide"]{
       _id,
       title,
       slug,
@@ -599,26 +598,26 @@ export default async function Home() {
 
   <p className="text-xl text-gray-700 max-w-2xl">
     <strong>Please share datasets</strong> with JusticeBench at{' '}
-    <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
-      legaldesignlab@law.stanford.edu
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-navy">
+      this form.
     </a>
   </p>
 </section>
 
 <section className="bg-peach-extra-light px-10 pt-0 pb-16">
-      <Section
-  id="guides"
-  title="Guides"
-  bg="bg-peach-extra-light" 
-  description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
-  items={guides}
-  baseUrl="/guide"
-/>
-
+  <Section
+    id="guides"
+    title="Guides"
+    bg="bg-peach-extra-light"
+    description="How can you create an AI plan for your justice organization, and what's the best way to implement new AI developments? Explore our guides for justice institution leaders."
+    items={guides}
+    baseUrl="/guide"
+    cardBg="bg-peach-extra-light" // <— peach cards
+  />
   <p className="text-xl text-gray-700 max-w-2xl">
-    <strong>Coming Soon.</strong> Please share guide proposals and open-source materials with us at{' '}
-    <a href="mailto:legaldesignlab@law.stanford.edu" className="underline text-navy">
-      legaldesignlab@law.stanford.edu
+    <strong>Please share guide proposals and open-source materials</strong> with us at{' '}
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-navy">
+      this form.
     </a>
   </p>
 </section>
@@ -634,6 +633,7 @@ function Section({
   items,
   bg,
   baseUrl,
+  cardBg = 'bg-white',
 }: {
   id?: string
   title: string
@@ -641,37 +641,52 @@ function Section({
   items: SanityDoc[]
   bg: string
   baseUrl: string
+  cardBg?: string 
 }) {
   return (
     <section id={id} className={`${bg} px-10 py-16`}>
       <h2 className="text-4xl font-heading font-bold text-navy mb-2">{title}</h2>
       <p className="text-gray-600 max-w-2xl mb-6">{description}</p>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          item.slug?.current && (
-            <Link key={item._id} href={`${baseUrl}/${item.slug.current}`}>
-              <div className="bg-white p-4 border rounded-lg shadow flex flex-col hover:shadow-lg transition-shadow">
-                {item.image?.asset?.url && (
-                  <Image
-                    src={item.image.asset.url}
-                    alt={item.title}
-                    width={400}
-                    height={200}
-                    className="object-cover w-full h-40 rounded mb-4"
-                  />
-                )}
-                <h3 className="text-xl font-semibold text-navy font-heading mb-2 leading-tight">
-                  {item.title}
-                </h3>
-                {item.oneliner && (
-                  <div className="text-sm text-gray-700 leading-snug">
-                    <PortableText value={item.oneliner} />
-                  </div>
-                )}
-              </div>
+      {items.map((item) => {
+          // Prefer internal slug; else fall back to external link
+          const href = item.slug?.current
+            ? `${baseUrl}/${item.slug.current}`
+            : item.link || '#'
+          const isExternal = !!item.link && !item.slug?.current
+
+          const Card = (
+            <div className={`${cardBg} p-4 border rounded-lg shadow flex flex-col hover:shadow-lg transition-shadow`}>
+              {item.image?.asset?.url && (
+                <Image
+                  src={item.image.asset.url}
+                  alt={item.title}
+                  width={400}
+                  height={200}
+                  className="object-cover w-full h-40 rounded mb-4"
+                />
+              )}
+              <h3 className="text-xl font-semibold text-navy font-heading mb-2 leading-tight">
+                {item.title}
+              </h3>
+              {item.oneliner && (
+                <div className="text-sm text-gray-700 leading-snug">
+                  <PortableText value={item.oneliner} />
+                </div>
+              )}
+            </div>
+          )
+
+          return isExternal ? (
+            <a key={item._id} href={href} target="_blank" rel="noopener noreferrer">
+              {Card}
+            </a>
+          ) : (
+            <Link key={item._id} href={href}>
+              {Card}
             </Link>
           )
-        ))}
+        })}
       </div>
     </section>
   )
