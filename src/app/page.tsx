@@ -4,7 +4,16 @@ import Image from 'next/image'
 import { PortableText, PortableTextComponents  } from '@portabletext/react'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
+import { groq } from 'next-sanity'
 
+async function safeFetch<T>(query: string) {
+  try {
+    return await sanityClient.fetch<T>(query)
+  } catch (err) {
+    console.error('[Sanity fetch failed]', query, err)
+    return [] as unknown as T
+  }
+}
 
 type Task = SanityDoc
 type Project = SanityDoc
@@ -116,7 +125,6 @@ export default async function Home() {
       title,
       slug,
       description,
-      image{ asset->{_id, url} },,
       icon{ asset->{_id, url} },,
       sortOrder,
       "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
