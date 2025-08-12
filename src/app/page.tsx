@@ -125,7 +125,7 @@ export default async function Home() {
       title,
       slug,
       description,
-      icon{ asset->{_id, url} },,
+      icon{ asset->{_id, url} },
       sortOrder,
       "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
         _id,
