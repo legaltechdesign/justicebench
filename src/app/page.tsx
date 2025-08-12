@@ -6,6 +6,10 @@ import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
 
 
+type Task = SanityDoc
+type Project = SanityDoc
+type Dataset = SanityDoc
+type Guide = SanityDoc
 
 // Define types
 interface SanityDoc {
@@ -27,6 +31,7 @@ interface SanityDoc {
 // Fetch all categories in parallel
 export default async function Home() {
   const [tasks, projects, datasets, guides] = await Promise.all([
+    
     sanityClient.fetch(`*[_type == "task" && references(^._id)] | order(sortOrder asc){
       _id,
       title,
@@ -37,16 +42,6 @@ export default async function Home() {
           _id,
           url
         }
-      }
-    }`),
-    sanityClient.fetch(`*[_type == "guide"] | order(coalesce(sortOrder, 9999) asc, title asc){
-      _id,
-      title,
-      slug,
-      link,
-      "oneliner": oneliner,
-      image{
-        asset->{ url }
       }
     }`),
     sanityClient.fetch(`*[_type == "project"]{
@@ -108,6 +103,9 @@ export default async function Home() {
           url
         }
       }
+    }`),
+    sanityClient.fetch(`*[_type == "guide"] | order(coalesce(sortOrder,9999) asc, title asc){
+      _id, title, slug, link, "oneliner": oneliner, image{asset->{_id, url}}
     }`),
   ])
   const tasksByCategory = await sanityClient.fetch(`
