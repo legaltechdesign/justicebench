@@ -116,7 +116,8 @@ export default async function Home() {
       title,
       slug,
       description,
-      image,
+      image{ asset->{_id, url} },,
+      icon{ asset->{_id, url} },,
       sortOrder,
       "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
         _id,
@@ -133,14 +134,17 @@ export default async function Home() {
       } | order(sortOrder asc)
     }
   `)
+  
   const categoriesMeta = tasksByCategory
   .map((c: any) => ({
     _id: c._id,
     title: c.title,
     slug: c.slug,
     sortOrder: c.sortOrder ?? 9999,
+    iconUrl: c.icon?.asset?.url ?? c.image?.asset?.url ?? null,
   }))
   .sort((a: any, b: any) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
+
 
   const statusOrder = ['Pilots', 'Prototypes', 'Proposals']
 
@@ -314,9 +318,20 @@ export default async function Home() {
 
       return (
         <div key={`${group.status}-${cat._id}`} className="mb-10">
-          <h4 className="text-2xl font-heading font-semibold text-navy mb-4">
-            {cat.title} projects
-          </h4>
+         <div className="flex items-center gap-3 mb-4">
+        {cat.iconUrl && (
+          <Image
+            src={cat.iconUrl}
+            alt={`${cat.title} icon`}
+            width={28}
+            height={28}
+            className="rounded"
+          />
+        )}
+        <h4 className="text-2xl font-heading font-semibold text-navy">
+          {cat.title} projects
+        </h4>
+      </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {catProjects.map((project: any) => (
