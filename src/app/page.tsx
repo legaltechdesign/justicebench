@@ -286,30 +286,7 @@ export default async function Home() {
 </div>
 
 
-
-    {groupedProjects.map((group) => (
-      <div key={group.status} className="mb-16" id={group.status.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}>
-
-<div className="bg-navy/10 rounded-xl py-6 px-4 mb-8 text-center shadow-sm">
-      <div className="flex justify-center items-center gap-4 mb-4">
-        {group.icon?.asset?.url && (
-          <Image
-            src={group.icon.asset.url}
-            alt={group.status}
-            width={60}
-            height={60}
-          />
-        )}
-        <h3 className="text-5xl font-heading text-navy">{group.status}</h3>
-      </div>
-      {group.description && (
-          <p className="text-gray-700 mb-6 ">{group.description}</p>
-        )}
-    </div>
-        
-
-    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-    {groupedProjects.map((group) => (
+{groupedProjects.map((group) => (
   <div
     key={group.status}
     className="mb-16"
@@ -447,12 +424,8 @@ export default async function Home() {
     })()}
   </div>
 ))}
-  
 
 
-    </div>
-      </div>
-    ))}
   </div>
 </section>
 
