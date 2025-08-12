@@ -559,7 +559,7 @@ export default async function Home() {
     priority                 // optional: prioritize this image
   />
   <figcaption className="text-center text-xs text-gray-500 mt-2">
-    Overview of the service provider’s justice journey stages.
+    Overview of the service provider’s workflow, tasks along the justice journey.
   </figcaption>
 </figure>
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
@@ -631,7 +631,7 @@ export default async function Home() {
 
       <section id="tasks" className="bg-peach-extra-light px-10 py-16">
         <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Advance Access to Justice</h2>
-        <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+        <div className="text-gray-600 mb-10 ">
           <div>
             <p>
               <strong>Across all different problem types and geographies, what tasks can AI do to improve how people get legal help & how providers serve people?</strong></p> 
@@ -641,23 +641,22 @@ export default async function Home() {
               These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
             </p>
           </div>
-          <div>
-            <p>
-              The 7 main clusters of Access to Justice tasks came from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
-            </p>
-            <ul className="list-disc pl-5 mt-2">
-              <li>User: Getting Brief Help</li>
-              <li>Provider: Providing Brief Help</li>
-              <li>User-Provider: Service Onboarding</li>
-              <li>User-Provider: Work Product</li>
-              <li>Provider: Case Management</li>
-              <li>Provider: Administration, Ops, & Strategy</li>
-              <li>Provider: Tech Tooling</li>
-            </ul>
-            <p className="mt-4">Explore each in detail below.</p>
-          </div>
-        </div>
 
+        </div>
+        <figure className="my-8">
+  <Image
+    src="/images/task-workflow.png"
+    alt="AI Tasks along a justice journey overview"
+    width={2400}            // any large intrinsic width is fine
+    height={1400}           // keep the aspect ratio roughly correct
+    className="w-full h-auto rounded-xl shadow"
+    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
+    priority                 // optional: prioritize this image
+  />
+  <figcaption className="text-center text-xs text-gray-500 mt-2">
+    The 7 categories of tasks that people and providers do along the justice journey, where AI could help.
+  </figcaption>
+  </figure>
         {tasksByCategory.map((category: any) => (
   <div key={category._id} id={category.slug?.current} className="mb-12">
     <h3 className="text-3xl font-heading font-semibold text-navy mb-4">{category.title}</h3>
