@@ -548,6 +548,20 @@ export default async function Home() {
     Aside from users, service providers are also key stakeholders in advancing access to justice.
     Legal aid groups, court providers, pro bono clinics, and other providers have certain clusters of activities, that they do to provide front-facing services and back-end operations and strategy.
   </p>
+  <figure className="my-8">
+  <Image
+    src="/images/provider-workflow.png"
+    alt="Provider journey overview"
+    width={2400}            // any large intrinsic width is fine
+    height={1400}           // keep the aspect ratio roughly correct
+    className="w-full h-auto rounded-xl shadow"
+    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
+    priority                 // optional: prioritize this image
+  />
+  <figcaption className="text-center text-xs text-gray-500 mt-2">
+    Overview of the service provider’s justice journey stages.
+  </figcaption>
+</figure>
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
   {[
     {
