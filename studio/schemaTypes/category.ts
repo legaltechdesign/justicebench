@@ -20,6 +20,12 @@ export default defineType({
         maxLength: 96,
       },
     }),
+    {
+      name: 'oneliner',
+      title: 'One-Line Description',
+      type: 'array',
+      of: [{ type: 'block' }],
+    },
     defineField({
       name: 'description',
       title: 'Description',

@@ -125,6 +125,7 @@ export default async function Home() {
       title,
       slug,
       description,
+      oneliner,
       icon{ asset->{_id, url} },
       sortOrder,
       "tasks": *[_type == "task" && references(^._id)]| order(sortOrder asc){
@@ -150,6 +151,7 @@ export default async function Home() {
     slug: c.slug,
     sortOrder: c.sortOrder ?? 9999,
     description: c.description ?? '',   
+    oneliner: c.oneliner ?? null, 
     iconUrl: c.icon?.asset?.url ?? c.image?.asset?.url ?? null,
   }))
   .sort((a: any, b: any) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
@@ -332,19 +334,24 @@ export default async function Home() {
           <Image
             src={cat.iconUrl}
             alt={`${cat.title} icon`}
-            width={35}
-            height={35}
+            width={50}
+            height={50}
             className="rounded"
           />
         )}
         <h4 className="text-2xl font-heading font-semibold text-navy">
           {cat.title} projects
         </h4>
-        {cat.description && (
-        <p className="text-sm text-gray-600 mb-4 max-w-3xl">
-          {cat.description}
-        </p>
-      )}
+       {/* oneliner, small + subdued */}
+    {Array.isArray(cat.oneliner) && cat.oneliner.length > 0 ? (
+      <div className="text-sm text-gray-600 mb-4 max-w-3xl">
+        <PortableText value={cat.oneliner} components={portableTextComponents} />
+      </div>
+    ) : (
+      cat.oneliner && (
+        <p className="text-sm text-gray-600 mb-4 max-w-3xl">{cat.oneliner}</p>
+      )
+    )}
       </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -673,8 +680,8 @@ export default async function Home() {
         <Image
           src={category.icon?.asset?.url ?? category.image?.asset?.url}
           alt={`${category.title} icon`}
-          width={32}
-          height={32}
+          width={50}
+          height={50}
           className="rounded"
         />
       )}
