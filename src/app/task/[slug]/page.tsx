@@ -5,6 +5,9 @@ import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import '@/app/globals.css'
 import { CustomPortableText } from '@/components/CustomPortableText'
+import Image from 'next/image'
+import Link from 'next/link'
+import { portableTextComponents } from '@/components/CustomPortableText' 
 
 
 type Props = {
@@ -13,6 +16,69 @@ type Props = {
     }
   }
   
+  type ProjectLite = {
+    _id: string
+    title: string
+    slug?: { current: string }
+    oneliner?: any
+    image?: { asset?: { url?: string } }
+    status?: { status?: string }
+    category?: { title?: string; slug?: { current?: string } }
+    issue?: { title?: string; slug?: { current?: string } }
+  }
+  
+  function ProjectCardGrid({ projects }: { projects: ProjectLite[] }) {
+    if (!projects?.length) return null
+    return (
+      <section className="mb-12">
+        <h2 className="text-3xl font-heading text-navy mb-4">Related Projects</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((p) => (
+            <Link key={p._id} href={p.slug?.current ? `/project/${p.slug.current}` : '#'} aria-disabled={!p.slug?.current}>
+              <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+                {p.image?.asset?.url && (
+                  <Image
+                    src={p.image.asset.url}
+                    alt={p.title}
+                    width={600}
+                    height={340}
+                    className="object-cover w-full h-44"
+                  />
+                )}
+                <div className="p-4">
+                  <h3 className="text-lg font-heading font-bold text-navy mb-2">{p.title}</h3>
+                  {p.oneliner && (
+                    <div className="text-sm text-gray-700">
+                      <PortableText value={p.oneliner} components={portableTextComponents} />
+                    </div>
+                  )}
+                  {/* Optional chip row */}
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {p.status?.status && (
+                      <span className="text-xs bg-white border rounded-full px-2 py-0.5 text-gray-700">
+                        {p.status.status}
+                      </span>
+                    )}
+                    {p.category?.title && (
+                      <span className="text-xs bg-white border rounded-full px-2 py-0.5 text-gray-700">
+                        {p.category.title}
+                      </span>
+                    )}
+                    {p.issue?.title && (
+                      <span className="text-xs bg-white border rounded-full px-2 py-0.5 text-gray-700">
+                        {p.issue.title}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
 
 // Sanity image URL builder
 const builder = imageUrlBuilder(sanityClient)
@@ -36,7 +102,19 @@ export default async function TaskPage({ params }: any) {
       oneLiner,
       description,
       qualityStandards,
-      "relatedProjects": relatedProjects[]->{title, slug},
+       // AUTO related projects: any project that references this task
+    "relatedProjects": *[_type == "project" && references(^._id)]{
+      _id,
+      title,
+      slug,
+      "oneliner": oneliner,
+      image{ asset->{ url } },
+      // optional metadata you might want on the card:
+      status->{ status },
+      category->{ title, slug },
+      issue->{ title, slug }
+    },
+
       "relatedDatasets": relatedDatasets[]->{title, slug},
       "relatedEvaluations": relatedEvaluations[]->{title, slug},
       "relatedGuides": relatedGuides[]->{title, slug}
@@ -68,7 +146,8 @@ export default async function TaskPage({ params }: any) {
       <Section title="Task Description" content={task.description} />
       <Section title="How to Measure Quality?" content={task.qualityStandards} />
 
-      <ReferenceList title="Related Projects" items={task.relatedProjects} basePath="/project" />
+      <ProjectCardGrid projects={task.relatedProjects} />
+
       <ReferenceList title="Related Datasets" items={task.relatedDatasets} basePath="/dataset" />
       <ReferenceList title="Related Evaluation Tools" items={task.relatedEvaluations} basePath="/evaluation" />
       <ReferenceList title="Related Guides" items={task.relatedGuides} basePath="/guide" />
