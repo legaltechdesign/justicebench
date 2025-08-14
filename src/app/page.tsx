@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { PortableText, PortableTextComponents  } from '@portabletext/react'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
-import { groq } from 'next-sanity'
+
 
 async function safeFetch<T>(query: string) {
   try {
@@ -364,7 +364,7 @@ export default async function Home() {
         <p className="text-sm text-gray-600 mt-1 mb-4 max-w-3xl">{cat.oneliner}</p>
       ) : null}
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {catProjects.map((project: any) => (
               <Link key={project._id} href={`/project/${project.slug.current}`}>
                 <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
