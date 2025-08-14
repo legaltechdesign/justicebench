@@ -564,7 +564,7 @@ export default async function Home() {
   </h2>
   <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
     Aside from users, service providers are also key stakeholders in advancing access to justice.
-    Legal aid groups, court providers, pro bono clinics, and other providers have certain clusters of activities, that they do to provide front-facing services and back-end operations and strategy.
+    Legal aid groups, court help centers, pro bono clinics, and other justice workers have common clusters of tasks. These tasks all relate to the front-facing services or back-end operations of providing legal help to the public.
   </p>
   <figure className="my-8">
   <Image
@@ -617,7 +617,7 @@ export default async function Home() {
       title: "Present & Negotiate",
       description:
         "The provider presents the case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.",
-      icon: "/icons/presentation.png",
+      icon: "/icons/present-negotiate.png",
     },
     {
       title: "Administration & Strategy",
@@ -659,7 +659,7 @@ export default async function Home() {
         <div className="text-gray-600 mb-10 ">
           <div>
             <p>
-              <strong>Across all different problem types and geographies, what tasks can AI do to improve how people get legal help & how providers serve people?</strong></p> 
+              <strong>Across all different problem types, stakeholders, and geographies, what tasks might AI do to improve how people get legal help & how providers serve people?</strong></p> 
               <p>For the various stages of a person's justice journey, we have documented the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
             </p>
             <p className="mt-4">
