@@ -5,9 +5,10 @@ import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import '@/app/globals.css'
 import { CustomPortableText } from '@/components/CustomPortableText'
+import { portableTextComponents } from '@/components/CustomPortableText' 
 import Image from 'next/image'
 import Link from 'next/link'
-import { portableTextComponents } from '@/components/CustomPortableText' 
+
 
 
 type Props = {
