@@ -604,7 +604,7 @@ export default async function Home() {
     {
       title: "Work Product & Legal Research",
       description:
-        "The provider works with the user to research the law, draft and file documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
+        "The provider researches the law, draft and file documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
       icon: "/icons/work-icon.png",
     },
     {
