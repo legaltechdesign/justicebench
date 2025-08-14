@@ -12,14 +12,12 @@
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^7.1.0",
     "@sanity/image-url": "^1.1.0",
-    "@sanity/vision": "^4.4.1",
     "@sanity/webhook": "^4.0.4",
     "lucide-react": "^0.511.0",
     "next": "^15.4.6",
     "next-sanity": "^10.0.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sanity": "^3.88.2",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
