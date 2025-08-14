@@ -243,7 +243,13 @@ export default async function Home() {
     New to the Access to Justice Domain?
   </h2>
   <p className="text-base text-black md:text-lg mb-6">
-    Are you a technologist, researcher, data scientist, or professional who is new to the world of legal aid, courts, and civil legal problems? Learn the basics of what a person's journey through a legal problem like eviction, debt, or divorce looks like—and how service providers try to assist them.
+    Are you a technologist, researcher, data scientist, or professional who is new to the world of legal aid, courts, and civil legal problems? 
+    </p>
+    <p className="text-base text-black md:text-lg mb-6">
+      Learn the basics of what a person's journey looks like, as they deal with a legal problem like eviction, debt, divorce, reentry, employement problems, or  more.
+      </p>
+      <p className="text-base text-black md:text-lg mb-6">
+     Also explore the common workflows of service providers who assist people in resolving their legal problems.
   </p>
   <a
     href="#justice-journey"
