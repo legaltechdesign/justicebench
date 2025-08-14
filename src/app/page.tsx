@@ -322,37 +322,41 @@ export default async function Home() {
 
     {/* Categories within this status */}
     {categoriesMeta.map((cat: any) => {
-      const catProjects = group.projects.filter(
-        (p: any) => p.category?.slug?.current && p.category.slug.current === cat.slug?.current
-      )
-      if (!catProjects.length) return null
+  const catProjects = group.projects.filter(
+    (p: any) => p.category?.slug?.current && p.category.slug.current === cat.slug?.current
+  )
+  if (!catProjects.length) return null
 
-      return (
-        <div key={`${group.status}-${cat._id}`} className="mb-10">
-         <div className="flex items-center gap-3 mb-4">
+  // normalize "Pilots/Prototypes/Proposals" -> "pilot/prototype/proposal"
+  const statusName = (group.status ?? '').replace(/s$/i, '').toLowerCase()
+
+
+  return (
+    <div key={`${group.status}-${cat._id}`} className="mb-10">
+      {/* Title row: icon + "[Category] [status] projects" */}
+      <div className="flex items-center gap-3">
         {cat.iconUrl && (
           <Image
             src={cat.iconUrl}
             alt={`${cat.title} icon`}
-            width={50}
-            height={50}
-            className="rounded"
+            width={60}
+            height={60}
+            className="rounded-md shrink-0"
           />
         )}
         <h4 className="text-2xl font-heading font-semibold text-navy">
-          {cat.title} projects
+          {cat.title} {statusName} projects
         </h4>
-       {/* oneliner, small + subdued */}
-    {Array.isArray(cat.oneliner) && cat.oneliner.length > 0 ? (
-      <div className="text-sm text-gray-600 mb-4 max-w-3xl">
-        <PortableText value={cat.oneliner} components={portableTextComponents} />
       </div>
-    ) : (
-      cat.oneliner && (
-        <p className="text-sm text-gray-600 mb-4 max-w-3xl">{cat.oneliner}</p>
-      )
-    )}
-      </div>
+
+      {/* Next line: small, light-gray oneliner */}
+      {Array.isArray(cat.oneliner) && cat.oneliner.length > 0 ? (
+        <div className="text-sm text-gray-600 mt-1 mb-4 max-w-3xl">
+          <PortableText value={cat.oneliner} components={portableTextComponents} />
+        </div>
+      ) : cat.oneliner ? (
+        <p className="text-sm text-gray-600 mt-1 mb-4 max-w-3xl">{cat.oneliner}</p>
+      ) : null}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {catProjects.map((project: any) => (
@@ -610,6 +614,12 @@ export default async function Home() {
       icon: "/icons/coach-icon.png",
     },
     {
+      title: "Present & Negotiate",
+      description:
+        "The provider presents the case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.",
+      icon: "/icons/presentation.png",
+    },
+    {
       title: "Administration & Strategy",
       description:
         "The provider monitors cases and outcomes overall, manages staff and reporting, spots patterns, operates tech, and identifies areas for service improvement, policy change, strategic litigation, or tech innovation.",
@@ -680,8 +690,8 @@ export default async function Home() {
         <Image
           src={category.icon?.asset?.url ?? category.image?.asset?.url}
           alt={`${category.title} icon`}
-          width={50}
-          height={50}
+          width={60}
+          height={60}
           className="rounded"
         />
       )}
