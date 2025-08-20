@@ -169,42 +169,40 @@ export default async function Home() {
 
   return (
     <main className="font-sans">
-<header className="relative isolate h-[360px] sm:h-[440px] lg:h-[520px] overflow-hidden">
-  {/* Background image (full-bleed) */}
+
+<header className="relative isolate overflow-hidden min-h-[420px] sm:min-h-[480px] lg:min-h-[560px]">
+  {/* Background image */}
   <Image
     src="/images/banner.png"
-    alt=""                 // decorative background
+    alt=""
     fill
     priority
     sizes="100vw"
     className="object-cover object-center"
   />
 
-  {/* Readability overlay */}
-  <div className="absolute inset-0 bg-white/75" aria-hidden />
+  {/* Optional gradient scrim to further tame busy areas */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/20" aria-hidden />
 
-  {/* Content */}
-  <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 text-center">
-    <div>
+  {/* Centered content container */}
+  <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6">
+    <div className="w-full max-w-3xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-2xl ring-1 ring-black/5 p-6 sm:p-10 text-center">
       <h1 className="text-5xl md:text-6xl font-heading font-bold text-navy">
         JusticeBench
       </h1>
 
-      <p className="mt-3 text-lg md:text-xl text-navy font-bold">
+      <p className="mt-3 text-base md:text-xl text-gray-700">
         An R&amp;D Community Platform for AI and Access to Justice
       </p>
 
-      <div className="mt-5 flex justify-center">
-        <div className="inline-flex items-center gap-2 rounded-md bg-white/90 px-4 py-2 text-sm font-medium text-navy shadow backdrop-blur">
-          <span>🚧 This platform is still under development.</span>
-          {/* Optional: keep your feedback link */}
-          <Link
-            href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
-            className="underline underline-offset-2"
-          >
-            Share feedback &amp; projects
-          </Link>
-        </div>
+      <div className="mt-5 inline-flex items-center gap-2 rounded-md bg-peach-light px-4 py-2 text-sm font-medium text-navy">
+        <span>🚧 This platform is still under development.</span>
+        <Link
+          href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
+          className="underline underline-offset-2"
+        >
+          Share feedback &amp; projects
+        </Link>
       </div>
     </div>
   </div>
