@@ -170,7 +170,8 @@ export default async function Home() {
   return (
     <main className="font-sans">
 
-<header className="relative isolate overflow-hidden min-h-[420px] sm:min-h-[480px] lg:min-h-[560px]">
+<header className="relative isolate overflow-hidden min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] pt-16 md:pt-24 pb-12">
+
   {/* Background image */}
   <Image
     src="/images/banner.png"
@@ -182,7 +183,7 @@ export default async function Home() {
   />
 
   {/* Optional gradient scrim to further tame busy areas */}
-  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/20" aria-hidden />
+  <div className="absolute inset-0 bg-gradient-to-b from-peach/50 via-peach/40 to-peach/20" aria-hidden />
 
   {/* Centered content container */}
   <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6">
