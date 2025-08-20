@@ -169,18 +169,47 @@ export default async function Home() {
 
   return (
     <main className="font-sans">
-      <header className="bg-white p-12 text-center">
-  <div className="flex justify-center items-center gap-4">
-    
-    <h1 className="text-6xl font-heading font-bold text-navy">JusticeBench</h1>
-  </div>
-  <p className="text-xl text-gray-700 mt-4">
-    An R&D Community Platform for AI and Access to Justice
-  </p>
-  <div className="mt-4 bg-peach-light text-navy text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
-    🚧 This platform is still under development. Please explore and send us your projects, feedback, contributions, and ideas <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479" className="underline">at the form here</a>.
+<header className="relative isolate h-[360px] sm:h-[440px] lg:h-[520px] overflow-hidden">
+  {/* Background image (full-bleed) */}
+  <Image
+    src="/images/banner.png"
+    alt=""                 // decorative background
+    fill
+    priority
+    sizes="100vw"
+    className="object-cover object-center"
+  />
+
+  {/* Readability overlay */}
+  <div className="absolute inset-0 bg-navy/50" aria-hidden />
+
+  {/* Content */}
+  <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 text-center">
+    <div>
+      <h1 className="text-5xl md:text-6xl font-heading font-bold text-white">
+        JusticeBench
+      </h1>
+
+      <p className="mt-3 text-lg md:text-xl text-white/90">
+        An R&amp;D Community Platform for AI and Access to Justice
+      </p>
+
+      <div className="mt-5 flex justify-center">
+        <div className="inline-flex items-center gap-2 rounded-md bg-white/90 px-4 py-2 text-sm font-medium text-navy shadow backdrop-blur">
+          <span>🚧 This platform is still under development.</span>
+          {/* Optional: keep your feedback link */}
+          <Link
+            href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
+            className="underline underline-offset-2"
+          >
+            Share feedback &amp; projects
+          </Link>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
+
 <section className="bg-navy px-6 py-16">
   <h2 className="text-5xl md:text-5xl font-heading font-bold text-white text-center mb-4">
     How to Use JusticeBench
