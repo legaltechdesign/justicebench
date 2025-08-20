@@ -181,7 +181,7 @@ export default async function Home() {
   />
 
   {/* Readability overlay */}
-  <div className="absolute inset-0 bg-white/25" aria-hidden />
+  <div className="absolute inset-0 bg-white/75" aria-hidden />
 
   {/* Content */}
   <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 text-center">
