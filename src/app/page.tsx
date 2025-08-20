@@ -190,7 +190,7 @@ export default async function Home() {
         JusticeBench
       </h1>
 
-      <p className="mt-3 text-lg md:text-xl text-navy/90">
+      <p className="mt-3 text-lg md:text-xl text-navy font-bold">
         An R&amp;D Community Platform for AI and Access to Justice
       </p>
 
