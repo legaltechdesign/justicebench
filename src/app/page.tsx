@@ -181,16 +181,16 @@ export default async function Home() {
   />
 
   {/* Readability overlay */}
-  <div className="absolute inset-0 bg-navy/05" aria-hidden />
+  <div className="absolute inset-0 bg-white/25" aria-hidden />
 
   {/* Content */}
   <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 text-center">
     <div>
-      <h1 className="text-5xl md:text-6xl font-heading font-bold text-white">
+      <h1 className="text-5xl md:text-6xl font-heading font-bold text-navy">
         JusticeBench
       </h1>
 
-      <p className="mt-3 text-lg md:text-xl text-white/90">
+      <p className="mt-3 text-lg md:text-xl text-navy/90">
         An R&amp;D Community Platform for AI and Access to Justice
       </p>
 
