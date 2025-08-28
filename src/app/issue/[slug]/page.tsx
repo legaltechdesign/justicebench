@@ -73,7 +73,7 @@ export default async function IssuePage({ params }: any) {
         ) : (
           <p className="text-gray-700">
             <Link href="https://taxonomy.legal" className="text-navy underline">
-              Explore all Legal Issue codes at the LIST taxonomy website
+              Explore all of the Legal Issue codes at the LIST taxonomy website
             </Link>
           </p>
         )}
