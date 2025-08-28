@@ -54,7 +54,7 @@ export default async function IssuePage({ params }: any) {
 
       {issue.description && (
         <section className="mb-10">
-          <h2 className="text-3xl font-heading text-navy mb-2">More About This Legal Issue</h2>
+          <h2 className="text-3xl font-heading text-navy mb-2">More About This Legal Services Area</h2>
           <p className="text-gray-700 whitespace-pre-line">{issue.description}</p>
         </section>
       )}
