@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { CustomPortableText } from '@/components/CustomPortableText'
 
+
 export async function generateStaticParams() {
   const slugs = await sanityClient.fetch(
     `*[_type == "issue" && defined(slug.current)][].slug.current`
@@ -13,7 +14,13 @@ export async function generateStaticParams() {
   return slugs.map((slug: string) => ({ slug }))
 }
 
-export default async function IssuePage({ params }: { params: { slug: string } }) {
+export default async function IssuePage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const { slug } = params
+
   const issue = await sanityClient.fetch(
     `*[_type == "issue" && slug.current == $slug][0]{
       title,
@@ -61,7 +68,7 @@ export default async function IssuePage({ params }: { params: { slug: string } }
       faq[]{ q, a },
       ctas[]{ label, href, style }
     }`,
-    { slug: params.slug }
+    { slug}
   )
 
   if (!issue) return notFound()
