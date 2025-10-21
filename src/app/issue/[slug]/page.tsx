@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { CustomPortableText } from '@/components/CustomPortableText'
 
+// src/app/issue/[slug]/page.tsx
+
+// … your imports …
 
 export async function generateStaticParams() {
   const slugs = await sanityClient.fetch(
@@ -14,12 +17,13 @@ export async function generateStaticParams() {
   return slugs.map((slug: string) => ({ slug }))
 }
 
+// ✅ FIX: params is a *Promise* in Next 15; await it here
 export default async function IssuePage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const { slug } = params
+  const { slug } = await params
 
   const issue = await sanityClient.fetch(
     `*[_type == "issue" && slug.current == $slug][0]{
@@ -33,7 +37,6 @@ export default async function IssuePage({
       listCodeUrl,
       icon{ asset->{ url } },
 
-      // Workflows (15 tiles)
       workflows[]{
         title,
         oneLiner,
@@ -41,37 +44,30 @@ export default async function IssuePage({
         serviceTypes,
         tags,
         impact{ timeSavedMins, riskLevel },
-        // Split spotlights into project refs vs idea objects
         "spotlightProjects": aiSpotlights[_type == "reference"]->{
           _id, title, "slug": slug.current, image{asset->{url}}, oneliner
         },
         "ideas": aiSpotlights[_type == "idea"]{ label, description, link }
       },
 
-      // Service portfolio rows
       servicePortfolio[]{ serviceLine, scope, channels, aiSupport },
 
-      // Explicit issue-wide links
       aiProjects[]->{ _id, title, "slug": slug.current, image{asset->{url}}, oneliner },
 
-      // Back-compat: any project that references this issue
-      "projectsByRef": *[_type == "project" && references(^._id)]{
+      // back-compat: any project that references this issue
+      "projectsByRef": *[_type=="project" && references(^._id)]{
         _id, title, "slug": slug.current, image{asset->{url}}, oneliner
-      },
-
-      // Evidence
-      benchmarks[]->{ title, "slug": slug.current },
-      datasets[]->{ title, "slug": slug.current },
-
-      // Impact
-      kpis{ volume, timeSaved, riskReduction, languageParity },
-      faq[]{ q, a },
-      ctas[]{ label, href, style }
+      }
     }`,
-    { slug}
+    { slug }
   )
 
   if (!issue) return notFound()
+
+  // …render JSX with `issue`…
+}
+
+
 
   // Merge explicit aiProjects with back-compat referenced projects; de-dupe by _id
   const projectMap: Record<string, any> = {}
