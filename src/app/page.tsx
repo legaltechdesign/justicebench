@@ -283,7 +283,7 @@ export default async function Home() {
     href="#justice-journey"
     className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition flex justify-center items-center"
   >
-    Learn More about Access to Justice
+    Learn More about "Access to Justice
   </a>
 </section>
 
@@ -563,7 +563,7 @@ export default async function Home() {
     icon: '/icons/presentation.png',
   },
   {
-    title: 'Follow Through Stage',
+    title: 'Follow-Through Stage',
     description: 'After a decision or settlement, the person must ensure they understand what the final arrangement is and how to live up to it (or enforce it). They may need to comply with orders, secure what they won, or clear their record to prevent collateral consequences.',
     icon: '/icons/follow.png',
   },
