@@ -65,7 +65,6 @@ export default async function IssuePage({
   if (!issue) return notFound()
 
   // …render JSX with `issue`…
-}
 
 
 
