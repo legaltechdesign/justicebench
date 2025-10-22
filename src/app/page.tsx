@@ -90,16 +90,18 @@ export default async function Home() {
           }
         }
       },
-      tasks[]->{
+       // include task + its category (title/slug/sortOrder/icon)
+    tasks[]->{
+      title,
+      slug,
+      category->{
         title,
         slug,
-        icon {
-          asset->{
-          _id,
-            url
-          }
-        }
-      }
+        sortOrder,
+        icon{asset->{url}}
+      },
+      icon{asset->{url}}
+    }
     }`),
 
 
@@ -120,7 +122,7 @@ export default async function Home() {
     }`),
   ])
   const tasksByCategory = await sanityClient.fetch(`
-    *[_type == "category"] | order(sortOrder asc){
+    *[_type == "category"] | order(coalesce(sortOrder, 9999) asc, title asc){
       _id,
       title,
       slug,
@@ -377,19 +379,43 @@ export default async function Home() {
             </h3>
           </div>
 
-          {/* Cards */}
+          {/* === Sub-groups by Task Category (sorted by sortOrder) === */}
+    {categoriesMeta.map((cat: any) => {
+      // all projects in this issue that have ANY task in this category
+      const catProjects = group.projects.filter((p: any) =>
+        p.tasks?.some((t: any) => t?.category?.slug?.current === cat.slug?.current)
+      )
+      if (!catProjects.length) return null
+
+      return (
+        <div key={`${group.key}-${cat._id}`} className="mb-10">
+          {/* category sub-heading */}
+          <div className="flex items-center gap-2 mb-3">
+            {cat.icon?.asset?.url && (
+              <Image
+                src={cat.icon.asset.url}
+                alt={`${cat.title} icon`}
+                width={28}
+                height={28}
+              />
+            )}
+            <h4 className="text-2xl font-heading font-semibold text-navy">
+              {cat.title}
+            </h4>
+          </div>
+
+          {/* cards in this category */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {group.projects.map((project: any) => (
+            {catProjects.map((project: any) => (
               <Link key={project._id} href={`/project/${project.slug.current}`}>
                 <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-                  {/* Status pill */}
+                  {/* status pill */}
                   {project.status?.status && (
                     <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
                       {project.status.status}
                     </span>
                   )}
-
-                  {/* Image */}
+                  {/* image */}
                   {project.image?.asset?.url && (
                     <Image
                       src={project.image.asset.url}
@@ -399,43 +425,108 @@ export default async function Home() {
                       className="object-cover w-full h-48"
                     />
                   )}
-
-                  {/* Body */}
+                  {/* body */}
                   <div className="p-4">
-                    <h4 className="text-lg font-heading font-bold text-navy mb-2">
+                    <h5 className="text-lg font-heading font-bold text-navy mb-2">
                       {project.title}
-                    </h4>
+                    </h5>
                     {project.oneliner && (
                       <div className="text-sm text-gray-700">
                         <PortableText value={project.oneliner} components={portableTextComponents} />
                       </div>
                     )}
-
-                    {/* Labels: tasks + (optional) category */}
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {project.tasks?.map((t: any) => (
-                        <Link
-                          key={t.slug.current}
-                          href={`/task/${t.slug.current}`}
-                          className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
-                        >
-                          {t.icon?.asset?.url && (
-                            <Image src={t.icon.asset.url} alt={t.title} width={16} height={16} className="mr-1" />
-                          )}
-                          <span>{t.title}</span>
-                        </Link>
-                      ))}
-                      {project.category && (
-                        <span className="flex items-center bg-navy/10 rounded-full px-3 py-1 text-xs text-navy">
-                          {project.category.title}
-                        </span>
-                      )}
+                    {/* chips: show tasks that belong to this cat (optional) */}
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {project.tasks
+                        ?.filter((t: any) => t?.category?.slug?.current === cat.slug?.current)
+                        ?.map((t: any) => (
+                          <Link
+                            key={t.slug.current}
+                            href={`/task/${t.slug.current}`}
+                            className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
+                          >
+                            {t.icon?.asset?.url && (
+                              <Image src={t.icon.asset.url} alt={t.title} width={14} height={14} className="mr-1" />
+                            )}
+                            <span>{t.title}</span>
+                          </Link>
+                        ))}
                     </div>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
+        </div>
+      )
+    })}
+
+   
+{/* === Optional: a final bucket for projects with no task category match === */}
+{(() => {
+  // Build a set of project _ids that appear in any known task category
+  const categorizedIds = new Set<string>(
+    categoriesMeta.flatMap((cat: any) =>
+      group.projects
+        .filter((p: any) =>
+          p.tasks?.some(
+            (t: any) => t?.category?.slug?.current === cat.slug?.current
+          )
+        )
+        .map((p: any) => p._id as string)
+    )
+  )
+
+  const otherProjects = group.projects.filter(
+    (p: any) => !categorizedIds.has(p._id as string)
+  )
+  if (!otherProjects.length) return null
+
+  return (
+    <div className="mb-10">
+      <h4 className="text-2xl font-heading font-semibold text-navy mb-3">
+        Other tasks
+      </h4>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {otherProjects.map((project: any) => (
+          <Link key={project._id} href={`/project/${project.slug.current}`}>
+            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+              {project.status?.status && (
+                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
+                  {project.status.status}
+                </span>
+              )}
+              {project.image?.asset?.url && (
+                <Image
+                  src={project.image.asset.url}
+                  alt={project.title}
+                  width={400}
+                  height={220}
+                  className="object-cover w-full h-48"
+                />
+              )}
+              <div className="p-4">
+                <h5 className="text-lg font-heading font-bold text-navy mb-2">
+                  {project.title}
+                </h5>
+                {project.oneliner && (
+                  <div className="text-sm text-gray-700">
+                    <PortableText
+                      value={project.oneliner}
+                      components={portableTextComponents}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+})()}
+
+
         </div>
       ))
     })()}
