@@ -268,7 +268,7 @@ sanityClient.fetch(`*[_type == "project"]{
       Projects
     </h2>
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
-      Explore AI projects organized by service area / legal team. Each card notes whether it's a pilot, prototype, or proposal.
+      What kinds of AI projects are already in the works to advance access to justice? Explore AI projects organized by the legal need / service area or team that the project relates to. Each card notes the project's status -- whether it's a pilot, prototype, or proposal. If you know of other projects aside from those here, please tell us about them!
     </p>
 
     {(() => {
@@ -365,9 +365,13 @@ sanityClient.fetch(`*[_type == "project"]{
     </div>
 
    {group.blurb && (
-      <div className="text-base text-gray-700 leading-snug max-w-3xl">
-        <PortableText value={group.blurb} components={portableTextComponents} />
-      </div>
+      <p className="text-base text-gray-700 mt-1">
+  {typeof group.blurb === 'string'
+    ? group.blurb
+    : <PortableText value={group.blurb} components={portableTextComponents} />}
+</p>
+
+      
     )}
   </div>
 </div>
