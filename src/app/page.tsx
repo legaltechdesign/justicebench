@@ -380,86 +380,96 @@ export default async function Home() {
           </div>
 
           {/* === Sub-groups by Task Category (sorted by sortOrder) === */}
-    {categoriesMeta.map((cat: any) => {
-      // all projects in this issue that have ANY task in this category
-      const catProjects = group.projects.filter((p: any) =>
-        p.tasks?.some((t: any) => t?.category?.slug?.current === cat.slug?.current)
-      )
-      if (!catProjects.length) return null
+   {/* === Sub-groups by Project Category (sorted by category.sortOrder) === */}
+{categoriesMeta.map((cat: any) => {
+  // projects in this issue whose OWN category matches this cat
+  const catProjects = group.projects.filter(
+    (p: any) => p.category?.slug?.current === cat.slug?.current
+  )
+  if (!catProjects.length) return null
 
-      return (
-        <div key={`${group.key}-${cat._id}`} className="mb-10">
-          {/* category sub-heading */}
-          <div className="flex items-center gap-2 mb-3">
-            {cat.icon?.asset?.url && (
-              <Image
-                src={cat.icon.asset.url}
-                alt={`${cat.title} icon`}
-                width={28}
-                height={28}
-              />
-            )}
-            <h4 className="text-2xl font-heading font-semibold text-navy">
-              {cat.title}
-            </h4>
-          </div>
+  return (
+    <div key={`${group.key}-${cat._id}`} className="mb-10">
+      {/* category sub-heading */}
+      <div className="flex items-center gap-2 mb-2">
+        {cat.icon?.asset?.url && (
+          <Image
+            src={cat.icon.asset.url}
+            alt={`${cat.title} icon`}
+            width={28}
+            height={28}
+          />
+        )}
+        <h4 className="text-2xl font-heading font-semibold text-navy">
+          {cat.title}
+        </h4>
+      </div>
 
-          {/* cards in this category */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {catProjects.map((project: any) => (
-              <Link key={project._id} href={`/project/${project.slug.current}`}>
-                <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-                  {/* status pill */}
-                  {project.status?.status && (
-                    <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
-                      {project.status.status}
-                    </span>
-                  )}
-                  {/* image */}
-                  {project.image?.asset?.url && (
-                    <Image
-                      src={project.image.asset.url}
-                      alt={project.title}
-                      width={400}
-                      height={220}
-                      className="object-cover w-full h-48"
-                    />
-                  )}
-                  {/* body */}
-                  <div className="p-4">
-                    <h5 className="text-lg font-heading font-bold text-navy mb-2">
-                      {project.title}
-                    </h5>
-                    {project.oneliner && (
-                      <div className="text-sm text-gray-700">
-                        <PortableText value={project.oneliner} components={portableTextComponents} />
-                      </div>
-                    )}
-                    {/* chips: show tasks that belong to this cat (optional) */}
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {project.tasks
-                        ?.filter((t: any) => t?.category?.slug?.current === cat.slug?.current)
-                        ?.map((t: any) => (
-                          <Link
-                            key={t.slug.current}
-                            href={`/task/${t.slug.current}`}
-                            className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
-                          >
-                            {t.icon?.asset?.url && (
-                              <Image src={t.icon.asset.url} alt={t.title} width={14} height={14} className="mr-1" />
-                            )}
-                            <span>{t.title}</span>
-                          </Link>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+      {/* optional short oneliner under the heading */}
+      {cat.oneliner && (
+        <div className="text-sm text-gray-600 mb-3 max-w-3xl">
+          <PortableText value={cat.oneliner} components={portableTextComponents} />
         </div>
-      )
-    })}
+      )}
+
+      {/* cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {catProjects.map((project: any) => (
+          <Link key={project._id} href={`/project/${project.slug.current}`}>
+            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+              {/* status pill */}
+              {project.status?.status && (
+                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
+                  {project.status.status}
+                </span>
+              )}
+              {/* image */}
+              {project.image?.asset?.url && (
+                <Image
+                  src={project.image.asset.url}
+                  alt={project.title}
+                  width={400}
+                  height={220}
+                  className="object-cover w-full h-48"
+                />
+              )}
+              {/* body */}
+              <div className="p-4">
+                <h5 className="text-lg font-heading font-bold text-navy mb-2">
+                  {project.title}
+                </h5>
+                {project.oneliner && (
+                  <div className="text-sm text-gray-700">
+                    <PortableText value={project.oneliner} components={portableTextComponents} />
+                  </div>
+                )}
+
+                {/* optional: task chips (purely decorative now) */}
+                {project.tasks?.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {project.tasks.map((t: any) => (
+                      <Link
+                        key={t.slug.current}
+                        href={`/task/${t.slug.current}`}
+                        className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
+                      >
+                        {t.icon?.asset?.url && (
+                          <Image src={t.icon.asset.url} alt={t.title} width={14} height={14} className="mr-1" />
+                        )}
+                        <span>{t.title}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+})}
+
 
    
 {/* === Optional: a final bucket for projects with no task category match === */}
@@ -477,15 +487,15 @@ export default async function Home() {
     )
   )
 
-  const otherProjects = group.projects.filter(
-    (p: any) => !categorizedIds.has(p._id as string)
-  )
+  {/* === Projects in this issue without a project.category === */}
+{(() => {
+  const otherProjects = group.projects.filter((p: any) => !p.category?.slug?.current)
   if (!otherProjects.length) return null
 
   return (
     <div className="mb-10">
       <h4 className="text-2xl font-heading font-semibold text-navy mb-3">
-        Other tasks
+        Uncategorized
       </h4>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {otherProjects.map((project: any) => (
@@ -511,10 +521,7 @@ export default async function Home() {
                 </h5>
                 {project.oneliner && (
                   <div className="text-sm text-gray-700">
-                    <PortableText
-                      value={project.oneliner}
-                      components={portableTextComponents}
-                    />
+                    <PortableText value={project.oneliner} components={portableTextComponents} />
                   </div>
                 )}
               </div>
@@ -524,6 +531,10 @@ export default async function Home() {
       </div>
     </div>
   )
+})()}
+
+
+
 })()}
 
 
@@ -537,211 +548,7 @@ export default async function Home() {
 
 
 
-<section id="projects" className="bg-white py-16 px-6 sm:px-10">
-  <div className="max-w-7xl mx-auto">
-    <h2 className="text-6xl font-heading font-bold text-navy mb-10 text-center">
-      Projects
-    </h2>
-    <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
-      What AI projects are already happening in the Access to Justice domain? Many groups are working on new tools to help people & providers dealing with legal problems. Look through these project pages to see who is building what, the data they have to share, how they are measuring progress, and what protocols you might borrow.
-    </p>
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
-  {[
-    {
-      id: "pilots",
-      title: "Pilots",
-      description: "Projects that are live and in use",
-      icon: "https://cdn.sanity.io/images/swtijbu4/production/5e6b9214676d8554307efc4bd6635a248c0a3388-475x475.png",
-    },
-    {
-      id: "prototypes",
-      title: "Prototypes",
-      description: "Projects that work but aren't operating in the field",
-      icon: "https://cdn.sanity.io/images/swtijbu4/production/ce9f7210c0bba1df3aee4fe67d8dc833e6aa463a-475x475.png",
-    },
-    {
-      id: "proposals",
-      title: "Proposals",
-      description: "Visions of possible new projects",
-      icon: "https://cdn.sanity.io/images/swtijbu4/production/53b223ae986e14a7eb16143c889255493355eed7-475x475.png",
-    },
-  ].map((item) => (
-    <a
-      key={item.id}
-      href={`#${item.id}`}
-      className="bg-navy/10 rounded-xl p-6 flex flex-col items-center text-center hover:bg-navy/20 transition"
-    >
-      <Image
-        src={item.icon}
-        alt={item.title}
-        width={80}
-        height={80}
-        className="mb-4"
-      />
-      <h3 className="text-xl font-heading font-bold text-navy mb-1">{item.title}</h3>
-      <p className="text-sm text-gray-700">{item.description}</p>
-    </a>
-  ))}
-</div>
 
-
-{groupedProjects.map((group) => (
-  <div
-    key={group.status}
-    className="mb-16"
-    id={group.status.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}
-  >
-    {/* Status header */}
-    <div className="bg-navy/10 rounded-xl py-6 px-4 mb-8 text-center shadow-sm">
-      <div className="flex justify-center items-center gap-4 mb-4">
-        {group.icon?.asset?.url && (
-          <Image src={group.icon.asset.url} alt={group.status} width={60} height={60} />
-        )}
-        <h3 className="text-5xl font-heading text-navy">{group.status}</h3>
-      </div>
-      {group.description && (
-        <p className="text-gray-700 mb-6">{group.description}</p>
-      )}
-    </div>
-
-    {/* Categories within this status */}
-    {categoriesMeta.map((cat: any) => {
-  const catProjects = group.projects.filter(
-    (p: any) => p.category?.slug?.current && p.category.slug.current === cat.slug?.current
-  )
-  if (!catProjects.length) return null
-
-  // normalize "Pilots/Prototypes/Proposals" -> "pilot/prototype/proposal"
-  const statusName = (group.status ?? '').replace(/s$/i, '').toLowerCase()
-
-
-  return (
-    <div key={`${group.status}-${cat._id}`} className="mb-10">
-      {/* Title row: icon + "[Category] [status] projects" */}
-      <div className="flex items-center gap-3">
-        {cat.iconUrl && (
-          <Image
-            src={cat.iconUrl}
-            alt={`${cat.title} icon`}
-            width={60}
-            height={60}
-            className="rounded-md shrink-0"
-          />
-        )}
-        <h4 className="text-2xl font-heading font-semibold text-navy">
-          {cat.title} {statusName} projects
-        </h4>
-      </div>
-
-      {/* Next line: small, light-gray oneliner */}
-      {Array.isArray(cat.oneliner) && cat.oneliner.length > 0 ? (
-        <div className="text-sm text-gray-600 mt-1 mb-4 max-w-3xl">
-          <PortableText value={cat.oneliner} components={portableTextComponents} />
-        </div>
-      ) : cat.oneliner ? (
-        <p className="text-sm text-gray-600 mt-1 mb-4 max-w-3xl">{cat.oneliner}</p>
-      ) : null}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {catProjects.map((project: any) => (
-              <Link key={project._id} href={`/project/${project.slug.current}`}>
-                <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-                  {project.image?.asset?.url && (
-                    <Image
-                      src={project.image.asset.url}
-                      alt={project.title}
-                      width={400}
-                      height={220}
-                      className="object-cover w-full h-48"
-                    />
-                  )}
-                  <div className="p-4">
-                    <h5 className="text-lg font-heading font-bold text-navy mb-2">
-                      {project.title}
-                    </h5>
-                    {project.oneliner && (
-                      <div className="text-sm text-gray-700">
-                        <PortableText value={project.oneliner} components={portableTextComponents} />
-                      </div>
-                    )}
-
-                    {/* Labels */}
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {project.issue && (
-                        <Link
-                          href={`/issue/${project.issue.slug.current}`}
-                          className="flex items-center bg-navy-light rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400"
-                        >
-                          {project.issue.icon?.asset?.url && (
-                            <Image src={project.issue.icon.asset.url} alt="issue icon" width={20} height={20} className="mr-2" />
-                          )}
-                          <span>Legal Issue: {project.issue.title}</span>
-                        </Link>
-                      )}
-            
-                      {project.tasks?.map((t: any) => (
-                        <Link
-                          key={t.slug.current}
-                          href={`/task/${t.slug.current}`}
-                          className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-400"
-                        >
-                          {t.icon?.asset?.url && (
-                            <Image src={t.icon.asset.url} alt={t.title} width={16} height={16} className="mr-1" />
-                          )}
-                          <span>Task: {t.title}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )
-    })}
-
-    {/* Optional: Uncategorized bucket */}
-    {(() => {
-      const uncategorized = group.projects.filter((p: any) => !p.category?.slug?.current)
-      if (!uncategorized.length) return null
-      return (
-        <div className="mb-10">
-          <h4 className="text-2xl font-heading font-semibold text-navy mb-4">Other projects</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {uncategorized.map((project: any) => (
-              <Link key={project._id} href={`/project/${project.slug.current}`}>
-                <div className="bg-peach-extra-light border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-                  {project.image?.asset?.url && (
-                    <Image
-                      src={project.image.asset.url}
-                      alt={project.title}
-                      width={400}
-                      height={220}
-                      className="object-cover w-full h-48"
-                    />
-                  )}
-                  <div className="p-4">
-                    <h5 className="text-lg font-heading font-bold text-navy mb-2">{project.title}</h5>
-                    {project.oneliner && (
-                      <div className="text-sm text-gray-700">
-                        <PortableText value={project.oneliner} components={portableTextComponents} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )
-    })()}
-  </div>
-))}
-
-
-  </div>
-</section>
 
 <section className="bg-navy py-14 px-6 sm:px-10 text-white" id="justice-journey">
   <div className="max-w-7xl mx-auto">
