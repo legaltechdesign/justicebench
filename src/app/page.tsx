@@ -53,56 +53,28 @@ export default async function Home() {
         }
       }
     }`),
-    sanityClient.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      slug,
-      "issue": issue->{title, slug, icon{asset->{
-          _id,
-          url
-    }}},
-      "oneliner": oneliner,
-      image {
-        asset->{
-          _id,
-          url
-        }
-      },
-      status->{
-        status,
-        description,
-        color,
-        icon {
-          asset->{
-            url
-          }
-       }
-    },
-      category->{
-        _id,
-        title,
-        slug,
-        sortOrder,
-        icon {
-          asset->{
-          _id,
-            url
-          }
-        }
-      },
-       // include task + its category (title/slug/sortOrder/icon)
-    tasks[]->{
-      title,
-      slug,
-      category->{
-        title,
-        slug,
-        sortOrder,
-        icon{asset->{url}}
-      },
-      icon{asset->{url}}
-    }
-    }`),
+sanityClient.fetch(`*[_type == "project"]{
+  _id,
+  title,
+  slug,
+  "issue": issue->{
+  title,
+  slug,
+  icon{asset->{url}},
+  oneliner,
+  description
+},
+  "oneliner": oneliner,
+  image{ asset->{ url } },
+  status->{ status, description, color, icon{asset->{url}} },
+
+  category->{
+    title, slug, sortOrder, icon{asset->{url}}, oneliner
+  },
+
+  // tasks kept for chips (not used for grouping)
+  tasks[]->{ title, slug, icon{asset->{url}} }
+}`),
 
 
     sanityClient.fetch(`*[_type == "dataset"]{
@@ -296,256 +268,263 @@ export default async function Home() {
       Projects
     </h2>
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
-      Explore AI projects organized by legal service area. If you are on a legal team, find the service that matches what your team works on. Each card notes whether the project is at a pilot, prototype, or proposal stage.
+      Explore AI projects organized by service area / legal team. Each card notes whether it's a pilot, prototype, or proposal.
     </p>
 
     {(() => {
-      // 1) Group by service/issue area (project.issue)
+      // -----------------------------
+      // Types to keep TS happy
+      // -----------------------------
+      type Project = {
+  _id: string
+  title: string
+  slug: { current: string }
+  issue?: {
+    title?: string
+    slug?: { current: string }
+    icon?: { asset?: { url?: string } }
+    oneliner?: any            // ← add
+    description?: any         // ← add
+  }
+  image?: { asset?: { url?: string } }
+  oneliner?: any
+  tasks?: { title: string; slug: { current: string }; icon?: { asset?: { url?: string } } }[]
+  category?: { title?: string; slug?: { current: string }; sortOrder?: number; icon?: { asset?: { url?: string } }; oneliner?: any }
+  status?: { status?: string }
+}
+
+
       type IssueGroup = {
         key: string
         title: string
         slug?: string
         iconUrl?: string | null
-        projects: any[]
+        blurb?: any  
+        projects: Project[]
       }
+
+      // -----------------------------
+      // 1) Group projects by ISSUE/TEAM
+      // -----------------------------
       const groupsMap = new Map<string, IssueGroup>()
-
-      const projectsArr = (projects as any[])
-
-      projectsArr.forEach((p: any) => {
+      ;(projects as Project[]).forEach((p) => {
         const key = p.issue?.slug?.current ?? '__uncategorized__'
-      
         const g: IssueGroup =
-    groupsMap.get(key) ??
-    {
-      key,
-      title: p.issue?.title ?? 'Other service areas',
-      slug: p.issue?.slug?.current,
-      iconUrl: p.issue?.icon?.asset?.url ?? null,
-      projects: [] as any[],     // ← prevents `never[]`
-    }
-
-  g.projects.push(p)
-  groupsMap.set(key, g)
-
+          groupsMap.get(key) ??
+          {
+            key,
+            title: p.issue?.title ?? 'Other service areas',
+            slug: p.issue?.slug?.current,
+            iconUrl: p.issue?.icon?.asset?.url ?? null,
+            blurb: p.issue?.oneliner ?? p.issue?.description ?? null,  // ← NEW
+            projects: [] as Project[],
+          }
+        g.projects.push(p)
+        groupsMap.set(key, g)
       })
 
-      // 2) Desired display order (optional): put common teams first, by slug or title
+      // Optional display order for issue/team groups
       const preferredOrder: string[] = [
-        'housing',           // Housing Team services
-        'debt-consumer',     // Debt/Consumer Team services
-        'reentry',
-        'family-law',
-        'estates',
-        'intake-triage-brief-advice',
-        'self-help-education', // Legal Help Website & Guides & self-help Education
-        'court-clerk-case-mgmt',
-        'legal-org-admin',
+        'housing', 'debt-consumer', 'reentry', 'family-law', 'estates',
+        'intake-triage-brief-advice', 'self-help-education', 'court-clerk-case-mgmt', 'legal-org-admin',
       ]
-
       const groups = Array.from(groupsMap.values())
-
       const rank = (g: IssueGroup) => {
         const k = (g.slug ?? g.title ?? '').toLowerCase()
         const bySlug = preferredOrder.indexOf(k)
         if (bySlug !== -1) return bySlug
-        // try title contains
         const titleMatch = preferredOrder.findIndex(hint => (g.title ?? '').toLowerCase().includes(hint))
         return titleMatch !== -1 ? titleMatch + 100 : 999
       }
+      groups.sort((a, b) => rank(a) - rank(b) || a.title.localeCompare(b.title))
 
-      groups.sort((a, b) => {
-        const ra = rank(a)
-        const rb = rank(b)
-        return ra - rb || a.title.localeCompare(b.title)
-      })
-
-      // 3) Render each service/issue group
+      // -----------------------------
+      // 2) Render each ISSUE group
+      //    Sub-group by the PROJECT'S OWN CATEGORY (sorted by categoriesMeta.sortOrder)
+      // -----------------------------
       return groups.map((group) => (
         <div key={group.key} className="mb-16" id={group.slug ?? undefined}>
-          {/* Service/Issue heading */}
-          <div className="flex items-center gap-3 mb-6">
-            {group.iconUrl && (
-              <Image
-                src={group.iconUrl}
-                alt={`${group.title} icon`}
-                width={56}
-                height={56}
-                className="rounded-md"
-              />
-            )}
-            <h3 className="text-3xl font-heading font-semibold text-navy">
-              {group.title}
-            </h3>
-          </div>
-
-=
-{categoriesMeta.map((cat: any) => {
-  // projects in this issue whose OWN category matches this cat
-  const catProjects = group.projects.filter(
-    (p: any) => p.category?.slug?.current === cat.slug?.current
-  )
-  if (!catProjects.length) return null
-
-  return (
-    <div key={`${group.key}-${cat._id}`} className="mb-10">
-      {/* category sub-heading */}
-      <div className="flex items-center gap-2 mb-2">
-        {cat.icon?.asset?.url && (
-          <Image
-            src={cat.icon.asset.url}
-            alt={`${cat.title} icon`}
-            width={28}
-            height={28}
-          />
-        )}
-        <h4 className="text-2xl font-heading font-semibold text-navy">
-          {cat.title}
-        </h4>
-      </div>
-
-      {/* optional short oneliner under the heading */}
-      {cat.oneliner && (
-        <div className="text-sm text-gray-600 mb-3 max-w-3xl">
-          <PortableText value={cat.oneliner} components={portableTextComponents} />
-        </div>
+          {/* Issue/Team heading */}
+          {/* Issue/Team heading with peach band */}
+<div className="mb-6">
+  <div className="bg-peach-extra-light border border-peach rounded-xl p-4">
+    <div className="flex items-center gap-3">
+      {group.iconUrl && (
+        <Image
+          src={group.iconUrl}
+          alt={`${group.title} icon`}
+          width={48}
+          height={48}
+          className="rounded-md"
+        />
       )}
+      <h3 className="text-3xl font-heading font-semibold text-navy">
+        {group.title}
+      </h3>
+    </div>
 
-      {/* cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {catProjects.map((project: any) => (
-          <Link key={project._id} href={`/project/${project.slug.current}`}>
-            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-              {/* status pill */}
-              {project.status?.status && (
-                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
-                  {project.status.status}
-                </span>
-              )}
-              {/* image */}
-              {project.image?.asset?.url && (
-                <Image
-                  src={project.image.asset.url}
-                  alt={project.title}
-                  width={400}
-                  height={220}
-                  className="object-cover w-full h-48"
-                />
-              )}
-              {/* body */}
-              <div className="p-4">
-                <h5 className="text-lg font-heading font-bold text-navy mb-2">
-                  {project.title}
-                </h5>
-                {project.oneliner && (
-                  <div className="text-sm text-gray-700">
-                    <PortableText value={project.oneliner} components={portableTextComponents} />
-                  </div>
-                )}
+    {/* One-line blurb under the title */}
+    {group.blurb && (
+      <div className="mt-1 text-sm text-gray-700 truncate">
+        {/* If your blurb is Portable Text, render it; if it's a string, PT will handle string too */}
+        <PortableText value={group.blurb} components={portableTextComponents} />
+      </div>
+    )}
+  </div>
+</div>
 
-                {/* optional: task chips (purely decorative now) */}
-                {project.tasks?.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {project.tasks.map((t: any) => (
-                      <Link
-                        key={t.slug.current}
-                        href={`/task/${t.slug.current}`}
-                        className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
-                      >
-                        {t.icon?.asset?.url && (
-                          <Image src={t.icon.asset.url} alt={t.title} width={14} height={14} className="mr-1" />
+
+          {/* === Sub-groups by Project Category (ONLY project.category is used) === */}
+          {(() => {
+            // Build a map of categorySlug -> projects (using ONLY project.category)
+            const byCat = new Map<string, Project[]>()
+            group.projects.forEach((p) => {
+              const catSlug = p.category?.slug?.current ?? '__uncategorized__'
+              const arr = byCat.get(catSlug) ?? ([] as Project[])
+              arr.push(p)
+              byCat.set(catSlug, arr)
+            })
+
+            return (
+              <>
+                {/* Known categories in sortOrder via categoriesMeta */}
+                {categoriesMeta.map((cat: any) => {
+                  const catSlug = cat.slug?.current
+                  const catProjects = (catSlug && byCat.get(catSlug)) || []
+                  if (!catProjects.length) return null
+
+                  return (
+                    <div key={`${group.key}-${cat._id}`} className="mb-10">
+                      <div className="flex items-center gap-2 mb-2">
+                        {cat.icon?.asset?.url && (
+                          <Image
+                            src={cat.icon.asset.url}
+                            alt={`${cat.title} icon`}
+                            width={28}
+                            height={28}
+                          />
                         )}
-                        <span>{t.title}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
+                        <h4 className="text-2xl font-heading font-semibold text-navy">
+                          {cat.title}
+                        </h4>
+                      </div>
 
+                      {cat.oneliner && (
+                        <div className="text-sm text-gray-600 mb-3 max-w-3xl">
+                          <PortableText value={cat.oneliner} components={portableTextComponents} />
+                        </div>
+                      )}
 
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {catProjects.map((project: any) => (
+                          <Link key={project._id} href={`/project/${project.slug.current}`}>
+                            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+                              {/* Status pill */}
+                              {project.status?.status && (
+                                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
+                                  {project.status.status}
+                                </span>
+                              )}
 
-})}
+                              {/* Image */}
+                              {project.image?.asset?.url && (
+                                <Image
+                                  src={project.image.asset.url}
+                                  alt={project.title}
+                                  width={400}
+                                  height={220}
+                                  className="object-cover w-full h-48"
+                                />
+                              )}
 
+                              {/* Body */}
+                              <div className="p-4">
+                                <h5 className="text-lg font-heading font-bold text-navy mb-2">
+                                  {project.title}
+                                </h5>
+                                {project.oneliner && (
+                                  <div className="text-sm text-gray-700">
+                                    <PortableText value={project.oneliner} components={portableTextComponents} />
+                                  </div>
+                                )}
 
-   
-{/* === Optional: a final bucket for projects with no task category match === */}
-{(() => {
-  // Build a set of project _ids that appear in any known task category
-  const categorizedIds = new Set<string>(
-    categoriesMeta.flatMap((cat: any) =>
-      group.projects
-        .filter((p: any) =>
-          p.tasks?.some(
-            (t: any) => t?.category?.slug?.current === cat.slug?.current
-          )
-        )
-        .map((p: any) => p._id as string)
-    )
-  )
+                                {/* Task chips (decorative only) */}
+                                {project.tasks?.length ? (
+                                  <div className="flex flex-wrap gap-2 mt-3">
+                                    {project.tasks.map((t: any) => (
+                                      <Link
+                                        key={t.slug.current}
+                                        href={`/task/${t.slug.current}`}
+                                        className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
+                                      >
+                                        {t.icon?.asset?.url && (
+                                          <Image src={t.icon.asset.url} alt={t.title} width={14} height={14} className="mr-1" />
+                                        )}
+                                        <span>{t.title}</span>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                ) : null}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
 
-  {/* === Projects in this issue without a project.category === */}
-{(() => {
-  const otherProjects = group.projects.filter((p: any) => !p.category?.slug?.current)
-  if (!otherProjects.length) return null
+                {/* Uncategorized (no project.category) */}
+                {(() => {
+                  const uncategorized = byCat.get('__uncategorized__') ?? []
+                  if (!uncategorized.length) return null
 
-  return (
-    <div className="mb-10">
-      <h4 className="text-2xl font-heading font-semibold text-navy mb-3">
-        Uncategorized
-      </h4>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {otherProjects.map((project: any) => (
-          <Link key={project._id} href={`/project/${project.slug.current}`}>
-            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
-              {project.status?.status && (
-                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
-                  {project.status.status}
-                </span>
-              )}
-              {project.image?.asset?.url && (
-                <Image
-                  src={project.image.asset.url}
-                  alt={project.title}
-                  width={400}
-                  height={220}
-                  className="object-cover w-full h-48"
-                />
-              )}
-              <div className="p-4">
-                <h5 className="text-lg font-heading font-bold text-navy mb-2">
-                  {project.title}
-                </h5>
-                {project.oneliner && (
-                  <div className="text-sm text-gray-700">
-                    <PortableText value={project.oneliner} components={portableTextComponents} />
-                  </div>
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-})()}
-
-
-
-})()}
-
-
+                  return (
+                    <div className="mb-10">
+                      <h4 className="text-2xl font-heading font-semibold text-navy mb-3">
+                        Uncategorized
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {uncategorized.map((project) => (
+                          <Link key={project._id} href={`/project/${project.slug.current}`}>
+                            <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+                              {project.status?.status && (
+                                <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
+                                  {project.status.status}
+                                </span>
+                              )}
+                              {project.image?.asset?.url && (
+                                <Image
+                                  src={project.image.asset.url}
+                                  alt={project.title}
+                                  width={400}
+                                  height={220}
+                                  className="object-cover w-full h-48"
+                                />
+                              )}
+                              <div className="p-4">
+                                <h5 className="text-lg font-heading font-bold text-navy mb-2">{project.title}</h5>
+                                {project.oneliner && (
+                                  <div className="text-sm text-gray-700">
+                                    <PortableText value={project.oneliner} components={portableTextComponents} />
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })()}
+              </>
+            )
+          })()}
         </div>
       ))
     })()}
   </div>
 </section>
-
 
 
 
