@@ -346,6 +346,7 @@ sanityClient.fetch(`*[_type == "project"]{
         <div key={group.key} className="mb-16" id={group.slug ?? undefined}>
           {/* Issue/Team heading */}
           {/* Issue/Team heading with peach band */}
+
 <div className="mb-6">
   <div className="bg-peach-extra-light border border-peach rounded-xl p-4">
     <div className="flex items-center gap-3">
@@ -363,10 +364,8 @@ sanityClient.fetch(`*[_type == "project"]{
       </h3>
     </div>
 
-    {/* One-line blurb under the title */}
-    {group.blurb && (
-      <div className="mt-1 text-sm text-gray-700 truncate">
-        {/* If your blurb is Portable Text, render it; if it's a string, PT will handle string too */}
+   {group.blurb && (
+      <div className="text-base text-gray-700 leading-snug max-w-3xl">
         <PortableText value={group.blurb} components={portableTextComponents} />
       </div>
     )}
