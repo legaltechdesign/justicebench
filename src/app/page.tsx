@@ -379,8 +379,7 @@ export default async function Home() {
             </h3>
           </div>
 
-          {/* === Sub-groups by Task Category (sorted by sortOrder) === */}
-   {/* === Sub-groups by Project Category (sorted by category.sortOrder) === */}
+=
 {categoriesMeta.map((cat: any) => {
   // projects in this issue whose OWN category matches this cat
   const catProjects = group.projects.filter(
@@ -468,6 +467,9 @@ export default async function Home() {
       </div>
     </div>
   )
+
+
+
 })}
 
 
@@ -828,8 +830,8 @@ export default async function Home() {
 <section className="px-10 pt-0 pb-16">
   <Section
   id="datasets"
-  title="Datasets"
-  description="Are you looking for data to build AI or measure its performance? We are featuring open datasets that can be used for benchmarking quality of AI, or to improve how an AI system works."
+  title="Datasets, Evaluation, and Benchmarks"
+  description="Are you looking for data to build AI or measure its performance? Do you need evaluation protocols or standards to test out LLMs or tools? We are featuring open datasets, evaluation harnesses, benchmarks, and more resources that can be used for testing the performance of models and applications, and to improve how an AI system works."
   items={datasets}
   bg="bg-white" 
 
