@@ -16,7 +16,7 @@ async function safeFetch<T>(query: string) {
 }
 
 type Task = SanityDoc
-type Project = SanityDoc
+
 type Dataset = SanityDoc
 type Guide = SanityDoc
 
@@ -283,9 +283,168 @@ export default async function Home() {
     href="#justice-journey"
     className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition flex justify-center items-center"
   >
-    Learn More about "Access to Justice
+    Learn More about Access to Justice
   </a>
 </section>
+
+
+<section id="projects" className="bg-white py-16 px-6 sm:px-10">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-6xl font-heading font-bold text-navy mb-10 text-center">
+      Projects
+    </h2>
+    <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+      Explore AI projects organized by legal service area. If you are on a legal team, find the service that matches what your team works on. Each card notes whether the project is at a pilot, prototype, or proposal stage.
+    </p>
+
+    {(() => {
+      // 1) Group by service/issue area (project.issue)
+      type IssueGroup = {
+        key: string
+        title: string
+        slug?: string
+        iconUrl?: string | null
+        projects: any[]
+      }
+      const groupsMap = new Map<string, IssueGroup>()
+
+      const projectsArr = (projects as any[])
+
+      projectsArr.forEach((p: any) => {
+        const key = p.issue?.slug?.current ?? '__uncategorized__'
+      
+        const g: IssueGroup =
+    groupsMap.get(key) ??
+    {
+      key,
+      title: p.issue?.title ?? 'Other service areas',
+      slug: p.issue?.slug?.current,
+      iconUrl: p.issue?.icon?.asset?.url ?? null,
+      projects: [] as any[],     // ← prevents `never[]`
+    }
+
+  g.projects.push(p)
+  groupsMap.set(key, g)
+
+      })
+
+      // 2) Desired display order (optional): put common teams first, by slug or title
+      const preferredOrder: string[] = [
+        'housing',           // Housing Team services
+        'debt-consumer',     // Debt/Consumer Team services
+        'reentry',
+        'family-law',
+        'estates',
+        'intake-triage-brief-advice',
+        'self-help-education', // Legal Help Website & Guides & self-help Education
+        'court-clerk-case-mgmt',
+        'legal-org-admin',
+      ]
+
+      const groups = Array.from(groupsMap.values())
+
+      const rank = (g: IssueGroup) => {
+        const k = (g.slug ?? g.title ?? '').toLowerCase()
+        const bySlug = preferredOrder.indexOf(k)
+        if (bySlug !== -1) return bySlug
+        // try title contains
+        const titleMatch = preferredOrder.findIndex(hint => (g.title ?? '').toLowerCase().includes(hint))
+        return titleMatch !== -1 ? titleMatch + 100 : 999
+      }
+
+      groups.sort((a, b) => {
+        const ra = rank(a)
+        const rb = rank(b)
+        return ra - rb || a.title.localeCompare(b.title)
+      })
+
+      // 3) Render each service/issue group
+      return groups.map((group) => (
+        <div key={group.key} className="mb-16" id={group.slug ?? undefined}>
+          {/* Service/Issue heading */}
+          <div className="flex items-center gap-3 mb-6">
+            {group.iconUrl && (
+              <Image
+                src={group.iconUrl}
+                alt={`${group.title} icon`}
+                width={56}
+                height={56}
+                className="rounded-md"
+              />
+            )}
+            <h3 className="text-3xl font-heading font-semibold text-navy">
+              {group.title}
+            </h3>
+          </div>
+
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {group.projects.map((project: any) => (
+              <Link key={project._id} href={`/project/${project.slug.current}`}>
+                <div className="relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+                  {/* Status pill */}
+                  {project.status?.status && (
+                    <span className="absolute top-3 left-3 z-10 rounded-full bg-navy text-white text-xs px-2 py-1">
+                      {project.status.status}
+                    </span>
+                  )}
+
+                  {/* Image */}
+                  {project.image?.asset?.url && (
+                    <Image
+                      src={project.image.asset.url}
+                      alt={project.title}
+                      width={400}
+                      height={220}
+                      className="object-cover w-full h-48"
+                    />
+                  )}
+
+                  {/* Body */}
+                  <div className="p-4">
+                    <h4 className="text-lg font-heading font-bold text-navy mb-2">
+                      {project.title}
+                    </h4>
+                    {project.oneliner && (
+                      <div className="text-sm text-gray-700">
+                        <PortableText value={project.oneliner} components={portableTextComponents} />
+                      </div>
+                    )}
+
+                    {/* Labels: tasks + (optional) category */}
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {project.tasks?.map((t: any) => (
+                        <Link
+                          key={t.slug.current}
+                          href={`/task/${t.slug.current}`}
+                          className="flex items-center bg-peach rounded-full px-3 py-1 text-xs text-navy hover:bg-gray-200"
+                        >
+                          {t.icon?.asset?.url && (
+                            <Image src={t.icon.asset.url} alt={t.title} width={16} height={16} className="mr-1" />
+                          )}
+                          <span>{t.title}</span>
+                        </Link>
+                      ))}
+                      {project.category && (
+                        <span className="flex items-center bg-navy/10 rounded-full px-3 py-1 text-xs text-navy">
+                          {project.category.title}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))
+    })()}
+  </div>
+</section>
+
+
+
+
 
 <section id="projects" className="bg-white py-16 px-6 sm:px-10">
   <div className="max-w-7xl mx-auto">
