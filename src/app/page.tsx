@@ -338,6 +338,57 @@ sanityClient.fetch(`*[_type == "project"]{
       }
       groups.sort((a, b) => rank(a) - rank(b) || a.title.localeCompare(b.title))
 
+
+
+// --- Jump Menu (full-bleed) ---
+const groupsWithProjects = groups.filter(g => g.projects.length > 0)
+
+{/* Full-bleed wrapper */}
+<div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
+  <div className="bg-peach-extra-light border border-[#f5cbbf] py-8">
+    <div className="max-w-7xl mx-auto px-6 sm:px-10">
+      <h3 className="text-xl font-heading font-semibold text-navy mb-4">
+        Jump to an Issue Area
+      </h3>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {groupsWithProjects.map((g) => (
+          <a
+            key={`jump-${g.key}`}
+            href={`#${g.slug ?? ''}`}
+            className="group flex items-center gap-3 rounded-lg bg-white/70 backdrop-blur-sm border border-gray-200 hover:border-navy/40 hover:bg-white transition p-3"
+          >
+            {g.iconUrl ? (
+              <img
+                src={g.iconUrl}
+                alt={`${g.title} icon`}
+                className="h-8 w-8 rounded"
+              />
+            ) : (
+              <div className="h-8 w-8 rounded bg-navy/10" />
+            )}
+            <div className="flex-1">
+              <div className="text-sm font-semibold text-navy leading-tight">
+                {g.title}
+              </div>
+              {g.slug && (
+                <div className="text-[11px] text-gray-600">
+                  View {g.title} AI Projects
+                </div>
+              )}
+            </div>
+            <span className="ml-auto text-navy/50 group-hover:text-navy">↘</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+// --- end Jump Menu ---
+
+
+
+
       // -----------------------------
       // 2) Render each ISSUE group
       //    Sub-group by the PROJECT'S OWN CATEGORY (sorted by categoriesMeta.sortOrder)
