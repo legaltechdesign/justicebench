@@ -283,7 +283,7 @@ sanityClient.fetch(`*[_type == "project"]{
     title?: string
     slug?: { current: string }
     icon?: { asset?: { url?: string } }
-    oneliner?: any            // ← add
+    oneLiner?: any            // ← add
     description?: any         // ← add
   }
   image?: { asset?: { url?: string } }
@@ -316,7 +316,7 @@ sanityClient.fetch(`*[_type == "project"]{
             title: p.issue?.title ?? 'Other service areas',
             slug: p.issue?.slug?.current,
             iconUrl: p.issue?.icon?.asset?.url ?? null,
-            blurb: p.issue?.oneliner ?? p.issue?.description ?? null,  // ← NEW
+            blurb: p.issue?.oneLiner ?? null,  // ← NEW
             projects: [] as Project[],
           }
         g.projects.push(p)
@@ -360,7 +360,7 @@ sanityClient.fetch(`*[_type == "project"]{
         />
       )}
       <h3 className="text-3xl font-heading font-semibold text-navy">
-        {group.title}
+        {group.title} AI Projects
       </h3>
     </div>
 
