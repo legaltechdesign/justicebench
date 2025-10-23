@@ -25,7 +25,14 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'category' }],
     }),
-    
+    defineField({
+  name: 'code',
+  title: 'Task Code / ID',
+  type: 'string',
+  description: 'Short identifier (e.g., TS-01-01) for use in taxonomy lists and references.',
+  validation: Rule => Rule.max(20),
+}),
+
     defineField({
       name: 'oneLiner',
       title: 'Brief Description',

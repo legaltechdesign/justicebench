@@ -779,84 +779,134 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
   </section>.
 
  
+<section id="tasks" className="bg-peach-extra-light px-10 py-16">
+  <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Advance Access to Justice</h2>
 
-      <section id="tasks" className="bg-peach-extra-light px-10 py-16">
-        <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Advance Access to Justice</h2>
-        <div className="text-gray-600 mb-10 ">
-          <div>
-            <p>
-              <strong>Across all different problem types, stakeholders, and geographies, what tasks might AI do to improve how people get legal help & how providers serve people?</strong></p> 
-              <p>For the various stages of a person's justice journey, we have documented the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
-            </p>
-            <p className="mt-4">
-              These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
-            </p>
-          </div>
-
-        </div>
-        <figure className="my-8">
-  <Image
-    src="/images/task-workflow.png"
-    alt="AI Tasks along a justice journey overview"
-    width={2400}            // any large intrinsic width is fine
-    height={1400}           // keep the aspect ratio roughly correct
-    className="w-full h-auto rounded-xl shadow"
-    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
-    priority                 // optional: prioritize this image
-  />
-  <figcaption className="text-center text-xs text-gray-500 mt-2">
-    The 7 categories of tasks that people and providers do along the justice journey, where AI could help.
-  </figcaption>
-  </figure>
-  
-  {tasksByCategory.map((category: any) => (
-  <div key={category._id} id={category.slug?.current} className="mb-12">
-   <div className="flex items-center gap-3 mb-2">
-      {(category.icon?.asset?.url || category.image?.asset?.url) && (
-        <Image
-          src={category.icon?.asset?.url ?? category.image?.asset?.url}
-          alt={`${category.title} icon`}
-          width={60}
-          height={60}
-          className="rounded"
-        />
-      )}
-      <h3 className="text-3xl font-heading font-semibold text-navy">
-        {category.title}
-      </h3>
+  <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+    <div>
+      <p>
+        <strong>Across all different problem types and geographies, what tasks can AI do to improve how people get legal help & how providers serve people?</strong>
+      </p>
+      <p>
+        For the various stages of a person's justice journey, we have documented the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
+      </p>
+      <p className="mt-4">
+        These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
+      </p>
     </div>
-    {typeof category.description === 'string' && category.description && (
-      <p className="text-gray-600 mb-4">{category.description}</p>
-    )}
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {category.tasks.map((task: any) => (
-        task.slug?.current && (
-          <Link key={task._id} href={`/task/${task.slug.current}`}>
-            <div className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow">
-              {task.image?.asset?.url && (
-                <Image
-                  src={task.image.asset.url}
-                  alt={task.title}
-                  width={400}
-                  height={200}
-                  className="object-cover w-full h-40 rounded mb-4"
-                />
-              )}
-              <h4 className="text-xl font-heading text-navy font-bold mb-2 leading-tight">{task.title}</h4>
-              {task.oneliner && (
-                <div className="text-sm text-gray-700 leading-snug">
-                  <PortableText value={task.oneliner} />
-                </div>
-              )}
-            </div>
-          </Link>
-        )
-      ))}
+    <div>
+      <p>
+        The 7 main clusters of Access to Justice tasks came from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
+      </p>
+      <ul className="list-disc pl-5 mt-2">
+        <li>User: Getting Brief Help</li>
+        <li>Provider: Providing Brief Help</li>
+        <li>User-Provider: Service Onboarding</li>
+        <li>User-Provider: Work Product</li>
+        <li>Provider: Case Management</li>
+        <li>Provider: Administration, Ops, & Strategy</li>
+        <li>Provider: Tech Tooling</li>
+      </ul>
+      <p className="mt-4">Explore each in detail below.</p>
     </div>
   </div>
-))}
 
-      </section>
+  {/* === Taxonomy-style list by Task Category === */}
+  {tasksByCategory.map((category: any) => {
+    const hasTasks = Array.isArray(category.tasks) && category.tasks.length > 0
+    if (!hasTasks) return null
+
+    return (
+      <div key={category._id} id={category.slug?.current} className="mb-12">
+        {/* Category heading with icon + title */}
+        <div className="flex items-center gap-3 mb-3">
+          {category.icon?.asset?.url && (
+            <Image
+              src={category.icon.asset.url}
+              alt={`${category.title} icon`}
+              width={36}
+              height={36}
+              className="rounded"
+            />
+          )}
+          <h3 className="text-3xl font-heading font-semibold text-navy">
+            {category.title}
+          </h3>
+        </div>
+        {category.description && (
+          <p className="text-gray-600 mb-4 max-w-3xl">{category.description}</p>
+        )}
+
+        {/* Full-width rows */}
+        <div className="space-y-3">
+          {category.tasks.map((task: any) => {
+            const href = task.slug?.current ? `/task/${task.slug.current}` : undefined
+            return (
+              <Link
+                key={task._id}
+                href={href ?? '#'}
+                className={`block rounded-xl border bg-white hover:shadow-md transition ${
+                  href ? 'cursor-pointer' : 'pointer-events-none opacity-70'
+                }`}
+              >
+                <div className="p-4 md:p-5 flex items-start gap-4">
+                  {/* Icon / image */}
+                  {task.image?.asset?.url ? (
+                    <Image
+                      src={task.image.asset.url}
+                      alt={task.title}
+                      width={80}
+                      height={80}
+                      className="rounded-md object-cover flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 rounded-md bg-peach-extra-light border flex-shrink-0" />
+                  )}
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    {/* Title + code badge */}
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <h4 className="text-xl font-heading font-bold text-navy leading-tight">
+                        {task.title}
+                      </h4>
+                      {task.code && (
+                        <span className="inline-block text-xs font-semibold bg-navy text-white px-2 py-0.5 rounded-full">
+                          {task.code}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Brief description (oneliner preferred; fallback to description) */}
+                    <div className="text-sm text-gray-700 line-clamp-2">
+                      {Array.isArray(task.oneliner) ? (
+                        <PortableText value={task.oneliner} components={portableTextComponents} />
+                      ) : task.oneliner ? (
+                        <span>{task.oneliner}</span>
+                      ) : Array.isArray(task.description) ? (
+                        <PortableText value={task.description} components={portableTextComponents} />
+                      ) : task.description ? (
+                        <span>{task.description}</span>
+                      ) : null}
+                    </div>
+
+                    {/* Read more */}
+                    {href && (
+                      <div className="mt-2">
+                        <span className="text-navy text-sm underline">Read more →</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    )
+  })}
+</section>
+
 
      
      
