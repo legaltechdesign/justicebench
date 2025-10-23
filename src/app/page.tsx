@@ -219,7 +219,7 @@ sanityClient.fetch(`*[_type == "project"]{
     <div className="bg-white p-6 rounded-xl shadow-md">
       <Link href="#datasets">
         <div className="text-4xl mb-4" aria-hidden>📊</div>
-        <h3 className="text-3xl font-bold text-navy mb-2">Datasets</h3>
+        <h3 className="text-3xl font-bold text-navy mb-2">Data & Eval</h3>
       </Link>
       <p className="text-gray-700">
         Share or use data to train, evaluate, and improve legal AI projects and performance standards.
