@@ -61,7 +61,7 @@ sanityClient.fetch(`*[_type == "project"]{
   title,
   slug,
   icon{asset->{url}},
-  oneliner,
+  oneLiner,
   description
 },
   "oneliner": oneliner,
