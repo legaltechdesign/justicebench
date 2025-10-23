@@ -28,16 +28,33 @@ export default function TopNav() {
           {isOpen ? <X /> : <Menu />}
         </button>
 
-        <div className={`sm:flex gap-6 items-center ${isOpen ? "block" : "hidden"}`}>
-          <button onClick={() => handleNav("#tasks")} className="block py-2 text-navy font-heading hover:underline">
-            Tasks
-          </button>
-          <button onClick={() => handleNav("#projects")} className="block py-2 text-navy font-heading hover:underline">
-            Projects
-          </button>
-          <button onClick={() => handleNav("#datasets")} className="block py-2 text-navy font-heading hover:underline">
-            Datasets
-          </button>
+    <div className={`sm:flex gap-6 items-center ${isOpen ? "block" : "hidden"}`}>
+  <button
+    onClick={() => handleNav("#projects")}
+    className="block py-2 text-navy font-heading hover:underline"
+  >
+    Projects
+  </button>
+  <button
+    onClick={() => handleNav("#tasks")}
+    className="block py-2 text-navy font-heading hover:underline"
+  >
+    Tasks
+  </button>
+  
+  <button
+    onClick={() => handleNav("#datasets")}
+    className="block py-2 text-navy font-heading hover:underline"
+  >
+    Datasets & Eval
+  </button>
+  <button
+    onClick={() => handleNav("#guides")}
+    className="block py-2 text-navy font-heading hover:underline"
+  >
+    Guides
+  </button>
+
 
           {/* Persistent Dropdown */}
           <div

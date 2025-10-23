@@ -7,7 +7,7 @@ export default function AboutPage() {
           technologists, and public service leaders evaluate and build better AI systems for civil legal help.
         </p>
         <div className="mt-4 bg-peach-light text-navy text-sm font-medium px-4 py-2 rounded-md max-w-xl mx-auto">
-    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a>.
+    🚧 This platform is still under development. Please explore and send us feedback, contributions, and ideas to <a href="mailto:legaldesignlab@law.stanford.edu" className="underline">legaldesignlab@law.stanford.edu</a> or <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline">by filling out this form</a>.
   </div>
   <p></p>
         <p className="mb-6 text-gray-700">

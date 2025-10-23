@@ -34,9 +34,9 @@ export default defineType({
     defineField({
       name: 'oneLiner',
       title: 'One-liner Explanation',
-      type: 'string',
+      type: 'array',
+        of: [{ type: 'block' }],
       description: 'A short summary or tagline for this legal issue',
-      validation: Rule => Rule.max(160),
       group: 'content'
     }),
     defineField({
