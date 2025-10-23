@@ -94,9 +94,11 @@ export default async function IssuePage({
           </div>
         )}
         <div className="w-full md:w-3/4 flex flex-col justify-center gap-3">
-          {issue.oneLiner && (
-            <p className="text-lg text-gray-800">{issue.oneLiner}</p>
-          )}
+        {issue.oneLiner && (
+  <div className="text-lg text-gray-800">
+    <CustomPortableText value={issue.oneLiner} />
+  </div>
+)}
           {/* Hero tags (subtopics) */}
           {issue.heroTags?.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -176,8 +178,10 @@ export default async function IssuePage({
               <div key={idx} className="bg-white border rounded-lg shadow p-4">
                 <h3 className="text-lg font-bold text-navy leading-snug">{w.title}</h3>
                 {w.oneLiner && (
-                  <p className="mt-1 text-sm text-gray-700">{w.oneLiner}</p>
-                )}
+  <div className="mt-1 text-sm text-gray-700">
+    <CustomPortableText value={w.oneLiner} />
+  </div>
+)}
                 {w.sampleQuote && (
                   <figure className="mt-3 rounded bg-peach-extra-light/50 border p-3 text-sm">
                     <blockquote>“{w.sampleQuote}”</blockquote>
