@@ -908,7 +908,7 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
                     {/* Read more */}
                     {href && (
                       <div className="mt-2">
-                        <span className="text-navy text-sm underline">Read more →</span>
+                        <span className="text-navy text-sm underline">Read more about this task →</span>
                       </div>
                     )}
                   </div>
