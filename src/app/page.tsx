@@ -45,6 +45,7 @@ export default async function Home() {
       _id,
       title,
       slug,
+        icon{asset->{url}},  
       "oneliner": oneLiner,
       image {
         asset->{
@@ -107,7 +108,9 @@ sanityClient.fetch(`*[_type == "project"]{
         title,
         slug,
         sortOrder,
+        code,   
         "oneliner": oneLiner,
+        icon{asset->{url}},
         image {
           asset->{
             _id,
@@ -856,8 +859,8 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
     <Image
       src={task.icon.asset.url}
       alt={`${task.title} icon`}
-      width={40}
-      height={40}
+      width={64}
+      height={64}
       className="object-contain"
     />
   </div>

@@ -46,7 +46,7 @@ export default function TopNav() {
     onClick={() => handleNav("#datasets")}
     className="block py-2 text-navy font-heading hover:underline"
   >
-    Datasets & Eval
+    Data & Eval
   </button>
   <button
     onClick={() => handleNav("#guides")}
