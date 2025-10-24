@@ -830,7 +830,7 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
             />
           )}
           <h3 className="text-3xl font-heading font-semibold text-navy">
-            {category.title}
+            {category.title} Tasks
           </h3>
         </div>
         {category.description && (
@@ -851,17 +851,29 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
               >
                 <div className="p-4 md:p-5 flex items-start gap-4">
                   {/* Icon / image */}
-                  {task.image?.asset?.url ? (
-                    <Image
-                      src={task.image.asset.url}
-                      alt={task.title}
-                      width={80}
-                      height={80}
-                      className="rounded-md object-cover flex-shrink-0"
-                    />
-                  ) : (
-                    <div className="w-20 h-20 rounded-md bg-peach-extra-light border flex-shrink-0" />
-                  )}
+{task.icon?.asset?.url ? (
+  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-peach-extra-light flex-shrink-0">
+    <Image
+      src={task.icon.asset.url}
+      alt={`${task.title} icon`}
+      width={40}
+      height={40}
+      className="object-contain"
+    />
+  </div>
+) : task.image?.asset?.url ? (
+  <Image
+    src={task.image.asset.url}
+    alt={task.title}
+    width={80}
+    height={80}
+    className="rounded-md object-cover flex-shrink-0"
+  />
+) : (
+  <div className="w-16 h-16 rounded-full bg-peach-extra-light border flex-shrink-0" />
+)}
+
+
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
