@@ -23,13 +23,15 @@ type Row = {
 
 /** ---- Fetch Airtable with simple pagination ---- */
 async function fetchAirtableAll(): Promise<AirtableRecord[]> {
-  const key = process.env.AIRTABLE_API_KEY!
-  const base = process.env.AIRTABLE_BASE_ID!
+  const token = process.env.AIRTABLE_PAT
+  const base = process.env.AIRTABLE_BASE_ID
   const table = encodeURIComponent(process.env.AIRTABLE_TABLE || 'Tasks')
   const view = encodeURIComponent(process.env.AIRTABLE_VIEW || 'Grid view')
 
-  if (!key || !base) {
-    console.warn('Airtable env missing; set AIRTABLE_API_KEY and AIRTABLE_BASE_ID')
+  if (!token || !base) {
+    console.warn(
+      'Airtable env missing — set AIRTABLE_PAT and AIRTABLE_BASE_ID in .env.local (and in Vercel env for production).'
+    )
     return []
   }
 
@@ -38,23 +40,34 @@ async function fetchAirtableAll(): Promise<AirtableRecord[]> {
 
   while (url) {
     const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${key}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+      // keep as no-store for fresh reads in dev; revalidate controls page caching
       cache: 'no-store',
     })
+
     if (!res.ok) {
-      console.error('Airtable fetch error', await res.text())
+      const text = await res.text()
+      console.error('Airtable fetch error', {
+        status: res.status,
+        statusText: res.statusText,
+        url,
+        body: text,
+      })
       break
     }
+
     const data = (await res.json()) as AirtableResp
     all.push(...data.records)
-    if (data.offset) {
-      url = `https://api.airtable.com/v0/${base}/${table}?view=${view}&offset=${data.offset}`
-    } else {
-      url = ''
-    }
+    url = data.offset
+      ? `https://api.airtable.com/v0/${base}/${table}?view=${view}&offset=${data.offset}`
+      : ''
   }
   return all
 }
+
 
 /** ---- Fetch minimal Sanity task slugs so we can link rows ---- */
 async function fetchSanityTaskSlugMap() {

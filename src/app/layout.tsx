@@ -3,6 +3,7 @@ import './globals.css'
 import { Geist, Geist_Mono, League_Spartan } from 'next/font/google'
 import TopNav from '@/components/TopNav'
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/react';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
@@ -47,6 +48,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
       </body>
+       <body>
+        {children}
+        <Analytics /> {/* counts visitors & pageviews */}
+      </body>
+      
     </html>
   )
 }
+
+
+
+
+
