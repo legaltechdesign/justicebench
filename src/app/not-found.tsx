@@ -5,7 +5,7 @@ export default function NotFound() {
       <div className="max-w-xl text-center">
         <h1 className="text-5xl font-heading font-bold text-navy mb-3">Page not found</h1>
         <p className="text-gray-700 mb-6">
-          The page you’re looking for doesn’t exist or was moved.
+          Sorry, the page you’re looking for doesn’t exist or was moved.
         </p>
         <a href="/" className="underline text-navy">Go home</a>
       </div>
