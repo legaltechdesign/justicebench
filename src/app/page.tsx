@@ -810,7 +810,7 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
         <li>Provider: Administration, Ops, & Strategy</li>
         <li>Provider: Tech Tooling</li>
       </ul>
-      <p className="mt-4">Explore each in detail below.</p>
+      <p className="mt-4">Explore each in detail below, or visit our <a href="https://www.justicebench.org/task">Task Taxonomy page.</a></p>
     </div>
   </div>
 
