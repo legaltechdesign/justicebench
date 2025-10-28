@@ -48,10 +48,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
       </body>
-       <body>
-        {children}
-        <Analytics /> {/* counts visitors & pageviews */}
-      </body>
       
     </html>
   )
