@@ -191,7 +191,7 @@ sanityClient.fetch(`*[_type == "project"]{
     How to Use JusticeBench
   </h2>
   <p className="text-white text-center max-w-4xl mx-auto mb-10">
-    JusticeBench is an open platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
+    JusticeBench is an open R&D platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
 
   {/* 2 columns on md, 4 on lg */}
