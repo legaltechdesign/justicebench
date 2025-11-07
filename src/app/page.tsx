@@ -391,6 +391,11 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
 
 
 
+// Helper: trim "Legal Services" or "Services" suffix for cleaner display
+function cleanIssueName(title?: string): string {
+  if (!title) return ''
+  return title.replace(/\s*(Legal\s+Services|Services)\s*$/i, '').trim()
+}
 
       // -----------------------------
       // 2) Render each ISSUE group
@@ -463,9 +468,10 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
       height={28}
     />
   )}
-  <h4 className="text-2xl font-heading font-semibold text-navy">
-    AI for {cat.title} for {group.title}
-  </h4>
+ <h4 className="text-2xl font-heading font-semibold text-navy">
+  AI for {cat.title} for {cleanIssueName(group.title)}
+</h4>
+
 </div>
 
 
