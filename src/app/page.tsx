@@ -401,34 +401,36 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
           {/* Issue/Team heading */}
           {/* Issue/Team heading with peach band */}
 
-<div className="mb-6">
-  <div className="bg-peach-extra-light border border-peach rounded-xl p-4">
-    <div className="flex items-center gap-3">
-      {group.iconUrl && (
-        <Image
-          src={group.iconUrl}
-          alt={`${group.title} icon`}
-          width={48}
-          height={48}
-          className="rounded-md"
-        />
+{/* === Issue banner (full-bleed) === */}
+<div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-8" id={group.slug ?? undefined}>
+  <div className="bg-peach-extra-light/70 border-y border-peach">
+    <div className="max-w-7xl mx-auto px-6 sm:px-10 py-5">
+      <div className="flex items-center gap-3">
+        {group.iconUrl ? (
+          <Image
+            src={group.iconUrl}
+            alt={`${group.title} icon`}
+            width={48}
+            height={48}
+            className="rounded-md"
+          />
+        ) : null}
+        <h3 className="text-3xl md:text-4xl font-heading font-semibold text-navy">
+          {group.title} AI Projects
+        </h3>
+      </div>
+
+      {group.blurb && (
+        <div className="mt-2 text-base text-gray-700 max-w-4xl">
+          {typeof group.blurb === 'string'
+            ? group.blurb
+            : <PortableText value={group.blurb} components={portableTextComponents} />}
+        </div>
       )}
-      <h3 className="text-3xl font-heading font-semibold text-navy">
-        {group.title} AI Projects
-      </h3>
     </div>
-
-   {group.blurb && (
-      <p className="text-base text-gray-700 mt-1">
-  {typeof group.blurb === 'string'
-    ? group.blurb
-    : <PortableText value={group.blurb} components={portableTextComponents} />}
-</p>
-
-      
-    )}
   </div>
 </div>
+
 
 
           {/* === Sub-groups by Project Category (ONLY project.category is used) === */}
@@ -453,18 +455,19 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
                   return (
                     <div key={`${group.key}-${cat._id}`} className="mb-10">
                       <div className="flex items-center gap-2 mb-2">
-                        {cat.icon?.asset?.url && (
-                          <Image
-                            src={cat.icon.asset.url}
-                            alt={`${cat.title} icon`}
-                            width={28}
-                            height={28}
-                          />
-                        )}
-                        <h4 className="text-2xl font-heading font-semibold text-navy">
-                          {cat.title}
-                        </h4>
-                      </div>
+  {cat.icon?.asset?.url && (
+    <Image
+      src={cat.icon.asset.url}
+      alt={`${cat.title} icon`}
+      width={28}
+      height={28}
+    />
+  )}
+  <h4 className="text-2xl font-heading font-semibold text-navy">
+    AI for {cat.title} for {group.title}
+  </h4>
+</div>
+
 
                       {cat.oneliner && (
                         <div className="text-sm text-gray-600 mb-3 max-w-3xl">
