@@ -343,7 +343,7 @@ sanityClient.fetch(`*[_type == "project"]{
 
 
 
-// --- Jump Menu (full-bleed) ---
+// --- Jump Menu (full -bleed) ---
 const groupsWithProjects = groups.filter(g => g.projects.length > 0)
 
 {/* Full-bleed wrapper  */}
