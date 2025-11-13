@@ -346,7 +346,7 @@ sanityClient.fetch(`*[_type == "project"]{
 // --- Jump Menu (full-bleed) ---
 const groupsWithProjects = groups.filter(g => g.projects.length > 0)
 
-{/* Full-bleed wrapper */}
+{/* Full-bleed wrapper  */}
 <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
   <div className="bg-peach-extra-light border border-[#f5cbbf] py-8">
     <div className="max-w-7xl mx-auto px-6 sm:px-10">
@@ -464,8 +464,8 @@ function cleanIssueName(title?: string): string {
     <Image
       src={cat.icon.asset.url}
       alt={`${cat.title} icon`}
-      width={28}
-      height={28}
+      width={48}
+      height={48}
     />
   )}
  <h4 className="text-2xl font-heading font-semibold text-navy">
