@@ -273,6 +273,62 @@ sanityClient.fetch(`*[_type == "project"]{
     <p className="text-gray-700 mb-12 text-center max-w-3xl mx-auto">
       What kinds of AI projects are already in the works to advance access to justice? Explore AI projects organized by the legal need / service area or team that the project relates to. Each card notes the project's status -- whether it's a pilot, prototype, or proposal. If you know of other projects aside from those here, please tell us about them!
     </p>
+{/* --- Jump menu: issue areas with projects --- */}
+{(() => {
+  const groupsMap = new Map()
+  ;(projects as any[]).forEach((p) => {
+    const key = p.issue?.slug?.current ?? '__uncategorized__'
+    if (!groupsMap.has(key)) {
+      groupsMap.set(key, {
+        key,
+        title: p.issue?.title ?? 'Other service areas',
+        slug: p.issue?.slug?.current,
+        iconUrl: p.issue?.icon?.asset?.url ?? null,
+        projects: [] as any[],
+      })
+    }
+    groupsMap.get(key).projects.push(p)
+  })
+  const groups = Array.from(groupsMap.values()).filter((g) => g.projects.length > 0)
+
+  return (
+    <div className="my-8 -mx-6 sm:-mx-10">
+      <section
+        aria-label="Jump to issue areas"
+        className="bg-peach-extra-light border-t border-b border-peach py-6"
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-10">
+          <h3 className="text-lg font-heading font-semibold text-navy mb-4 text-center">
+            Jump to an Issue Area
+          </h3>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+            {groups.map((g) => (
+              <Link
+                key={g.key}
+                href={`#${g.slug ?? g.key}`}
+                className="group flex items-center gap-2 bg-white/70 hover:bg-white border rounded-lg px-3 py-2 transition"
+              >
+                {g.iconUrl && (
+                  <Image
+                    src={g.iconUrl}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="w-6 h-6 rounded-sm"
+                  />
+                )}
+                <span className="text-sm font-medium text-navy group-hover:underline line-clamp-2">
+                  {g.title}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+})()}
 
     {(() => {
       // -----------------------------
