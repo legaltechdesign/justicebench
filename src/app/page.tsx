@@ -61,6 +61,7 @@ sanityClient.fetch(`*[_type == "project"]{
   "issue": issue->{
   title,
   slug,
+   sortOrder,      
   icon{asset->{url}},
   oneLiner,
   description
@@ -284,6 +285,7 @@ sanityClient.fetch(`*[_type == "project"]{
         title: p.issue?.title ?? 'Other service areas',
         slug: p.issue?.slug?.current,
         iconUrl: p.issue?.icon?.asset?.url ?? null,
+        sortOrder: p.issue?.sortOrder ?? 9999, 
         projects: [] as any[],
       })
     }
@@ -344,6 +346,7 @@ sanityClient.fetch(`*[_type == "project"]{
     icon?: { asset?: { url?: string } }
     oneLiner?: any            // ← add
     description?: any         // ← add
+    sortOrder?: number
   }
   image?: { asset?: { url?: string } }
   oneliner?: any
@@ -359,6 +362,7 @@ sanityClient.fetch(`*[_type == "project"]{
         slug?: string
         iconUrl?: string | null
         blurb?: any  
+        sortOrder?: number 
         projects: Project[]
       }
 
@@ -376,6 +380,7 @@ sanityClient.fetch(`*[_type == "project"]{
             slug: p.issue?.slug?.current,
             iconUrl: p.issue?.icon?.asset?.url ?? null,
             blurb: p.issue?.oneLiner ?? null,  // ← NEW
+            sortOrder: p.issue?.sortOrder ?? 9999,  
             projects: [] as Project[],
           }
         g.projects.push(p)
@@ -395,7 +400,12 @@ sanityClient.fetch(`*[_type == "project"]{
         const titleMatch = preferredOrder.findIndex(hint => (g.title ?? '').toLowerCase().includes(hint))
         return titleMatch !== -1 ? titleMatch + 100 : 999
       }
-      groups.sort((a, b) => rank(a) - rank(b) || a.title.localeCompare(b.title))
+      groups.sort((a, b) => {
+  const ao = a.sortOrder ?? 9999
+  const bo = b.sortOrder ?? 9999
+  if (ao !== bo) return ao - bo
+  return (a.title ?? '').localeCompare(b.title ?? '')
+})
 
 
 
