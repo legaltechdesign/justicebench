@@ -464,12 +464,12 @@ function cleanIssueName(title?: string): string {
 }
 
       // -----------------------------
-      // 2) Render each ISSUE group
+      // 2) Render each ISSUE groups
       //    Sub-group by the PROJECT'S OWN CATEGORY (sorted by categoriesMeta.sortOrder)
       // -----------------------------
       return groups.map((group) => (
         <div key={group.key} className="mb-16" id={group.slug ?? undefined}>
-          {/* Issue/Team heading */}
+          {/* Issue/Team heading   */}
           {/* Issue/Team heading with peach band */}
 
 {/* === Issue banner (full-bleed) === */}
