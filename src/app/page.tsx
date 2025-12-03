@@ -457,7 +457,7 @@ const groupsWithProjects = groups.filter(g => g.projects.length > 0)
 
 
 
-// Helper: trim "Legal Services" or "Services" suffix for cleaner display
+// Helper: "Legal Services" or "Services" suffix for cleaner display
 function cleanIssueName(title?: string): string {
   if (!title) return ''
   return title.replace(/\s*(Legal\s+Services|Services)\s*$/i, '').trim()
