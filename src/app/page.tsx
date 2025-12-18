@@ -175,7 +175,7 @@ sanityClient.fetch(`*[_type == "project"]{
       </p>
 
       <div className="mt-5 inline-flex items-center gap-2 rounded-md bg-peach-light px-4 py-2 text-sm font-medium text-navy">
-        <span>🚧 This platform is still under development.</span>
+        <span>🚧 This platform is still under development. Please give us your feedback and ideas!</span>
         <Link
           href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
           className="underline underline-offset-2"
