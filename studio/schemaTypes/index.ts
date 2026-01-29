@@ -1,3 +1,4 @@
+// schemas/index.ts
 import project from './project'
 import task from './task'
 import dataset from './dataset'
@@ -9,5 +10,15 @@ import issue from './issue'
 import jurisdiction from './jurisdiction'
 import benchmark from './benchmark'
 
-export const schemaTypes = [task, project, dataset, guide, evaluation, category, status, issue, jurisdiction, benchmark] 
-
+export const schemaTypes = [
+  task, 
+  project, 
+  dataset, 
+  guide, 
+  evaluation, 
+  category, 
+  status, 
+  issue, 
+  jurisdiction, 
+  benchmark
+]

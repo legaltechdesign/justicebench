@@ -1,9 +1,10 @@
 const guide = {
     name: 'guide',
-    title: 'Guide',
+    title: 'Resources',
     type: 'document',
+    description: 'Links to external guides, PDFs, toolkits from other organizations',
     fields: [
-      { name: 'title', title: 'Guide Title', type: 'string' },
+      { name: 'title', title: 'Resource Title', type: 'string' },
       {
         name: 'sortOrder',
         title: 'Order',
@@ -27,7 +28,7 @@ const guide = {
           options: { hotspot: true },
         },],
     },
-      { name: 'link', title: 'Link to Full Guide', type: 'url' },
+      { name: 'link', title: 'Link to Full Resource', type: 'url' },
       { name: 'image', title: 'Illustration', type: 'image', options: { hotspot: true } },
     ],
   }
