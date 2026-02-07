@@ -204,7 +204,7 @@ sanityClient.fetch(`*[_type == "project"]{
         <h3 className="text-3xl font-bold text-navy mb-2">Projects</h3>
       </Link>
       <p className="text-gray-700">
-        Look at prototypes, pilots, and proposals others are building to find inspiration, collaborators, or models.
+        Explore prototypes, pilots, and proposals others are building to find inspiration, collaborators, or models.
       </p>
     </div>
 
