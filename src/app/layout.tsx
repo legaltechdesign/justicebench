@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               . All rights reserved.
             </p>
             <p className="text-gray-600">
-              This site provides resources to legal providers, but is not meant for people
+              This site provides resources to legal providers, but it is not meant for people
               seeking help for legal problems. If you are looking for legal help,{' '}
               <a href="https://www.lawhelp.org/">please visit this website to find groups that can help you.</a>
             </p>
