@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { PortableText, PortableTextComponents  } from '@portabletext/react'
 import Link from 'next/link'
 import { portableTextComponents } from '@/components/CustomPortableText'
+import { DatasetGrid } from '@/components/DatasetGrid'
 
 
 async function safeFetch<T>(query: string) {
@@ -35,6 +36,7 @@ interface SanityDoc {
     }
   }
   link?: string
+  datasetType?: string
 }
 
 // Fetch all categories in parallel
@@ -83,6 +85,7 @@ sanityClient.fetch(`*[_type == "project"]{
       _id,
       title,
       slug,
+      datasetType,
       "oneliner": oneliner,
       image {
         asset->{
@@ -1033,23 +1036,24 @@ function cleanIssueName(title?: string): string {
 
      
      
-<section className="px-10 pt-0 pb-16">
-  <Section
-  id="datasets"
-  title="Datasets, Evaluation, and Benchmarks"
-  description="Are you looking for data to build AI or measure its performance? Do you need evaluation protocols or standards to test out LLMs or tools? We are featuring open datasets, evaluation harnesses, benchmarks, and more resources that can be used for testing the performance of models and applications, and to improve how an AI system works."
-  items={datasets}
-  bg="bg-white" 
+<section className="bg-navy px-10 py-16" id="datasets">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-5xl font-heading font-bold text-white mb-4 text-center">
+      Data &amp; Evaluation
+    </h2>
+    <p className="text-white/80 text-center max-w-3xl mx-auto mb-10">
+      Datasets, benchmarks, evaluation protocols, taxonomies, and leaderboards for building and testing legal AI. Use these to train models, measure performance, and establish quality standards.
+    </p>
 
-  baseUrl="/dataset"
-/>
+    <DatasetGrid datasets={datasets} />
 
-  <p className="text-xl text-gray-700 max-w-2xl">
-    <strong>Please share datasets</strong> with JusticeBench at{' '}
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-navy">
-      this form.
-    </a>
-  </p>
+    <p className="text-lg text-white/70 max-w-2xl mt-8">
+      <strong className="text-white">Please share datasets</strong> with JusticeBench at{' '}
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-peach hover:text-white">
+        this form.
+      </a>
+    </p>
+  </div>
 </section>
 
 <section className="bg-peach-extra-light px-10 pt-0 pb-16">
