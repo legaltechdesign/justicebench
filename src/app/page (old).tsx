@@ -171,18 +171,11 @@ sanityClient.fetch(`*[_type == "project"]{
       </h1>
 
       <p className="mt-3 text-base md:text-xl text-gray-700">
-        Explore What&rsquo;s Being Built in Justice AI
-      </p>
-
-      <p className="mt-3 text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
-        Discover AI projects across the access to justice landscape, understand where they fit in the justice journey, and find data and evaluation tools to know if they work. JusticeBench is the discovery layer of the{' '}
-        <Link href="https://legalhelpcommons.org" className="text-navy font-semibold underline underline-offset-2 hover:text-navy/80">
-          Legal Help Commons
-        </Link>.
+        Explore What's Being Built in Justice AI
       </p>
 
       <div className="mt-5 inline-flex items-center gap-2 rounded-md bg-peach-light px-4 py-2 text-sm font-medium text-navy">
-        <span>🚧 The JusticeBench platform is under development. Please give us your feedback and ideas!</span>
+        <span>🚧 The JusticeBench platform is a catalog of AI projects in the legal help space, as well as datasets and guides. It's under development. Please give us your feedback and ideas!</span>
         <Link
           href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
           className="underline underline-offset-2"
@@ -199,11 +192,7 @@ sanityClient.fetch(`*[_type == "project"]{
     How to Use JusticeBench
   </h2>
   <p className="text-white text-center max-w-4xl mx-auto mb-10">
-    JusticeBench is an R&amp;D platform for legal teams, technologists, researchers, and community members working on AI to advance access to justice. Explore the landscape here — then head to the{' '}
-    <Link href="https://legalhelpcommons.org" className="underline underline-offset-2 text-peach hover:text-white">
-      Legal Help Commons
-    </Link>{' '}
-    for implementation playbooks, working groups, and shared tools when you&rsquo;re ready to build.
+    JusticeBench is an R&D platform for legal teams, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
 
   {/* 2 columns on md, 4 on lg */}
@@ -254,28 +243,6 @@ sanityClient.fetch(`*[_type == "project"]{
   </div>
 </section>
 
-{/* Commons callout */}
-<section className="px-6 py-8">
-  <div className="max-w-5xl mx-auto">
-    <Link
-      href="https://legalhelpcommons.org"
-      className="group block rounded-2xl border-2 border-navy/10 bg-gradient-to-r from-peach-extra-light to-white p-6 sm:p-8 hover:shadow-lg hover:border-navy/20 transition"
-    >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="text-4xl" aria-hidden>🔧</div>
-        <div className="flex-1">
-          <h3 className="text-xl sm:text-2xl font-heading font-bold text-navy">
-            Ready to build? Visit the Legal Help Commons
-          </h3>
-          <p className="mt-1 text-gray-600 text-sm sm:text-base">
-            JusticeBench shows you what&rsquo;s possible. The Legal Help Commons shows you how to do it — with implementation playbooks, reference architectures, and working groups you can join today.
-          </p>
-        </div>
-        <span className="text-navy font-heading font-bold text-lg group-hover:translate-x-1 transition-transform">→</span>
-      </div>
-    </Link>
-  </div>
-</section>
 
 <section className="bg-peach-light text-white rounded-2xl p-8 max-w-5xl mx-auto mb-12 shadow-lg my-8">
   <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-center">
