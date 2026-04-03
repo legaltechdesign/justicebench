@@ -60,7 +60,7 @@ export default async function TasksPage() {
             </Link>{' '}
             / Tasks
           </p>
-          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+          <h1 className="text-4xl md:text-5xl text-white font-heading font-bold mb-4">
             AI Task Taxonomy
           </h1>
           <p className="text-white/80 max-w-3xl mx-auto text-lg mb-6">
