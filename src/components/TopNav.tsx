@@ -35,12 +35,13 @@ export default function TopNav() {
   >
     Projects
   </button>
-  <button
-    onClick={() => handleNav("#tasks")}
+  <Link
+    href="/task"
     className="block py-2 text-navy font-heading hover:underline"
+    onClick={() => setIsOpen(false)}
   >
     Tasks
-  </button>
+  </Link>
   
   <button
     onClick={() => handleNav("#datasets")}
@@ -54,6 +55,13 @@ export default function TopNav() {
   >
     Guides
   </button>
+  <Link
+    href="/journey"
+    className="block py-2 text-navy font-heading hover:underline"
+    onClick={() => setIsOpen(false)}
+  >
+    Learn A2J
+  </Link>
 
 
           {/* Persistent Dropdown */}

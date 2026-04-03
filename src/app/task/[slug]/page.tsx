@@ -103,18 +103,31 @@ export default async function TaskPage({ params }: any) {
       oneLiner,
       description,
       qualityStandards,
-       // AUTO related projects: any project that references this task
-    "relatedProjects": *[_type == "project" && references(^._id)]{
-      _id,
-      title,
-      slug,
-      "oneliner": oneliner,
-      image{ asset->{ url } },
-      // optional metadata you might want on the card:
-      status->{ status },
-      category->{ title, slug },
-      issue->{ title, slug }
-    },
+      code,
+      "category": category->{
+        _id,
+        title,
+        slug
+      },
+      // Sibling tasks in same category (excluding self)
+      "siblingTasks": *[_type == "task" && category._ref == ^.category._ref && slug.current != $slug] | order(coalesce(sortOrder, 9999) asc, code asc){
+        _id,
+        title,
+        slug,
+        code,
+        icon{asset->{url}}
+      },
+      // AUTO related projects: any project that references this task
+      "relatedProjects": *[_type == "project" && references(^._id)]{
+        _id,
+        title,
+        slug,
+        "oneliner": oneliner,
+        image{ asset->{ url } },
+        status->{ status },
+        category->{ title, slug },
+        issue->{ title, slug }
+      },
 
       "relatedDatasets": relatedDatasets[]->{title, slug},
       "relatedEvaluations": relatedEvaluations[]->{title, slug},
@@ -127,7 +140,32 @@ export default async function TaskPage({ params }: any) {
 
   return (
     <main className="font-sans px-8 py-12 max-w-6xl mx-auto">
-      <h1 className="text-6xl font-heading font-bold text-navy mb-10">{task.title}</h1>
+      {/* Breadcrumb */}
+      <nav className="text-sm text-gray-500 mb-4 flex items-center gap-1.5">
+        <Link href="/" className="hover:text-navy">JusticeBench</Link>
+        <span>/</span>
+        <Link href="/task" className="hover:text-navy">Tasks</Link>
+        {task.category?.title && (
+          <>
+            <span>/</span>
+            <Link
+              href={`/task#${task.category.slug?.current ?? ''}`}
+              className="hover:text-navy"
+            >
+              {task.category.title}
+            </Link>
+          </>
+        )}
+      </nav>
+
+      <div className="flex flex-wrap items-center gap-3 mb-10">
+        <h1 className="text-6xl font-heading font-bold text-navy">{task.title}</h1>
+        {task.code && (
+          <span className="text-sm font-semibold bg-navy text-white px-3 py-1 rounded-full">
+            {task.code}
+          </span>
+        )}
+      </div>
 
       <div className="bg-peach-extra-light rounded-lg p-6 flex flex-col md:flex-row gap-6 mb-16">
         {task.image && urlFor(task.image).url() && (
@@ -152,6 +190,47 @@ export default async function TaskPage({ params }: any) {
       <ReferenceList title="Related Datasets" items={task.relatedDatasets} basePath="/dataset" />
       <ReferenceList title="Related Evaluation Tools" items={task.relatedEvaluations} basePath="/evaluation" />
       <ReferenceList title="Related Guides" items={task.relatedGuides} basePath="/guide" />
+
+      {/* Sibling tasks in same category */}
+      {task.siblingTasks?.length > 0 && (
+        <section className="mb-12 mt-16 pt-10 border-t border-gray-200">
+          <h2 className="text-2xl font-heading font-bold text-navy mb-2">
+            Other {task.category?.title ?? ''} Tasks
+          </h2>
+          <p className="text-gray-500 text-sm mb-6">
+            Explore related tasks in the same workflow category.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {task.siblingTasks.map((sibling: any) => (
+              <Link
+                key={sibling._id}
+                href={sibling.slug?.current ? `/task/${sibling.slug.current}` : '#'}
+                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white hover:shadow-sm hover:border-navy/20 transition p-3"
+              >
+                {sibling.icon?.asset?.url ? (
+                  <Image
+                    src={sibling.icon.asset.url}
+                    alt=""
+                    width={32}
+                    height={32}
+                    className="rounded-full bg-peach-extra-light"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-peach-extra-light flex-shrink-0" />
+                )}
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-heading font-semibold text-navy leading-tight line-clamp-1">
+                    {sibling.title}
+                  </span>
+                  {sibling.code && (
+                    <span className="text-[10px] text-gray-400 ml-1">{sibling.code}</span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   )
 }

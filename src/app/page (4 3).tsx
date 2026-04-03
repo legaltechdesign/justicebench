@@ -16,6 +16,7 @@ async function safeFetch<T>(query: string) {
   }
 }
 
+type Task = SanityDoc
 
 type Dataset = SanityDoc
 type Guide = SanityDoc
@@ -40,7 +41,21 @@ interface SanityDoc {
 
 // Fetch all categories in parallel
 export default async function Home() {
-  const [projects, datasets, guides] = await Promise.all([
+  const [tasks, projects, datasets, guides] = await Promise.all([
+    
+    sanityClient.fetch(`*[_type == "task" && references(^._id)] | order(sortOrder asc){
+      _id,
+      title,
+      slug,
+        icon{asset->{url}},  
+      "oneliner": oneLiner,
+      image {
+        asset->{
+          _id,
+          url
+        }
+      }
+    }`),
 sanityClient.fetch(`*[_type == "project"]{
   _id,
   title,
@@ -265,39 +280,26 @@ sanityClient.fetch(`*[_type == "project"]{
   </div>
 </section>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto my-8 px-6">
-  {/* New to A2J teaser */}
-  <Link
-    href="/journey"
-    className="group block rounded-2xl border border-navy/10 bg-peach-light p-6 hover:shadow-lg hover:border-navy/20 transition"
-  >
-    <h3 className="text-xl font-heading font-bold text-navy mb-2">
-      New to Access to Justice?
-    </h3>
-    <p className="text-gray-600 text-sm mb-3">
-      Learn how legal problems play out in people&rsquo;s lives, the 7 stages of a justice journey, and how service providers work to help.
+<section className="bg-peach-light text-white rounded-2xl p-8 max-w-5xl mx-auto mb-12 shadow-lg my-8">
+  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-center">
+    New to the Access to Justice Domain?
+  </h2>
+  <p className="text-base text-black md:text-lg mb-6">
+    Are you a technologist, researcher, data scientist, or professional who is new to the world of legal aid, courts, and civil legal problems? 
     </p>
-    <span className="text-navy text-sm font-semibold group-hover:underline">
-      Explore the A2J domain →
-    </span>
-  </Link>
-
-  {/* Tasks teaser */}
-  <Link
-    href="/task"
-    className="group block rounded-2xl border border-navy/10 bg-peach-extra-light p-6 hover:shadow-lg hover:border-navy/20 transition"
+    <p className="text-base text-black md:text-lg mb-6">
+      Learn the basics of what a person's journey looks like, as they deal with a legal problem like eviction, debt, divorce, reentry, employement problems, or  more.
+      </p>
+      <p className="text-base text-black md:text-lg mb-6">
+     Also explore the common workflows of service providers who assist people in resolving their legal problems.
+  </p>
+  <a
+    href="#justice-journey"
+    className="inline-block bg-navy text-white font-semibold text-xl px-6 py-3 rounded-lg hover:bg-navy/90 transition flex justify-center items-center"
   >
-    <h3 className="text-xl font-heading font-bold text-navy mb-2">
-      AI Task Taxonomy
-    </h3>
-    <p className="text-gray-600 text-sm mb-3">
-      30+ specific tasks where AI can improve legal help — from document explanation to intake triage to case management. Organized by workflow stage.
-    </p>
-    <span className="text-navy text-sm font-semibold group-hover:underline">
-      View all tasks →
-    </span>
-  </Link>
-</div>
+    Learn More about Access to Justice
+  </a>
+</section>
 
 
 <section id="projects" className="bg-white py-16 px-6 sm:px-10">
@@ -697,7 +699,343 @@ function cleanIssueName(title?: string): string {
 
 
 
+<section className="bg-navy py-14 px-6 sm:px-10 text-white" id="justice-journey">
+  <div className="max-w-7xl mx-auto">
+    <h1 className="text-4xl font-heading font-bold text-white mb-6 text-center">
+      Learn More about the Access to Justice Domain
+    </h1>
+    <p className="text-white mb-12 text-center max-w-3xl mx-auto">
+      What does 'access to justice' mean? How can technology help more people navigate their legal problems and the justice system in order to get to good outcomes? Explore this section to get oriented in this A2J domain.
+    </p>
+    </div>
+    </section>
+<section className="bg-white py-10 px-6 sm:px-10" >
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-3xl font-heading font-bold text-navy mb-10 text-center">
+      Common Stages of a Person's Justice Journey
+    </h2>
 
+<p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
+  <strong>How does a legal problem play out in a person's life?</strong> Different legal problems -- eviction, debt collection, divorce, driver's license suspension, or other disputes -- often follow the same 7 stages.
+</p>
+<p className="text-gray-700 mb-8 text-center max-w-3xl mx-auto">
+  Use this overview to understand where AI might help a person. Then <a href="#tasks" className="text-navy underline">go to the Tasks Section</a> to see the specific AI opportunities at each stage.
+</p>
+<figure className="my-8">
+  <Image
+    src="/images/user-workflow.png"
+    alt="User justice journey overview"
+    width={2400}            // any large intrinsic width is fine
+    height={1400}           // keep the aspect ratio roughly correct
+    className="w-full h-auto rounded-xl shadow"
+    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
+    priority                 // optional: prioritize this image
+  />
+  <figcaption className="text-center text-xs text-gray-500 mt-2">
+    Overview of the person’s justice journey stages.
+  </figcaption>
+</figure>
+<div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+
+{[
+  {
+    title: 'Awareness Stage',
+    description: 'As a conflict brews, the person begins to recognize that they might need legal help to deal with it. They begin to seek out help online, through friends, or by contacting a service provider.',
+    icon: '/icons/awareness.png',
+  },
+  {
+    title: 'Orientation Stage',
+    description: 'The person gets a diagnosis of the exact legal scenario they are in, what the law says about their rights, what options they have, and what services can help.',
+    icon: '/icons/orientation.png',
+  },
+  {
+    title: 'Strategy Stage',
+    description: 'The person decides how they want to handle the problem. They weigh their goals, rights, and risks. They choose what path to take and get a plan of action -- including paperwork, research, hearings, meetings, and more.',
+    icon: '/icons/strategy.png',
+  },
+  {
+    title: 'Work Product Stage',
+    description: 'The person drafts documents and forms to file, researches the law, gathers and organizes evidence, responds to requests, makes requests of the other side, and crafts talking points.',
+    icon: '/icons/work-product.png',
+  },
+  {
+    title: 'Engagement Stage',
+    description: 'The person completes all of the steps, deadlines, and procedural requirements. They file things on time, make payments or get fee waivers, attend required meetings and hearings, and stay updated on their case progress and obligations.',
+    icon: '/icons/engagement.png',
+  },
+  {
+    title: 'Present and Negotiate Stage',
+    description: 'The person presents their case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.',
+    icon: '/icons/presentation.png',
+  },
+  {
+    title: 'Follow-Through Stage',
+    description: 'After a decision or settlement, the person must ensure they understand what the final arrangement is and how to live up to it (or enforce it). They may need to comply with orders, secure what they won, or clear their record to prevent collateral consequences.',
+    icon: '/icons/follow.png',
+  },
+].map((step) => (
+  <div
+    key={step.title}
+    className="bg-peach-extra-light rounded-xl shadow hover:shadow-lg transition overflow-hidden max-w-[300px] mx-auto"
+  >
+    <div className="relative w-full h-40">
+      <img
+        src={step.icon}
+        alt={step.title}
+        className="object-cover w-full h-full"
+      />
+      <div className="absolute bottom-0 left-0 right-0 bg-navy bg-opacity-80 text-white text-center px-2 py-2 text-xl font-semibold">
+        {step.title}
+      </div>
+    </div>
+    <div className="p-4">
+      <p className="text-gray-700 text-xs leading-snug">{step.description}</p>
+    </div>
+  </div>
+))}
+</div>
+
+  </div>
+</section>
+<section id="service-provider-workflow" className="bg-white py-10 px-6 sm:px-10">
+<div className="max-w-7xl mx-auto">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
+   Service Providers' Workflows to Suport Better Justice Journeys
+  </h2>
+  <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+    Aside from users, service providers are also key stakeholders in advancing access to justice.
+    Legal aid groups, court help centers, pro bono clinics, and other justice workers have common clusters of tasks. These tasks all relate to the front-facing services or back-end operations of providing legal help to the public.
+  </p>
+  <figure className="my-8">
+  <Image
+    src="/images/provider-workflow.png"
+    alt="Provider journey overview"
+    width={2400}            // any large intrinsic width is fine
+    height={1400}           // keep the aspect ratio roughly correct
+    className="w-full h-auto rounded-xl shadow"
+    sizes="(min-width: 1280px) 72rem, 100vw"  // helps Next pick the right size
+    priority                 // optional: prioritize this image
+  />
+  <figcaption className="text-center text-xs text-gray-500 mt-2">
+    Overview of the service provider’s workflow, tasks along the justice journey.
+  </figcaption>
+</figure>
+
+<div className="grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+  {[
+    {
+      title: "Outreach & Education",
+      description:
+        "The provider tries to connect with the right audience—raising awareness, providing legal information, building trust, and helping people recognize legal issues and seek help.",
+      icon: "/icons/outreach-icon.png",
+    },
+    {
+      title: "Screening & Triage",
+      description:
+        "The provider attempts to understand each person's background and legal issue to determine if and how the organization can help. This includes routing people to services, guides, or referrals.",
+      icon: "/icons/screen-icon.png",
+    },
+    {
+      title: "Tailored Advice",
+      description:
+        "The provider provides the user with detailed, custom advice on their legal options, risks, and next steps. Advice is specific to the user's goals, context, and documents—and designed to support informed decisions.",
+      icon: "/icons/advice-icon.png",
+    },
+    {
+      title: "Work Product & Legal Research",
+      description:
+        "The provider researches the law, draft and file documents, analyze legal options, collect evidence, and keep them on track with deadlines and next steps.",
+      icon: "/icons/work-icon.png",
+    },
+    {
+      title: "Coaching & Support",
+      description:
+        "The provider gives ongoing encouragement, legal education, and guidance throughout the justice journey, so users stay involved and making informed decisions.",
+      icon: "/icons/coach-icon.png",
+    },
+    {
+      title: "Present & Negotiate",
+      description:
+        "The provider presents the case to the judge or decisionmaker, answers questions, and interacts with the other party. They may also negotiate with the other side, and respond to settlement offers.",
+      icon: "/icons/present-negotiate.png",
+    },
+    {
+      title: "Administration & Strategy",
+      description:
+        "The provider monitors cases and outcomes overall, manages staff and reporting, spots patterns, operates tech, and identifies areas for service improvement, policy change, strategic litigation, or tech innovation.",
+      icon: "/icons/admin-icon.png",
+    },
+  ].map((step) => (
+    <div
+      key={step.title}
+      className="bg-navy/10 rounded-xl shadow hover:shadow-lg transition overflow-hidden max-w-[300px] mx-auto"
+    >
+      <div className="relative w-full h-40">
+        <img
+          src={step.icon}
+          alt={step.title}
+          className="object-cover w-full h-full"
+        />
+        <div className="absolute bottom-0 left-0 right-0 bg-navy bg-opacity-80 text-white text-center px-2 py-2 text-xl font-semibold">
+          {step.title}
+        </div>
+      </div>
+      <div className="p-4">
+        <p className="text-gray-700 text-xs leading-snug">{step.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+</div>
+
+  
+  </section>.
+
+ 
+<section id="tasks" className="bg-peach-extra-light px-10 py-16">
+  <h2 className="text-5xl font-heading font-bold text-navy mb-6">Tasks for AI to Advance Access to Justice</h2>
+
+  <div className="text-gray-600 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+    <div>
+      <p>
+        <strong>Across all different problem types and geographies, what tasks can AI do to improve how people get legal help & how providers serve people?</strong>
+      </p>
+      <p>
+        For the various stages of a person's justice journey, we have documented the main tasks that need to be done. These specific tasks can help people successfully resolve their legal problems, and they can help service providers operate more effectively.
+      </p>
+      <p className="mt-4">
+        These tasks are all general (across problem types and regions) so that we can find ways to collaborate on common technology solutions.
+      </p>
+    </div>
+    <div>
+      <p>
+        The 7 main clusters of Access to Justice tasks came from our community brainstorms & workflow mapping. Some of them are tasks that the user does, others are what the service provider (like a legal aid group or a court) would do:
+      </p>
+      <ul className="list-disc pl-5 mt-2">
+        <li>User: Getting Brief Help</li>
+        <li>Provider: Providing Brief Help</li>
+        <li>User-Provider: Service Onboarding</li>
+        <li>User-Provider: Work Product</li>
+        <li>Provider: Case Management</li>
+        <li>Provider: Administration, Ops, & Strategy</li>
+        <li>Provider: Tech Tooling</li>
+      </ul>
+      <p className="mt-4">Explore each in detail below, or visit our <a href="https://www.justicebench.org/task">Task Taxonomy page.</a></p>
+    </div>
+  </div>
+
+  {/* === Taxonomy-style list by Task Category === */}
+  {tasksByCategory.map((category: any) => {
+    const hasTasks = Array.isArray(category.tasks) && category.tasks.length > 0
+    if (!hasTasks) return null
+
+    return (
+      <div key={category._id} id={category.slug?.current} className="mb-12">
+        {/* Category heading with icon + title */}
+        <div className="flex items-center gap-3 mb-3">
+          {category.icon?.asset?.url && (
+            <Image
+              src={category.icon.asset.url}
+              alt={`${category.title} icon`}
+              width={36}
+              height={36}
+              className="rounded"
+            />
+          )}
+          <h3 className="text-3xl font-heading font-semibold text-navy">
+            {category.title} Tasks
+          </h3>
+        </div>
+        {category.description && (
+          <p className="text-gray-600 mb-4 max-w-3xl">{category.description}</p>
+        )}
+
+        {/* Full-width rows */}
+        <div className="space-y-3">
+          {category.tasks.map((task: any) => {
+            const href = task.slug?.current ? `/task/${task.slug.current}` : undefined
+            return (
+              <Link
+                key={task._id}
+                href={href ?? '#'}
+                className={`block rounded-xl border bg-white hover:shadow-md transition ${
+                  href ? 'cursor-pointer' : 'pointer-events-none opacity-70'
+                }`}
+              >
+                <div className="p-4 md:p-5 flex items-start gap-4">
+                  {/* Icon / image */}
+{task.icon?.asset?.url ? (
+  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-peach-extra-light flex-shrink-0">
+    <Image
+      src={task.icon.asset.url}
+      alt={`${task.title} icon`}
+      width={64}
+      height={64}
+      className="object-contain"
+    />
+  </div>
+) : task.image?.asset?.url ? (
+  <Image
+    src={task.image.asset.url}
+    alt={task.title}
+    width={80}
+    height={80}
+    className="rounded-md object-cover flex-shrink-0"
+  />
+) : (
+  <div className="w-16 h-16 rounded-full bg-peach-extra-light border flex-shrink-0" />
+)}
+
+
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    {/* Title + code badge */}
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <h4 className="text-xl font-heading font-bold text-navy leading-tight">
+                        {task.title}
+                      </h4>
+                      {task.code && (
+                        <span className="inline-block text-xs font-semibold bg-navy text-white px-2 py-0.5 rounded-full">
+                          {task.code}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Brief description (oneliner preferred; fallback to description) */}
+                    <div className="text-sm text-gray-700 line-clamp-2">
+                      {Array.isArray(task.oneliner) ? (
+                        <PortableText value={task.oneliner} components={portableTextComponents} />
+                      ) : task.oneliner ? (
+                        <span>{task.oneliner}</span>
+                      ) : Array.isArray(task.description) ? (
+                        <PortableText value={task.description} components={portableTextComponents} />
+                      ) : task.description ? (
+                        <span>{task.description}</span>
+                      ) : null}
+                    </div>
+
+                    {/* Read more */}
+                    {href && (
+                      <div className="mt-2">
+                        <span className="text-navy text-sm underline">Read more about this task →</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    )
+  })}
+</section>
+
+
+     
+     
 <section className="bg-navy px-10 py-16" id="datasets">
   <div className="max-w-7xl mx-auto">
     <h2 className="text-5xl font-heading font-bold text-white mb-4 text-center">
