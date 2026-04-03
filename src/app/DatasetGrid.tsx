@@ -5,14 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 
-const TYPE_LABELS: Record<string, { label: string; emoji: string }> = {
-  'benchmark':      { label: 'Evaluation Benchmarks',  emoji: '📊' },
-  'labeled-dataset': { label: 'Labeled Datasets',       emoji: '🏷️' },
-  'taxonomy':       { label: 'Taxonomies & Standards',  emoji: '🗂️' },
-  'leaderboard':    { label: 'Leaderboards',            emoji: '🏆' },
-  'reference':      { label: 'Reference Data',          emoji: '📋' },
-  'eval-protocol':  { label: 'Evaluation Protocols',    emoji: '✅' },
-  'test-suite':     { label: 'Test Suites',             emoji: '🧪' },
+const TYPE_LABELS: Record<string, { label: string; emoji: string; description: string }> = {
+  'test':     { label: 'Test & Evaluate',         emoji: '📊', description: 'Benchmarks, eval Q&A, and test suites for scoring model performance' },
+  'build':    { label: 'Build & Train',            emoji: '🔧', description: 'Labeled data, training corpora, and synthetic queries for building tools' },
+  'organize': { label: 'Organize & Standardize',   emoji: '🗂️', description: 'Taxonomies, reference data, and classification standards' },
+  'compare':  { label: 'Compare',                  emoji: '🏆', description: 'Leaderboards and model comparison tools' },
 }
 
 type Dataset = {
@@ -96,9 +93,12 @@ export function DatasetGrid({ datasets }: { datasets: Dataset[] }) {
           <div key={type} className="mb-10">
             {/* Show type heading only in "All" view */}
             {activeFilter === 'all' && meta && (
-              <h3 className="text-2xl font-heading font-semibold text-peach mb-4 flex items-center gap-2">
-                <span>{meta.emoji}</span> {meta.label}
-              </h3>
+              <div className="mb-4">
+                <h3 className="text-2xl font-heading font-semibold text-peach flex items-center gap-2">
+                  <span>{meta.emoji}</span> {meta.label}
+                </h3>
+                <p className="text-sm text-white/50 mt-1">{meta.description}</p>
+              </div>
             )}
             {activeFilter === 'all' && !meta && type === '__uncategorized__' && (
               <h3 className="text-2xl font-heading font-semibold text-white/60 mb-4">

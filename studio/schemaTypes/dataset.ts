@@ -21,15 +21,12 @@ const dataset = {
       description: 'What kind of resource is this?',
       options: {
         list: [
-          { title: 'Evaluation Benchmark', value: 'benchmark' },
-          { title: 'Labeled Dataset', value: 'labeled-dataset' },
-          { title: 'Taxonomy / Standard', value: 'taxonomy' },
-          { title: 'Leaderboard', value: 'leaderboard' },
-          { title: 'Reference Data', value: 'reference' },
-          { title: 'Evaluation Protocol', value: 'eval-protocol' },
-          { title: 'Test Suite', value: 'test-suite' },
+          { title: 'Test & Evaluate — Benchmarks, eval Q&A, test suites for scoring model performance', value: 'test' },
+          { title: 'Build & Train — Labeled data, training corpora, synthetic queries for building tools', value: 'build' },
+          { title: 'Organize & Standardize — Taxonomies, reference data, classification standards', value: 'organize' },
+          { title: 'Compare — Leaderboards and model comparison tools', value: 'compare' },
         ],
-        layout: 'dropdown',
+        layout: 'radio',
       },
     },
     {
