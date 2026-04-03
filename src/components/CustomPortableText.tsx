@@ -19,7 +19,7 @@ export const portableTextComponents: PortableTextComponents = {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-navy hover:text-dark-navy font-medium"
+            className="underline text-navy hover:text-navy/70 font-medium underline-offset-2 decoration-peach decoration-2 transition-colors"
           >
             {children}
           </a>
@@ -42,6 +42,21 @@ const components: PortableTextComponents = {
             className="rounded"
           />
         </div>
+      )
+    },
+  },
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href || '#'
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-navy hover:text-navy/70 font-medium underline-offset-2 decoration-peach decoration-2 transition-colors"
+        >
+          {children}
+        </a>
       )
     },
   },
