@@ -171,11 +171,11 @@ sanityClient.fetch(`*[_type == "project"]{
       </h1>
 
       <p className="mt-3 text-base md:text-xl text-gray-700">
-        An R&amp;D Community Platform for AI and Access to Justice
+        Explore What's Being Built in Justice AI
       </p>
 
       <div className="mt-5 inline-flex items-center gap-2 rounded-md bg-peach-light px-4 py-2 text-sm font-medium text-navy">
-        <span>🚧 The JusticeBench platform is under development. Please give us your feedback and ideas!</span>
+        <span>🚧 The JusticeBench platform is a catalog of AI projects in the legal help space, as well as datasets and guides. It's under development. Please give us your feedback and ideas!</span>
         <Link
           href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
           className="underline underline-offset-2"
@@ -192,7 +192,7 @@ sanityClient.fetch(`*[_type == "project"]{
     How to Use JusticeBench
   </h2>
   <p className="text-white text-center max-w-4xl mx-auto mb-10">
-    JusticeBench is an R&D platform for legal leaders, technologists, researchers, and community members working on AI to advance access to justice.
+    JusticeBench is an R&D platform for legal teams, technologists, researchers, and community members working on AI to advance access to justice.
   </p>
 
   {/* 2 columns on md, 4 on lg */}
