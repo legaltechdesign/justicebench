@@ -110,7 +110,7 @@ sanityClient.fetch(`*[_type == "project"]{
       </h1>
 
       <p className="mt-3 text-base md:text-xl text-gray-700">
-        Explore What&rsquo;s Being Built in Justice AI
+        Explore What Is Being Built in Justice AI
       </p>
 
       <p className="mt-3 text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
