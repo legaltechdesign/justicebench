@@ -7,6 +7,7 @@ import { DatasetGrid } from '@/components/DatasetGrid'
 import { ProjectGrid } from '@/components/ProjectGrid'
 
 
+
 async function safeFetch<T>(query: string) {
   try {
     return await sanityClient.fetch<T>(query)
@@ -38,7 +39,7 @@ interface SanityDoc {
   datasetType?: string
 }
 
-// Fetch all categories in parallel
+// Fetch all categories in parallel y
 export default async function Home() {
   const [projects, datasets, guides] = await Promise.all([
 sanityClient.fetch(`*[_type == "project"]{
