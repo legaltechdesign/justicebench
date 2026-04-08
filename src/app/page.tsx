@@ -39,7 +39,7 @@ interface SanityDoc {
   datasetType?: string
 }
 
-// Fetch all categories in parallel y
+// Fetch all categories in parallel
 export default async function Home() {
   const [projects, datasets, guides] = await Promise.all([
 sanityClient.fetch(`*[_type == "project"]{
