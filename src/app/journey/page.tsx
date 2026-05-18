@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Access to Justice Journey — JusticeBench',
+  title: 'Access to Justice Journey - JusticeBench',
   description:
-    'Learn the basics of how legal problems play out in people\'s lives, the common stages of a justice journey, and the workflows of service providers who help resolve legal problems.',
+    'Learn the basics of how legal problems play out in people\'s lives, the common stages of a justice journey, and the workflows of providers who help resolve legal problems.',
 }
 
 export default function JourneyPage() {
