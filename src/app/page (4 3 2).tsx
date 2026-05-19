@@ -1,4 +1,4 @@
-// src/app/page.tsx
+/// src/app/page.tsx
 import { sanityClient } from '@/lib/sanity'
 import Image from 'next/image'
 import { PortableText, PortableTextComponents  } from '@portabletext/react'
