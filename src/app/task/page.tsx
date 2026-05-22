@@ -8,9 +8,9 @@ import { portableTextComponents } from '@/components/CustomPortableText'
 export const revalidate = 300
 
 export const metadata = {
-  title: 'Task Taxonomy — JusticeBench',
+  title: 'Legal Help Task Taxonomy — JusticeBench',
   description:
-    'A taxonomy of 40+ AI tasks that can improve how people get legal help and how providers serve them — organized by workflow stage.',
+    'A taxonomy of 40+ tasks that can improve how people get legal help and how providers serve them — organized by workflow stage.',
 }
 
 async function fetchTasksByCategory() {
@@ -61,10 +61,10 @@ export default async function TasksPage() {
             / Tasks
           </p>
           <h1 className="text-4xl md:text-5xl text-white font-heading font-bold mb-4">
-            AI Task Taxonomy
+            Legal Help Task Taxonomy
           </h1>
           <p className="text-white/80 max-w-3xl mx-auto text-lg mb-6">
-            {totalTasks} specific tasks where AI can improve how people get
+            {totalTasks} specific tasks where AI-powered solutions can improve how people get
             legal help and how providers serve them — organized by workflow
             stage across all problem types and geographies.
           </p>
