@@ -10,7 +10,7 @@ export const revalidate = 300
 export const metadata = {
   title: 'Legal Help Task Taxonomy — JusticeBench',
   description:
-    'A taxonomy of 40+ tasks that can improve how people get legal help and how providers serve them — organized by workflow stage.',
+    'A taxonomy of 50+ tasks that can improve how people get legal help and how providers serve them — organized by workflow stage.',
 }
 
 async function fetchTasksByCategory() {
