@@ -124,7 +124,7 @@ sanityClient.fetch(`*[_type == "project"]{
       <div className="mt-5 inline-flex items-center gap-2 rounded-md bg-peach-light px-4 py-2 text-sm font-medium text-navy">
         <span>🚧 The JusticeBench platform is under development. Please give us your feedback and ideas!</span>
         <Link
-          href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform?usp=sharing&ouid=105527964805660002479"
+          href="https://airtable.com/appMxYCJsZZuScuTN/pagIjhdU14Yy7kbHL/form"
           className="underline underline-offset-2"
         >
           Share feedback &amp; projects
@@ -266,7 +266,7 @@ sanityClient.fetch(`*[_type == "project"]{
 
     <p className="text-lg text-gray-500 max-w-2xl mt-8">
       <strong className="text-navy">Know of a project not listed here?</strong>{' '}
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-navy hover:text-navy/70">
+      <a href="https://airtable.com/appMxYCJsZZuScuTN/pagIjhdU14Yy7kbHL/form" className="underline text-navy hover:text-navy/70">
         Tell us about it.
       </a>
     </p>
@@ -292,7 +292,7 @@ sanityClient.fetch(`*[_type == "project"]{
 
     <p className="text-lg text-white/70 max-w-2xl mt-8">
       <strong className="text-white">Please share datasets</strong> with JusticeBench at{' '}
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-peach hover:text-white">
+      <a href="https://airtable.com/appMxYCJsZZuScuTN/pagIjhdU14Yy7kbHL/form" className="underline text-peach hover:text-white">
         this form.
       </a>
     </p>
@@ -311,7 +311,7 @@ sanityClient.fetch(`*[_type == "project"]{
   />
   <p className="text-xl text-gray-700 max-w-2xl">
     <strong>Please share guide proposals and open-source materials</strong> with us at{' '}
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxjzlRUOZcwSDI_Fq5WWDWatdPF-6JQ30VcNBpCEwlSHvTlw/viewform" className="underline text-navy">
+    <a href="https://airtable.com/appMxYCJsZZuScuTN/pagIjhdU14Yy7kbHL/form" className="underline text-navy">
       this form.
     </a>
   </p>
