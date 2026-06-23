@@ -142,7 +142,7 @@ export default async function TaskPage({ params }: any) {
       </section>
 
       {/* ═══ Tab-style jump nav ═══ */}
-      <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200 px-6 sm:px-10">
+      <div className="sticky top-[56px] z-40 bg-white border-b border-gray-200 shadow-sm px-6 sm:px-10">
         <div className="max-w-5xl mx-auto flex gap-1 overflow-x-auto py-2 -mb-px">
           {[
             { id: 'description', label: 'Overview' },
@@ -167,7 +167,7 @@ export default async function TaskPage({ params }: any) {
       <div className="max-w-5xl mx-auto px-6 sm:px-10 py-12 space-y-16">
         {/* ═══ Description ═══ */}
         {task.description && (
-          <section id="description" className="scroll-mt-28">
+          <section id="description" className="scroll-mt-24">
             <h2 className="text-3xl font-heading font-bold text-navy mb-6">
               About This Task
             </h2>
@@ -179,7 +179,7 @@ export default async function TaskPage({ params }: any) {
 
         {/* ═══ Quality Standards ═══ */}
         {task.qualityStandards && (
-          <section id="quality" className="scroll-mt-28">
+          <section id="quality" className="scroll-mt-24">
             <div className="rounded-xl border-2 border-navy/10 bg-gradient-to-br from-peach-extra-light to-white p-8">
               <h2 className="text-3xl font-heading font-bold text-navy mb-2">
                 Quality Standards
@@ -196,7 +196,7 @@ export default async function TaskPage({ params }: any) {
 
         {/* ═══ Data & Evaluation ═══ */}
         {(datasetCount > 0 || task.relatedEvaluations?.length > 0) && (
-          <section id="data" className="scroll-mt-28">
+          <section id="data" className="scroll-mt-24">
             <h2 className="text-3xl font-heading font-bold text-navy mb-2">
               Data &amp; Evaluation Resources
             </h2>
@@ -261,7 +261,7 @@ export default async function TaskPage({ params }: any) {
 
         {/* ═══ Projects ═══ */}
         {projectCount > 0 && (
-          <section id="projects" className="scroll-mt-28">
+          <section id="projects" className="scroll-mt-24">
             <h2 className="text-3xl font-heading font-bold text-navy mb-2">
               Projects Building This Task
             </h2>
@@ -321,7 +321,7 @@ export default async function TaskPage({ params }: any) {
 
         {/* ═══ Guides ═══ */}
         {guideCount > 0 && (
-          <section id="guides" className="scroll-mt-28">
+          <section id="guides" className="scroll-mt-24">
             <h2 className="text-3xl font-heading font-bold text-navy mb-6">
               Related Guides
             </h2>
