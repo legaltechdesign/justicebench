@@ -14,8 +14,8 @@ export default function TopNav() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between relative">
+    <nav className="sticky top-0 bg-white border-b border-gray-200 px-6 h-16 shadow-sm z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between relative h-full">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80">
           <span className="text-2xl font-bold text-navy font-heading">JusticeBench</span>
         </Link>
