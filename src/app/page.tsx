@@ -240,10 +240,10 @@ sanityClient.fetch(`*[_type == "project"]{
     className="group block rounded-2xl border border-navy/10 bg-peach-extra-light p-6 hover:shadow-lg hover:border-navy/20 transition"
   >
     <h3 className="text-xl font-heading font-bold text-navy mb-2">
-      AI Task Taxonomy
+      Legal Help Task Taxonomy
     </h3>
     <p className="text-gray-600 text-sm mb-3">
-      30+ specific tasks where AI can improve legal help — from document explanation to intake triage to case management. Organized by workflow stage.
+      50+ specific tasks where AI can improve legal help — from document explanation to intake triage to case management. Organized by workflow stage.
     </p>
     <span className="text-navy text-sm font-semibold group-hover:underline">
       View all tasks →
